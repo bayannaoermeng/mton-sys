@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marathon.mapper.Marathon_infoMapper">
+
+    <resultMap type="Marathon_info" id="Marathon_infoResult">
+            <result property="marathon_uuid" column="marathon_uuid"/>
+            <result property="marathon_name" column="marathon_name"/>
+            <result property="marathon_starttime" column="marathon_starttime"/>
+            <result property="marathon_endtime" column="marathon_endtime"/>
+            <result property="marathon_address" column="marathon_address"/>
+            <result property="marathon_creater" column="marathon_creater"/>
+            <result property="marathon_createtime" column="marathon_createtime"/>
+            <result property="marathon_updater" column="marathon_updater"/>
+            <result property="marathon_updatetime" column="marathon_updatetime"/>
+            <result property="marathon_deleted" column="marathon_deleted"/>
+    </resultMap>
+
+    <sql id="selectMarathon_infoVo">
+        select marathon_uuid, marathon_name, marathon_starttime, marathon_endtime, marathon_address, marathon_creater, marathon_createtime, marathon_updater, marathon_updatetime, marathon_deleted from marathon_info
+    </sql>
+
+    <select id="selectMarathon_infoList" parameterType="Marathon_info" resultMap="Marathon_infoResult">
+        <include refid="selectMarathon_infoVo"/>
+        <where>
+            <if test="marathon_name != null  and marathon_name != '' ">and marathon_name like CONCAT( #{marathon_name},'%')</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(marathon_starttime,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(marathon_starttime,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectMarathon_infoById" parameterType="String" resultMap="Marathon_infoResult">
+        <include refid="selectMarathon_infoVo"/>
+        where marathon_uuid = #{marathon_uuid}
+    </select>
+
+    <insert id="insertMarathon_info" parameterType="Marathon_info">
+        insert into marathon_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="marathon_uuid != null  and marathon_uuid != ''  ">marathon_uuid,</if>
+                    <if test="marathon_name != null  and marathon_name != ''  ">marathon_name,</if>
+                    <if test="marathon_starttime != null  ">marathon_starttime,</if>
+                    <if test="marathon_endtime != null  ">marathon_endtime,</if>
+                    <if test="marathon_address != null  and marathon_address != ''  ">marathon_address,</if>
+                    <if test="marathon_creater != null  and marathon_creater != ''  ">marathon_creater,</if>
+                    <if test="marathon_createtime != null  ">marathon_createtime,</if>
+                    <if test="marathon_updater != null  and marathon_updater != ''  ">marathon_updater,</if>
+                    <if test="marathon_updatetime != null  ">marathon_updatetime,</if>
+                    <if test="marathon_deleted != null  ">marathon_deleted,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="marathon_uuid != null  and marathon_uuid != ''  ">#{marathon_uuid},</if>
+                    <if test="marathon_name != null  and marathon_name != ''  ">#{marathon_name},</if>
+                    <if test="marathon_starttime != null  ">#{marathon_starttime},</if>
+                    <if test="marathon_endtime != null  ">#{marathon_endtime},</if>
+                    <if test="marathon_address != null  and marathon_address != ''  ">#{marathon_address},</if>
+                    <if test="marathon_creater != null  and marathon_creater != ''  ">#{marathon_creater},</if>
+                    <if test="marathon_createtime != null  ">#{marathon_createtime},</if>
+                    <if test="marathon_updater != null  and marathon_updater != ''  ">#{marathon_updater},</if>
+                    <if test="marathon_updatetime != null  ">#{marathon_updatetime},</if>
+                    <if test="marathon_deleted != null  ">#{marathon_deleted},</if>
+        </trim>
+    </insert>
+
+    <update id="updateMarathon_info" parameterType="Marathon_info">
+        update marathon_info
+        <trim prefix="SET" suffixOverrides=",">
+                                                                            <if test="marathon_name != null  and marathon_name != ''  ">marathon_name = #{marathon_name},
+                    </if>
+                                                                <if test="marathon_starttime != null  ">marathon_starttime = #{marathon_starttime},
+                    </if>
+                                                                <if test="marathon_endtime != null  ">marathon_endtime = #{marathon_endtime},
+                    </if>
+                                                                <if test="marathon_address != null  and marathon_address != ''  ">marathon_address = #{marathon_address},
+                    </if>
+                                                                <if test="marathon_creater != null  and marathon_creater != ''  ">marathon_creater = #{marathon_creater},
+                    </if>
+                                                                <if test="marathon_createtime != null  ">marathon_createtime = #{marathon_createtime},
+                    </if>
+                                                                <if test="marathon_updater != null  and marathon_updater != ''  ">marathon_updater = #{marathon_updater},
+                    </if>
+                                                                <if test="marathon_updatetime != null  ">marathon_updatetime = #{marathon_updatetime},
+                    </if>
+                                                                <if test="marathon_deleted != null  ">marathon_deleted = #{marathon_deleted},
+                    </if>
+                                    </trim>
+        where marathon_uuid = #{marathon_uuid}
+    </update>
+
+    <delete id="deleteMarathon_infoById" parameterType="String">
+        delete from marathon_info where marathon_uuid = #{marathon_uuid}
+    </delete>
+
+    <delete id="deleteMarathon_infoByIds" parameterType="String">
+        delete from marathon_info where marathon_uuid in
+        <foreach item="marathon_uuid" collection="array" open="(" separator="," close=")">
+            #{marathon_uuid}
+        </foreach>
+    </delete>
+
+</mapper>

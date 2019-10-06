@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marathon.mapper.Marathon_userMapper">
+
+    <resultMap type="Marathon_user" id="Marathon_userResult">
+                    <result property="id" column="id"/>
+                    <result property="marathon_id" column="marathon_id"/>
+                    <result property="user_id" column="user_id"/>
+                    <result property="task_id" column="task_id"/>
+            </resultMap>
+
+    <sql id="selectMarathon_userVo">
+        select id, marathon_id, user_id, task_id from marathon_user
+    </sql>
+
+    <select id="selectMarathon_userList" parameterType="Marathon_user" resultMap="Marathon_userResult">
+        <include refid="selectMarathon_userVo"/>
+        <where>
+                            <if test="id != null  and id != '' ">and id = #{id}
+                </if>
+                            <if test="marathon_id != null  and marathon_id != '' ">and marathon_id = #{marathon_id}
+                </if>
+                            <if test="user_id != null ">and user_id = #{user_id}
+                </if>
+                            <if test="task_id != null  and task_id != '' ">and task_id = #{task_id}
+                </if>
+                    </where>
+    </select>
+
+    <select id="selectMarathon_userById" parameterType="String" resultMap="Marathon_userResult">
+        <include refid="selectMarathon_userVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMarathon_user" parameterType="Marathon_user">
+        insert into marathon_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                                                <if test="id != null  and id != ''  ">id,
+                    </if>
+                                                                <if test="marathon_id != null  and marathon_id != ''  ">marathon_id,
+                    </if>
+                                                                <if test="user_id != null  ">user_id,
+                    </if>
+                                                                <if test="task_id != null  and task_id != ''  ">task_id,
+                    </if>
+                                    </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                                                <if test="id != null  and id != ''  ">#{id},
+                    </if>
+                                                                <if test="marathon_id != null  and marathon_id != ''  ">#{marathon_id},
+                    </if>
+                                                                <if test="user_id != null  ">#{user_id},
+                    </if>
+                                                                <if test="task_id != null  and task_id != ''  ">#{task_id},
+                    </if>
+                                    </trim>
+    </insert>
+
+    <update id="updateMarathon_user" parameterType="Marathon_user">
+        update marathon_user
+        <trim prefix="SET" suffixOverrides=",">
+                                                                            <if test="marathon_id != null  and marathon_id != ''  ">marathon_id = #{marathon_id},
+                    </if>
+                                                                <if test="user_id != null  ">user_id = #{user_id},
+                    </if>
+                                                                <if test="task_id != null  and task_id != ''  ">task_id = #{task_id},
+                    </if>
+                                    </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMarathon_userById" parameterType="String">
+        delete from marathon_user where id = #{id}
+    </delete>
+
+    <delete id="deleteMarathon_userByIds" parameterType="String">
+        delete from marathon_user where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByMarathonId" parameterType="String">
+        delete from marathon_user where marathon_id = #{marathon_uuid}
+    </delete>
+    <delete id="deleteByMarathonIds" parameterType="String">
+        delete from marathon_user where marathon_id in
+        <foreach item="marathonuuid" collection="array" open="(" separator="," close=")">
+            #{marathonuuid}
+        </foreach>
+    </delete>
+
+</mapper>
