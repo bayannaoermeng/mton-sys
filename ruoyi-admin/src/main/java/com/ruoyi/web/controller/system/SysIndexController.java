@@ -1,5 +1,7 @@
 package com.ruoyi.web.controller.system;
 
+import com.marathon.service.IMrtonProcInfoService;
+import com.marathon.service.IMrtonProcUserService;
 import com.ruoyi.common.annotation.LoginAuth;
 import com.ruoyi.common.config.Global;
 import com.ruoyi.framework.web.base.BaseController;
@@ -25,6 +27,9 @@ public class SysIndexController extends BaseController {
     private final ISysMenuService menuService;
 
     @Autowired
+    private IMrtonProcInfoService mrtonProcInfoService;
+
+    @Autowired
     public SysIndexController(ISysMenuService menuService) {
         this.menuService = menuService;
     }
@@ -39,6 +44,8 @@ public class SysIndexController extends BaseController {
     public String index(ModelMap mmap,SysUser sysUser) {
         // 根据用户id取出菜单
         List<SysMenu> menus = menuService.selectMenusByUser(sysUser);
+        mrtonProcInfoService.buildMrtonMenu(sysUser,menus);
+
         mmap.put("menus", menus);
         mmap.put("user", sysUser);
         mmap.put("copyrightYear", Global.getCopyrightYear());

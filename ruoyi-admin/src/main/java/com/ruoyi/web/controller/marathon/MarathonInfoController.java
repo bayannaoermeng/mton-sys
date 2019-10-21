@@ -2,9 +2,23 @@ package com.ruoyi.web.controller.marathon;
 
 import java.util.List;
 
+import com.google.common.base.Function;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
+import com.marathon.domain.MarathonUser;
+import com.marathon.domain.MrtonProcInfo;
+import com.marathon.domain.MrtonProcUser;
+import com.marathon.qvo.MrtonProcInfoVO;
+import com.marathon.qvo.PrincipalBean;
+import com.marathon.service.IMarathonUserService;
+import com.marathon.service.IMrtonProcInfoService;
+import com.marathon.service.IMrtonProcUserService;
 import com.ruoyi.framework.util.ShiroUtils;
-import com.ruoyi.marathon.domain.Marathon_info;
-import com.ruoyi.marathon.service.IMarathon_infoService;
+import com.marathon.domain.MarathonInfo;
+import com.marathon.service.IMarathonInfoService;
+import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +35,8 @@ import com.ruoyi.common.page.TableDataInfo ;
 import com.ruoyi.common.base.AjaxResult;
 import com.ruoyi.common.utils.ExcelUtil;
 
+import javax.websocket.server.PathParam;
+
 /**
  * 赛事 信息操作处理
  *
@@ -33,7 +49,8 @@ public class MarathonInfoController extends BaseController {
     private String prefix = "marathon/info" ;
 
     @Autowired
-    private IMarathon_infoService marathon_infoService;
+    private IMarathonInfoService marathonInfoService;
+
 
     @RequiresPermissions("marathon:marathon_info:view")
     @GetMapping()
@@ -47,9 +64,9 @@ public class MarathonInfoController extends BaseController {
     @RequiresPermissions("marathon:marathon_info:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Marathon_info marathon_info) {
+    public TableDataInfo list(MarathonInfo marathon_info) {
         startPage();
-        List<Marathon_info> list = marathon_infoService.selectMarathon_infoList(marathon_info);
+        List<MarathonInfo> list = marathonInfoService.selectMarathon_infoList(marathon_info);
         return getDataTable(list);
     }
 
@@ -60,9 +77,9 @@ public class MarathonInfoController extends BaseController {
     @RequiresPermissions("marathon:marathon_info:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(Marathon_info marathon_info) {
-        List<Marathon_info> list = marathon_infoService.selectMarathon_infoList(marathon_info);
-        ExcelUtil<Marathon_info> util = new ExcelUtil<Marathon_info>(Marathon_info. class);
+    public AjaxResult export(MarathonInfo marathon_info) {
+        List<MarathonInfo> list = marathonInfoService.selectMarathon_infoList(marathon_info);
+        ExcelUtil<MarathonInfo> util = new ExcelUtil<MarathonInfo>(MarathonInfo. class);
         return util.exportExcel(list, "marathon_info");
     }
 
@@ -81,10 +98,10 @@ public class MarathonInfoController extends BaseController {
     @Log(title = "赛事" , businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(Marathon_info marathon_info) {
+    public AjaxResult addSave(MarathonInfo marathon_info) {
         marathon_info.setMarathon_creater(String.valueOf(ShiroUtils.getUserId()));
         marathon_info.setMarathon_updater(String.valueOf(ShiroUtils.getUserId()));
-        return toAjax(marathon_infoService.insertMarathon_info(marathon_info));
+        return toAjax(marathonInfoService.insertMarathon_info(marathon_info));
     }
 
     /**
@@ -92,7 +109,7 @@ public class MarathonInfoController extends BaseController {
      */
     @GetMapping("/edit/{marathon_uuid}")
     public String edit(@PathVariable("marathon_uuid") String marathon_uuid, ModelMap mmap) {
-        Marathon_info marathon_info =marathon_infoService.selectMarathon_infoById(marathon_uuid);
+        MarathonInfo marathon_info = marathonInfoService.selectMarathon_infoById(marathon_uuid);
         mmap.put("marathon_info" , marathon_info);
         return prefix + "/edit" ;
     }
@@ -104,9 +121,9 @@ public class MarathonInfoController extends BaseController {
     @Log(title = "赛事" , businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(Marathon_info marathon_info) {
+    public AjaxResult editSave(MarathonInfo marathon_info) {
         marathon_info.setMarathon_updater(String.valueOf(ShiroUtils.getUserId()));
-        return toAjax(marathon_infoService.updateMarathon_info(marathon_info));
+        return toAjax(marathonInfoService.updateMarathon_info(marathon_info));
     }
 
     /**
@@ -117,7 +134,6 @@ public class MarathonInfoController extends BaseController {
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
-        return toAjax(marathon_infoService.deleteMarathon_infoByIds(ids));
+        return toAjax(marathonInfoService.deleteMarathon_infoByIds(ids));
     }
-
 }

@@ -9,6 +9,7 @@ import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.security.Md5Utils;
 import com.ruoyi.system.domain.*;
 import com.ruoyi.system.mapper.*;
+import com.ruoyi.system.mapper.customize.SysUserCustomizeMapper;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -41,15 +42,18 @@ public class SysUserServiceImpl implements ISysUserService {
 
     private final ISysConfigService configService;
 
+    private final SysUserCustomizeMapper sysUserCustomizeMapper;
+
     @Autowired
     public SysUserServiceImpl(SysUserMapper userMapper, SysRoleMapper roleMapper, SysPostMapper postMapper,
-                              SysUserPostMapper userPostMapper, SysUserRoleMapper userRoleMapper, ISysConfigService configService) {
+                              SysUserPostMapper userPostMapper, SysUserRoleMapper userRoleMapper, ISysConfigService configService,SysUserCustomizeMapper sysUserCustomizeMapper) {
         this.userMapper = userMapper;
         this.roleMapper = roleMapper;
         this.postMapper = postMapper;
         this.userPostMapper = userPostMapper;
         this.userRoleMapper = userRoleMapper;
         this.configService = configService;
+        this.sysUserCustomizeMapper=sysUserCustomizeMapper;
     }
 
     /**
@@ -412,5 +416,10 @@ public class SysUserServiceImpl implements ISysUserService {
             throw new BusinessException("不允许修改超级管理员用户");
         }
         return userMapper.updateUser(user);
+    }
+
+    @Override
+    public List<SysUser> selectUserListByIds(List<Integer> lstMrthonUserId) {
+        return sysUserCustomizeMapper.selectUserListByIds(lstMrthonUserId);
     }
 }

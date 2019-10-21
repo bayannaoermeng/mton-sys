@@ -51,7 +51,7 @@ public class GenUtils {
         List<ColumnInfo> columsList = new ArrayList<>();
         for (ColumnInfo column : columns) {
             // 列名转换成Java属性名
-            String attrName = StrUtil.upperFirst(StrUtil.toUnderlineCase(column.getColumnName()));
+            String attrName = StrUtil.upperFirst(StrUtil.toCamelCase(column.getColumnName()));
             column.setAttrName(attrName);
             column.setAttrname(StrUtil.lowerFirst(attrName));
             column.setExtra(column.getExtra());
@@ -103,7 +103,7 @@ public class GenUtils {
         templates.add("vm/html/list.html.vm");
         templates.add("vm/html/add.html.vm");
         templates.add("vm/html/edit.html.vm");
-        templates.add("vm/sql/sql.vm");
+//        templates.add("vm/sql/sql.vm");
         return templates;
     }
 
@@ -117,7 +117,7 @@ public class GenUtils {
         if (StrUtil.isNotEmpty(Global.getTablePrefix())) {
             tableName = tableName.replace(Global.getTablePrefix(), "");
         }
-        return StrUtil.upperFirst(StrUtil.toUnderlineCase(tableName));
+        return StrUtil.upperFirst(StrUtil.toCamelCase(tableName));
     }
 
     /**

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.marathon.mapper.MrtonProcInfoMapper">
+
+    <resultMap type="MrtonProcInfo" id="MrtonProcInfoResult">
+        <result property="id" column="id"/>
+        <result property="marathonId" column="marathon_id"/>
+        <result property="parentProcId" column="parent_proc_id"/>
+        <result property="procId" column="proc_id"/>
+        <result property="customize" column="customize"/>
+        <result property="procName" column="proc_name"/>
+        <result property="planStarttime" column="plan_starttime"/>
+        <result property="planEndtime" column="plan_endtime"/>
+        <result property="realStarttime" column="real_starttime"/>
+        <result property="realEndtime" column="real_endtime"/>
+        <result property="fee" column="fee"/>
+        <result property="status" column="status"/>
+        <result property="reserve1" column="reserve1"/>
+        <result property="reserve2" column="reserve2"/>
+        <result property="reserve3" column="reserve3"/>
+    </resultMap>
+
+    <sql id="selectMrtonProcInfoVo">
+        select id, marathon_id, parent_proc_id, proc_id, customize, proc_name, plan_starttime, plan_endtime, real_starttime, real_endtime, fee, status, reserve1, reserve2, reserve3 from mrton_proc_info
+    </sql>
+
+    <select id="selectMrtonProcInfoList" parameterType="MrtonProcInfo" resultMap="MrtonProcInfoResult">
+        <include refid="selectMrtonProcInfoVo"/>
+        <where>
+            <if test="id != null  and id != '' ">and id = #{id}
+            </if>
+            <if test="marathonId != null  and marathonId != '' ">and marathon_id = #{marathonId}
+            </if>
+            <if test="parentProcId != null  and parentProcId != '' ">and parent_proc_id = #{parentProcId}
+            </if>
+            <if test="procId != null  and procId != '' ">and proc_id = #{procId}
+            </if>
+            <if test="customize != null ">and customize = #{customize}
+            </if>
+            <if test="procName != null  and procName != '' ">and proc_name = #{procName}
+            </if>
+            <if test="planStarttime != null ">and plan_starttime = #{planStarttime}
+            </if>
+            <if test="planEndtime != null ">and plan_endtime = #{planEndtime}
+            </if>
+            <if test="realStarttime != null ">and real_starttime = #{realStarttime}
+            </if>
+            <if test="realEndtime != null ">and real_endtime = #{realEndtime}
+            </if>
+            <if test="fee != null ">and fee = #{fee}
+            </if>
+            <if test="status != null ">and status = #{status}
+            </if>
+            <if test="reserve1 != null  and reserve1 != '' ">and reserve1 = #{reserve1}
+            </if>
+            <if test="reserve2 != null  and reserve2 != '' ">and reserve2 = #{reserve2}
+            </if>
+            <if test="reserve3 != null  and reserve3 != '' ">and reserve3 = #{reserve3}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectMrtonProcInfoById" parameterType="String" resultMap="MrtonProcInfoResult">
+        <include refid="selectMrtonProcInfoVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMrtonProcInfo" parameterType="MrtonProcInfo">
+        insert into mrton_proc_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''  ">id,
+            </if>
+            <if test="marathonId != null  and marathonId != ''  ">marathon_id,
+            </if>
+            <if test="parentProcId != null  and parentProcId != ''  ">parent_proc_id,
+            </if>
+            <if test="procId != null  and procId != ''  ">proc_id,
+            </if>
+            <if test="customize != null  ">customize,
+            </if>
+            <if test="procName != null  and procName != ''  ">proc_name,
+            </if>
+            <if test="planStarttime != null  ">plan_starttime,
+            </if>
+            <if test="planEndtime != null  ">plan_endtime,
+            </if>
+            <if test="realStarttime != null  ">real_starttime,
+            </if>
+            <if test="realEndtime != null  ">real_endtime,
+            </if>
+            <if test="fee != null  ">fee,
+            </if>
+            <if test="status != null  ">status,
+            </if>
+            <if test="reserve1 != null  and reserve1 != ''  ">reserve1,
+            </if>
+            <if test="reserve2 != null  and reserve2 != ''  ">reserve2,
+            </if>
+            <if test="reserve3 != null  and reserve3 != ''  ">reserve3,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''  ">#{id},
+            </if>
+            <if test="marathonId != null  and marathonId != ''  ">#{marathonId},
+            </if>
+            <if test="parentProcId != null  and parentProcId != ''  ">#{parentProcId},
+            </if>
+            <if test="procId != null  and procId != ''  ">#{procId},
+            </if>
+            <if test="customize != null  ">#{customize},
+            </if>
+            <if test="procName != null  and procName != ''  ">#{procName},
+            </if>
+            <if test="planStarttime != null  ">#{planStarttime},
+            </if>
+            <if test="planEndtime != null  ">#{planEndtime},
+            </if>
+            <if test="realStarttime != null  ">#{realStarttime},
+            </if>
+            <if test="realEndtime != null  ">#{realEndtime},
+            </if>
+            <if test="fee != null  ">#{fee},
+            </if>
+            <if test="status != null  ">#{status},
+            </if>
+            <if test="reserve1 != null  and reserve1 != ''  ">#{reserve1},
+            </if>
+            <if test="reserve2 != null  and reserve2 != ''  ">#{reserve2},
+            </if>
+            <if test="reserve3 != null  and reserve3 != ''  ">#{reserve3},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateMrtonProcInfo" parameterType="MrtonProcInfo">
+        update mrton_proc_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="marathonId != null  and marathonId != ''  ">marathon_id = #{marathonId},
+            </if>
+            <if test="parentProcId != null  and parentProcId != ''  ">parent_proc_id = #{parentProcId},
+            </if>
+            <if test="procId != null  and procId != ''  ">proc_id = #{procId},
+            </if>
+            <if test="customize != null  ">customize = #{customize},
+            </if>
+            <if test="procName != null  and procName != ''  ">proc_name = #{procName},
+            </if>
+            <if test="planStarttime != null  ">plan_starttime = #{planStarttime},
+            </if>
+            <if test="planEndtime != null  ">plan_endtime = #{planEndtime},
+            </if>
+            <if test="realStarttime != null  ">real_starttime = #{realStarttime},
+            </if>
+            <if test="realEndtime != null  ">real_endtime = #{realEndtime},
+            </if>
+            <if test="fee != null  ">fee = #{fee},
+            </if>
+            <if test="status != null  ">status = #{status},
+            </if>
+            <if test="reserve1 != null  and reserve1 != ''  ">reserve1 = #{reserve1},
+            </if>
+            <if test="reserve2 != null  and reserve2 != ''  ">reserve2 = #{reserve2},
+            </if>
+            <if test="reserve3 != null  and reserve3 != ''  ">reserve3 = #{reserve3},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMrtonProcInfoById" parameterType="String">
+        delete from mrton_proc_info where id = #{id}
+    </delete>
+
+    <delete id="deleteMrtonProcInfoByIds" parameterType="String">
+        delete from mrton_proc_info where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

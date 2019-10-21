@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.marathon.mapper.MrtonProcUserMapper">
+
+    <resultMap type="MrtonProcUser" id="MrtonProcUserResult">
+        <result property="id" column="id"/>
+        <result property="mrtonId" column="mrton_id"/>
+        <result property="parentProcId" column="parent_proc_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="role" column="role"/>
+        <result property="reserve1" column="reserve1"/>
+    </resultMap>
+
+    <sql id="selectMrtonProcUserVo">
+        select id, mrton_id, parent_proc_id, user_id, role, reserve1 from mrton_proc_user
+    </sql>
+
+    <select id="selectMrtonProcUserList" parameterType="MrtonProcUser" resultMap="MrtonProcUserResult">
+        <include refid="selectMrtonProcUserVo"/>
+        <where>
+            <if test="id != null ">and id = #{id}
+            </if>
+            <if test="mrtonId != null  and mrtonId != '' ">and mrton_id = #{mrtonId}
+            </if>
+            <if test="parentProcId != null  and parentProcId != '' ">and parent_proc_id = #{parentProcId}
+            </if>
+            <if test="userId != null ">and user_id = #{userId}
+            </if>
+            <if test="role != null  and role != '' ">and role = #{role}
+            </if>
+            <if test="reserve1 != null  and reserve1 != '' ">and reserve1 = #{reserve1}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectMrtonProcUserById" parameterType="Integer" resultMap="MrtonProcUserResult">
+        <include refid="selectMrtonProcUserVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMrtonProcUser" parameterType="MrtonProcUser" useGeneratedKeys="true" keyProperty="id">
+        insert into mrton_proc_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mrtonId != null  and mrtonId != ''  ">mrton_id,
+            </if>
+            <if test="parentProcId != null  and parentProcId != ''  ">parent_proc_id,
+            </if>
+            <if test="userId != null  ">user_id,
+            </if>
+            <if test="role != null  and role != ''  ">role,
+            </if>
+            <if test="reserve1 != null  and reserve1 != ''  ">reserve1,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mrtonId != null  and mrtonId != ''  ">#{mrtonId},
+            </if>
+            <if test="parentProcId != null  and parentProcId != ''  ">#{parentProcId},
+            </if>
+            <if test="userId != null  ">#{userId},
+            </if>
+            <if test="role != null  and role != ''  ">#{role},
+            </if>
+            <if test="reserve1 != null  and reserve1 != ''  ">#{reserve1},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateMrtonProcUser" parameterType="MrtonProcUser">
+        update mrton_proc_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mrtonId != null  and mrtonId != ''  ">mrton_id = #{mrtonId},
+            </if>
+            <if test="parentProcId != null  and parentProcId != ''  ">parent_proc_id = #{parentProcId},
+            </if>
+            <if test="userId != null  ">user_id = #{userId},
+            </if>
+            <if test="role != null  and role != ''  ">role = #{role},
+            </if>
+            <if test="reserve1 != null  and reserve1 != ''  ">reserve1 = #{reserve1},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMrtonProcUserById" parameterType="Integer">
+        delete from mrton_proc_user where id = #{id}
+    </delete>
+
+    <delete id="deleteMrtonProcUserByIds" parameterType="String">
+        delete from mrton_proc_user where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

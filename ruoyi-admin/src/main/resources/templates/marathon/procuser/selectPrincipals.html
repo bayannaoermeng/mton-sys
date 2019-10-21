@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('分配任务')" />
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal" id="form-selectPrincipals">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">岗位：</label>
+						<div class="col-sm-9">
+							<input th:each="user:${principals}"  type="checkbox"  th:value="${user.userId}" th:checked="${user.checked}" th:text="${user.userName}">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-offset-5 col-sm-10">
+					<button type="button" class="btn btn-sm btn-primary" onclick="setPrincipals()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+				</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+		$(function() {
+		});
+
+		function setPrincipals() {
+			var procId=[[${procId}]];
+			var mrtonId=[[${mrtonId}]];
+
+			var principals = [];
+			$('#form-selectPrincipals > div:nth-child(1) > div > div > div > input[type=checkbox]:checked').each(function(i){
+				principals.push($(this).val());
+			});
+			var principals_str=principals.join();
+
+			$.ajax({
+				type : "POST",
+				url : ctx + "marathon/procuser/savaPrincipals",
+				data:{
+					"mrtonId":mrtonId,
+					"parentProcId": procId,
+					"principals": principals_str
+				},
+				async : true,
+				error : function(request) {
+					$.modal.alertError("系统错误");
+				},
+				success : function(data) {
+					$.operate.successCallback(data);
+				}
+			});
+		}
+
+	</script>
+</body>
+</html>

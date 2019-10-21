@@ -170,4 +170,6 @@ public interface ISysUserService {
      * @return 结果
      */
     int changeStatus(SysUser user);
+
+    List<SysUser> selectUserListByIds(List<Integer> lstMrthonUserId);
 }

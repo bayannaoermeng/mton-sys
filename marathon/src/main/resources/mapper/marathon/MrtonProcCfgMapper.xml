@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.marathon.mapper.MrtonProcCfgMapper">
+
+    <resultMap type="MrtonProcCfg" id="MrtonProcCfgResult">
+                    <result property="procId" column="proc_id"/>
+                    <result property="procName" column="proc_name"/>
+                    <result property="procSeq" column="proc_seq"/>
+                    <result property="parentProcId" column="parent_proc_id"/>
+                    <result property="comparativelyToMrton" column="comparatively_to_mrton"/>
+                    <result property="starttimeOffset" column="starttime_offset"/>
+                    <result property="endtimeOffset" column="endtime_offset"/>
+                    <result property="procContent" column="proc_content"/>
+                    <result property="procDescri" column="proc_descri"/>
+                    <result property="attachResourceId" column="attach_resource_id"/>
+                    <result property="procStatus" column="proc_status"/>
+                    <result property="reserved" column="reserved"/>
+                    <result property="delFlag" column="del_flag"/>
+            </resultMap>
+
+    <sql id="selectMrtonProcCfgVo">
+        select proc_id, proc_name, proc_seq, parent_proc_id, comparatively_to_mrton, starttime_offset, endtime_offset, proc_content, proc_descri, attach_resource_id, proc_status, reserved, del_flag from mrton_proc_cfg
+    </sql>
+
+    <select id="selectMrtonProcCfgList" parameterType="MrtonProcCfg" resultMap="MrtonProcCfgResult">
+        <include refid="selectMrtonProcCfgVo"/>
+        <where>
+                            <if test="procId != null  and procId != '' ">and proc_id = #{procId}
+                </if>
+                            <if test="procName != null  and procName != '' ">and proc_name = #{procName}
+                </if>
+                            <if test="procSeq != null ">and proc_seq = #{procSeq}
+                </if>
+                            <if test="parentProcId != null  and parentProcId != '' ">and parent_proc_id = #{parentProcId}
+                </if>
+                            <if test="comparativelyToMrton != null ">and comparatively_to_mrton = #{comparativelyToMrton}
+                </if>
+                            <if test="starttimeOffset != null ">and starttime_offset = #{starttimeOffset}
+                </if>
+                            <if test="endtimeOffset != null ">and endtime_offset = #{endtimeOffset}
+                </if>
+                            <if test="procContent != null  and procContent != '' ">and proc_content = #{procContent}
+                </if>
+                            <if test="procDescri != null  and procDescri != '' ">and proc_descri = #{procDescri}
+                </if>
+                            <if test="attachResourceId != null  and attachResourceId != '' ">and attach_resource_id = #{attachResourceId}
+                </if>
+                            <if test="procStatus != null ">and proc_status = #{procStatus}
+                </if>
+                            <if test="reserved != null  and reserved != '' ">and reserved = #{reserved}
+                </if>
+                            <if test="delFlag != null ">and del_flag = #{delFlag}
+                </if>
+                    </where>
+    </select>
+
+    <select id="selectMrtonProcCfgById" parameterType="String" resultMap="MrtonProcCfgResult">
+        <include refid="selectMrtonProcCfgVo"/>
+        where proc_id = #{procId}
+    </select>
+
+    <insert id="insertMrtonProcCfg" parameterType="MrtonProcCfg">
+        insert into mrton_proc_cfg
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                                                <if test="procId != null  and procId != ''  ">proc_id,
+                    </if>
+                                                                <if test="procName != null  and procName != ''  ">proc_name,
+                    </if>
+                                                                <if test="procSeq != null  ">proc_seq,
+                    </if>
+                                                                <if test="parentProcId != null  and parentProcId != ''  ">parent_proc_id,
+                    </if>
+                                                                <if test="comparativelyToMrton != null  ">comparatively_to_mrton,
+                    </if>
+                                                                <if test="starttimeOffset != null  ">starttime_offset,
+                    </if>
+                                                                <if test="endtimeOffset != null  ">endtime_offset,
+                    </if>
+                                                                <if test="procContent != null  and procContent != ''  ">proc_content,
+                    </if>
+                                                                <if test="procDescri != null  and procDescri != ''  ">proc_descri,
+                    </if>
+                                                                <if test="attachResourceId != null  and attachResourceId != ''  ">attach_resource_id,
+                    </if>
+                                                                <if test="procStatus != null  ">proc_status,
+                    </if>
+                                                                <if test="reserved != null  and reserved != ''  ">reserved,
+                    </if>
+                                                                <if test="delFlag != null  ">del_flag,
+                    </if>
+                                    </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                                                <if test="procId != null  and procId != ''  ">#{procId},
+                    </if>
+                                                                <if test="procName != null  and procName != ''  ">#{procName},
+                    </if>
+                                                                <if test="procSeq != null  ">#{procSeq},
+                    </if>
+                                                                <if test="parentProcId != null  and parentProcId != ''  ">#{parentProcId},
+                    </if>
+                                                                <if test="comparativelyToMrton != null  ">#{comparativelyToMrton},
+                    </if>
+                                                                <if test="starttimeOffset != null  ">#{starttimeOffset},
+                    </if>
+                                                                <if test="endtimeOffset != null  ">#{endtimeOffset},
+                    </if>
+                                                                <if test="procContent != null  and procContent != ''  ">#{procContent},
+                    </if>
+                                                                <if test="procDescri != null  and procDescri != ''  ">#{procDescri},
+                    </if>
+                                                                <if test="attachResourceId != null  and attachResourceId != ''  ">#{attachResourceId},
+                    </if>
+                                                                <if test="procStatus != null  ">#{procStatus},
+                    </if>
+                                                                <if test="reserved != null  and reserved != ''  ">#{reserved},
+                    </if>
+                                                                <if test="delFlag != null  ">#{delFlag},
+                    </if>
+                                    </trim>
+    </insert>
+
+    <update id="updateMrtonProcCfg" parameterType="MrtonProcCfg">
+        update mrton_proc_cfg
+        <trim prefix="SET" suffixOverrides=",">
+                                                                            <if test="procName != null  and procName != ''  ">proc_name = #{procName},
+                    </if>
+                                                                <if test="procSeq != null  ">proc_seq = #{procSeq},
+                    </if>
+                                                                <if test="parentProcId != null  and parentProcId != ''  ">parent_proc_id = #{parentProcId},
+                    </if>
+                                                                <if test="comparativelyToMrton != null  ">comparatively_to_mrton = #{comparativelyToMrton},
+                    </if>
+                                                                <if test="starttimeOffset != null  ">starttime_offset = #{starttimeOffset},
+                    </if>
+                                                                <if test="endtimeOffset != null  ">endtime_offset = #{endtimeOffset},
+                    </if>
+                                                                <if test="procContent != null  and procContent != ''  ">proc_content = #{procContent},
+                    </if>
+                                                                <if test="procDescri != null  and procDescri != ''  ">proc_descri = #{procDescri},
+                    </if>
+                                                                <if test="attachResourceId != null  and attachResourceId != ''  ">attach_resource_id = #{attachResourceId},
+                    </if>
+                                                                <if test="procStatus != null  ">proc_status = #{procStatus},
+                    </if>
+                                                                <if test="reserved != null  and reserved != ''  ">reserved = #{reserved},
+                    </if>
+                                                                <if test="delFlag != null  ">del_flag = #{delFlag},
+                    </if>
+                                    </trim>
+        where proc_id = #{procId}
+    </update>
+
+    <delete id="deleteMrtonProcCfgById" parameterType="String">
+        delete from mrton_proc_cfg where proc_id = #{procId}
+    </delete>
+
+    <delete id="deleteMrtonProcCfgByIds" parameterType="String">
+        delete from mrton_proc_cfg where proc_id in
+        <foreach item="procId" collection="array" open="(" separator="," close=")">
+            #{procId}
+        </foreach>
+    </delete>
+
+</mapper>

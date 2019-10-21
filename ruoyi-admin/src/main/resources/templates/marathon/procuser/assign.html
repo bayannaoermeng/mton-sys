@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('分配任务')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-tree-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+		var prefix = ctx + "marathon/procuser";
+		var mrtonId = [[${marathonId}]];
+
+		$(function() {
+			var options = {
+				code: "mrtonProcId",
+				parentCode: "parentProcId",
+				uniqueId: "mrtonProcId",
+				url: prefix + "/proclist/"+mrtonId,
+				modalName: "分配任务",
+				columns: [
+					{
+						field: 'procName',
+						title: '步骤名称',
+						align: "left"
+					},
+					{
+						field: 'procSeq',
+						title: '排序',
+						align: "left"
+					},
+					{
+						field: 'planStarttime',
+						title: '计划开始时间',
+						align: "left"
+					},
+					{
+						field: 'planEndtime',
+						title: '计划结束时间',
+						align: "left"
+					},
+					{
+						field: 'principals',
+						title: '责任人',
+						align: "left"
+					},
+					{
+						title: '操作',
+						align: 'left',
+						formatter: function(value, row, index) {
+							if (row.parentProcId != 0) {
+								var actions = [];
+								actions.push('<a class="btn btn-success btn-xs ' + true + '" href="javascript:void(0)" onclick="selectPrincipals(\'' + row.mrtonProcId + '\')"><i class="fa fa-edit"></i>分配人员</a>');
+								return actions.join('');
+							} else {
+								return "";
+							}
+						}
+					}]
+			};
+			$.treeTable.init(options);
+		});
+
+		function selectPrincipals(procId) {
+			var options = {
+				title: '人员选择',
+				width: "380",
+				url: prefix + "/selectPrincipals/?mrtonId="+mrtonId+"&procId=" + procId,
+			};
+			$.modal.openOptions(options);
+		}
+	</script>
+</body>
+</html>

@@ -21,7 +21,6 @@ ${AnsiColor.BRIGHT_YELLOW}
 **	   pagehelper-spring-boot-starter .......................... 1.2.10
 **
 **
-**	More: https://github.com/lerry903/RuoYi
 **
 ****************************************************************************************
 ${AnsiColor.DEFAULT}

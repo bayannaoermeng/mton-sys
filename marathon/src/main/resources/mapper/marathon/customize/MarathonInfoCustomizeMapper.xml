@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.marathon.mapper.customize.MrtProcInfoCustomizeMapper">
+
+    <select id="selectMrtProcs" resultType="com.marathon.qvo.MrtonProcInfoVO">
+        SELECT
+            info.id AS mrtonProcId,
+            cfg.proc_id AS procId,
+            cfg.proc_name AS procName,
+            cfg.proc_seq AS procSeq,
+            cfg.parent_proc_id AS parentProcId,
+            plan_starttime AS planStarttime,
+            plan_endtime AS planEndtime,
+            GROUP_CONCAT(userr.user_name) AS principals
+        FROM
+            mrton_proc_cfg cfg
+        INNER JOIN `mrton_proc_info` info ON cfg.proc_id = info.proc_id
+        AND info.marathon_id = #{marathonId}
+        LEFT JOIN mrton_proc_user mpuser ON info.id = mpuser.proc_id
+        LEFT JOIN sys_user userr ON mpuser.user_id = userr.user_id
+        WHERE
+            cfg.parent_proc_id = #{procId}
+        GROUP BY
+            info.id
+        ORDER BY
+            proc_seq
+    </select>
+
+    <select id="selectMyMrtonProc" resultType="com.marathon.qvo.MyMrtonProcVO">
+        SELECT
+            procinfo.id AS mrtonProcId,
+            cfg1.proc_name AS procName,
+            cfg1.proc_seq AS procSeq,
+            procinfo.plan_starttime AS planStarttime,
+            procinfo.plan_endtime AS planEndtime,
+            procinfo.real_starttime AS realStarttime,
+            procinfo.real_endtime AS realEndtime,
+            procinfo.`status` AS STATUS
+        FROM
+            mrton_proc_cfg cfg
+        LEFT JOIN mrton_proc_cfg cfg1 ON cfg.proc_id = cfg1.parent_proc_id
+        LEFT JOIN mrton_proc_info procinfo ON cfg1.proc_id = procinfo.proc_id
+        INNER JOIN mrton_proc_user procuser ON procuser.parent_proc_id = cfg.proc_id
+        AND procuser.user_id = #{userId} and procuser.mrton_id = #{marathonId}
+        WHERE
+            cfg.proc_name = #{procName}
+        ORDER BY cfg1.proc_seq
+    </select>
+    <select id="selectMyMrton" resultMap="com.marathon.mapper.MarathonInfoMapper.Marathon_infoResult">
+        SELECT DISTINCT
+            mrton.marathon_uuid,
+            marathon_name
+        FROM
+            mrton_proc_cfg cfg
+        INNER JOIN mrton_proc_user procuser ON procuser.parent_proc_id = cfg.proc_id
+        AND procuser.user_id = #{userId}
+        INNER JOIN marathon_info mrton ON procuser.mrton_id = mrton.marathon_uuid
+        WHERE
+            cfg.proc_name = #{procName}
+    </select>
+    <select id="getMrtonMenu" resultType="com.marathon.qvo.MrthonMenuBean">
+        SELECT
+            mrton.marathon_uuid as marathonId,
+            mrton.marathon_name as mrtonName ,
+            cfg.proc_name as procName,
+            CONCAT(mrton.marathon_name,cfg.proc_name) as mrthonMenuName
+        FROM
+            mrton_proc_cfg cfg
+        INNER JOIN mrton_proc_user mpuser ON cfg.proc_id = mpuser.parent_proc_id
+        AND user_id = #{userId}
+        INNER JOIN marathon_info mrton ON mpuser.mrton_id = mrton.marathon_uuid
+        WHERE
+            cfg.parent_proc_id = "0"
+    </select>
+</mapper>
