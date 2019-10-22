@@ -82,5 +82,19 @@ public interface IMrtonProcInfoService {
      */
     List<MyMrtonProcVO> selectMyMrtonProc(SysUser user, MrtonProcEnum mrtonProcEnum, String marathonId);
 
+
     void buildMrtonMenu(SysUser sysUser, List<SysMenu> menus);
+
+    /**
+     * 保存自定义赛事任务
+     * @param mrtonProcInfo
+     */
+    void addOrEditSave(MrtonProcInfo mrtonProcInfo);
+
+    /**
+     * 查询赛事任务
+     * @param mrtonprocId
+     * @return
+     */
+    MrtonProcInfo queryMrtonInfoById(String mrtonprocId);
 }

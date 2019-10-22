@@ -25,17 +25,8 @@
 			</div>
 
 			<div class="btn-group-sm" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="marathon:mrtonProcInfo:add">
+				<a class="btn btn-success" id="addcustomizeproc" shiro:hasPermission="marathon:mrtonProcInfo:add">
 					<i class="fa fa-plus"></i> 添加
-				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="marathon:mrtonProcInfo:edit">
-					<i class="fa fa-edit"></i> 修改
-				</a>
-				<a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="marathon:mrtonProcInfo:remove">
-					<i class="fa fa-remove"></i> 删除
-				</a>
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="marathon:mrtonProcInfo:export">
-					<i class="fa fa-download"></i> 导出
 				</a>
 			</div>
 			<div class="col-sm-12 select-table table-striped">
@@ -48,15 +39,23 @@
         var editFlag = [[${@permission.hasPermi('marathon:marathon_info:edit')}]];
         var removeFlag = [[${@permission.hasPermi('marathon:marathon_info:remove')}]];
         var prefix = ctx + "marathon/mrtonproc";
+		var mrtonId = [[${marathonId}]];
 
         $(function() {
             initTable()
+
+			$("#addcustomizeproc").click(function () {
+				$.operate.add(mrtonId);
+			})
         });
 
         function initTable() {
 			var options = {
 				url: prefix + "/mymrtonproc",
 				modalName: "安保",
+				createUrl: ctx + "mrtonproc/safety/add/{id}",
+				updateUrl: ctx + "mrtonproc/safety/edit/{id}",
+				removeUrl: ctx + "mrtonproc/safety/remove/{id}",
 				showExport: true,
 				columns: [
 					{
@@ -107,6 +106,9 @@
 							actions.push('<a class="btn btn-success btn-xs" href="#" onclick="$.operate.edit(\'' + row.mrtonProcId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
 							actions.push('<a class="btn btn-info btn-xs" href="#" onclick="start(\'' + row.mrtonProcId + '\')"><i class="fa fa-search"></i>开始</a> ');
 							actions.push('<a class="btn btn-info btn-xs" href="#" onclick="finish(\'' + row.mrtonProcId + '\')"><i class="fa fa-remove"></i>结束</a>');
+							if(row.customize == 1){
+								actions.push('<a class="btn btn-danger btn-xs " href="javascript:void(0)" onclick="$.operate.remove(\'' + row.mrtonProcId + '\')"><i class="fa fa-remove"></i>删除</a>')
+							}
 							return actions.join('');
 						}
 					}]
@@ -121,7 +123,7 @@
 		}
 
 		function finish(mrtonProcId) {
-			$.get(ctx + "marathon/mrtonproc//finish/"+mrtonProcId, function(data){
+			$.get(ctx + "marathon/mrtonproc/finish/"+mrtonProcId, function(data){
 				$.table.search();
 			})
 		}

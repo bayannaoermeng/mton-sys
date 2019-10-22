@@ -2,6 +2,7 @@ package com.marathon.mapper.customize;
 
 import com.marathon.MrthonMenuEnum;
 import com.marathon.domain.MarathonInfo;
+import com.marathon.domain.MrtonProcInfo;
 import com.marathon.qvo.MrthonMenuBean;
 import com.marathon.qvo.MrtonProcInfoVO;
 import com.marathon.qvo.MyMrtonProcVO;
@@ -24,5 +25,7 @@ public interface MrtProcInfoCustomizeMapper {
     List<MarathonInfo> selectMyMrton(@Param("userId") Long userId, @Param("procName") String name);
 
     List<MrthonMenuBean> getMrtonMenu(Long userId);
+
+    MrtonProcInfo queryMrtonInfoById(String mrtonprocId);
 }
 

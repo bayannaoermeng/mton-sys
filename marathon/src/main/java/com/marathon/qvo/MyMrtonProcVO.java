@@ -40,6 +40,9 @@ public class MyMrtonProcVO extends BaseEntity {
     @ApiModelProperty(value = "状态")
     private Integer status;
 
+    @ApiModelProperty(value = "是否自定义任务")
+    private Integer customize;
+
     @ApiModelProperty(value = "状态中文")
     private String statusStr;
 

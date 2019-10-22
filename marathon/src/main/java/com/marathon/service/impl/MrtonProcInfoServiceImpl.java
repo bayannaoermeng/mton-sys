@@ -1,9 +1,13 @@
 package com.marathon.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import cn.hutool.core.convert.Convert;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.marathon.MrthonMenuEnum;
 import com.marathon.MrtonConstants;
@@ -20,6 +24,7 @@ import com.ruoyi.common.utils.DateUtil;
 import com.ruoyi.system.domain.SysMenu;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.marathon.mapper.MrtonProcInfoMapper;
@@ -32,6 +37,7 @@ import com.marathon.service.IMrtonProcInfoService;
  * @author cuigq
  * @date 2019-10-08
  */
+@Slf4j
 @Service
 public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
     @Autowired
@@ -42,9 +48,6 @@ public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
 
     @Autowired
     private IMrtonProcCfgService mrtonProcCfgService;
-
-    @Autowired
-    private ISysUserService userService;
 
     /**
      * 查询赛事过程关系信息
@@ -114,16 +117,7 @@ public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
             parent.setProcId(parentCfg.getProcId());
             parent.setProcSeq(parentCfg.getProcSeq());
             parent.setProcName(parentCfg.getProcName());
-
             result.add(parent);
-
-//            List<MrtonProcInfoVO> lstChild = mrtProcInfoCustomizeMapper.selectMrtProcs(parentCfg.getProcId(), marathonId);
-//
-//            lstChild.forEach(child -> {
-//                child.getParams().put("planStarttimeStr", DateUtil.formatDateTime(child.getPlanStarttime()));
-//               child.getParams().put("planEndtimeStr",DateUtil.formatDateTime(child.getPlanEndtime()));
-//            });
-//            result.addAll(lstChild);
         }
         return result;
     }
@@ -186,18 +180,46 @@ public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
         }
     }
 
-    /**
-     * 删除空的目录
-     * @param menu
-     * @param child
-     */
-    private void delEmptyMenu(SysMenu menu, SysMenu child) {
-        Iterator<SysMenu> iterator=menu.getChildren().iterator();
-        while (iterator.hasNext()){
-            SysMenu sysMenu=iterator.next();
-            if(sysMenu.equals(child)){
-                iterator.remove();
+    @Override
+    public void addOrEditSave(MrtonProcInfo mrtonProcInfo) {
+        mrtonProcInfo.setCustomize(1);
+        mrtonProcInfo.setStatus(MrtonProcStatusEnum.STATUS_NEW.getKey());
+
+        String startTime = (String) mrtonProcInfo.getParams().get("planStarttime");
+        try {
+            if (!Strings.isNullOrEmpty(startTime)) {
+                mrtonProcInfo.setPlanStarttime(new SimpleDateFormat("yyyy-MM-dd").parse(startTime));
+            }
+
+            String endTime = (String) mrtonProcInfo.getParams().get("planEndtime");
+            if (!Strings.isNullOrEmpty(endTime)) {
+                mrtonProcInfo.setPlanEndtime(new SimpleDateFormat("yyyy-MM-dd").parse(endTime));
+            }
+        } catch (ParseException e) {
+            log.error("时间格式转换失败！",e);
+        }
+
+        if(Strings.isNullOrEmpty(mrtonProcInfo.getId())){
+            mrtonProcInfo.setId(UUID.randomUUID().toString());
+            this.insertMrtonProcInfo(mrtonProcInfo);
+        }else{
+            this.updateMrtonProcInfo(mrtonProcInfo);
+        }
+    }
+
+    @Override
+    public MrtonProcInfo queryMrtonInfoById(String mrtonprocId) {
+        MrtonProcInfo mrtonProcInfo= mrtProcInfoCustomizeMapper.queryMrtonInfoById(mrtonprocId);
+
+        if(mrtonProcInfo!=null){
+            if (mrtonProcInfo.getPlanStarttime() != null) {
+                mrtonProcInfo.getParams().put("planStarttime", new SimpleDateFormat("yyyy-MM-dd").format(mrtonProcInfo.getPlanStarttime()));
+            }
+            if (mrtonProcInfo.getPlanEndtime() != null) {
+                mrtonProcInfo.getParams().put("planEndtime", new SimpleDateFormat("yyyy-MM-dd").format(mrtonProcInfo.getPlanEndtime()));
             }
         }
+
+        return mrtonProcInfo;
     }
 }

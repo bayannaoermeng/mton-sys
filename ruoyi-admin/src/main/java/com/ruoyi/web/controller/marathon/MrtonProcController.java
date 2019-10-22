@@ -33,17 +33,9 @@ import java.util.List;
 @RequestMapping("marathon/mrtonproc")
 public class MrtonProcController extends BaseController {
 
-    private String prefix = "marathon/procedure" ;
-
     @Autowired
     private IMrtonProcInfoService mrtonProcInfoService;
 
-
-    @RequestMapping("/safetyprotection/{marathonId}")
-    public String safety(@PathVariable("marathonId") String marathonId, ModelMap modelMap){
-        modelMap.put("marathonId",marathonId);
-        return prefix + "/safetyprotection";
-    }
 
     /**
      * 根据赛事过程序号查询我的赛事列表

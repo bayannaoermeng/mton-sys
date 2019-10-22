@@ -29,24 +29,35 @@
     </select>
 
     <select id="selectMyMrtonProc" resultType="com.marathon.qvo.MyMrtonProcVO">
-        SELECT
+         SELECT
             procinfo.id AS mrtonProcId,
+            (
+                CASE
+                WHEN customize = 1 THEN
+                    procinfo.proc_name
+                ELSE
+                    cfg1.proc_name
+                END
+            ) AS procName,
             cfg1.proc_name AS procName,
             cfg1.proc_seq AS procSeq,
+            procinfo.customize as customize,
             procinfo.plan_starttime AS planStarttime,
             procinfo.plan_endtime AS planEndtime,
             procinfo.real_starttime AS realStarttime,
             procinfo.real_endtime AS realEndtime,
             procinfo.`status` AS STATUS
         FROM
-            mrton_proc_cfg cfg
-        LEFT JOIN mrton_proc_cfg cfg1 ON cfg.proc_id = cfg1.parent_proc_id
-        LEFT JOIN mrton_proc_info procinfo ON cfg1.proc_id = procinfo.proc_id
-        INNER JOIN mrton_proc_user procuser ON procuser.parent_proc_id = cfg.proc_id
-        AND procuser.user_id = #{userId} and procuser.mrton_id = #{marathonId}
+            mrton_proc_info procinfo
+        INNER JOIN mrton_proc_user procuser ON procuser.mrton_id = procinfo.marathon_id
+        AND procuser.user_id = #{userId}
+        INNER JOIN mrton_proc_cfg cfg ON cfg.proc_id = procinfo.parent_proc_id
+        LEFT JOIN mrton_proc_cfg cfg1 ON cfg1.proc_id = procinfo.proc_id
         WHERE
-            cfg.proc_name = #{procName}
-        ORDER BY cfg1.proc_seq
+            procinfo.marathon_id = #{marathonId}
+        AND cfg.proc_name = #{procName}
+        ORDER BY
+            cfg1.proc_seq
     </select>
     <select id="selectMyMrton" resultMap="com.marathon.mapper.MarathonInfoMapper.Marathon_infoResult">
         SELECT DISTINCT
@@ -73,5 +84,25 @@
         INNER JOIN marathon_info mrton ON mpuser.mrton_id = mrton.marathon_uuid
         WHERE
             cfg.parent_proc_id = "0"
+    </select>
+
+    <select id="queryMrtonInfoById" resultType="com.marathon.domain.MrtonProcInfo">
+        SELECT
+            id,
+            (
+                CASE
+                WHEN customize = 1 THEN
+                    procinfo.proc_name
+                ELSE
+                    config.proc_name
+                END
+            ) AS procName,
+            customize,
+            plan_starttime AS planStarttime,
+            plan_endtime AS planEndtime
+        FROM
+            `mrton_proc_info` procinfo
+        LEFT JOIN mrton_proc_cfg config ON procinfo.proc_id = config.proc_id
+        where id = #{mrtonprocId}
     </select>
 </mapper>
