@@ -106,20 +106,7 @@ public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
 
     @Override
     public List<MrtonProcInfoVO> selectMrtonProcs(String marathonId) {
-        MrtonProcCfg cfg = new MrtonProcCfg();
-        cfg.setParentProcId(MrtonConstants.DEFAULT_PROC_TOP);
-        List<MrtonProcCfg> lstParent = mrtonProcCfgService.selectMrtonProcCfgList(cfg);
-
-        List<MrtonProcInfoVO> result = Lists.newArrayList();
-        for (MrtonProcCfg parentCfg : lstParent) {
-            MrtonProcInfoVO parent = new MrtonProcInfoVO();
-            parent.setMrtonProcId(parentCfg.getProcId());
-            parent.setProcId(parentCfg.getProcId());
-            parent.setProcSeq(parentCfg.getProcSeq());
-            parent.setProcName(parentCfg.getProcName());
-            result.add(parent);
-        }
-        return result;
+        return mrtProcInfoCustomizeMapper.selectMrtProcs(marathonId);
     }
 
     @Override
@@ -157,6 +144,7 @@ public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
                 while (iterator.hasNext()){
                     SysMenu child=iterator.next();
                     String menuName=child.getMenuName();
+                    log.info(menuName);
                     MrthonMenuEnum mrthonMenu=MrthonMenuEnum.getValue(menuName);
                     if(mrthonMenu!=null){
                         if(lstMrtonMenu.size()<=0){
@@ -172,6 +160,10 @@ public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
                                     sysMenu.setTarget("menuItem");
                                     child.getChildren().add(sysMenu);
                                 }
+                            }
+
+                            if(child.getChildren().size() == 0){
+                                iterator.remove();
                             }
                         }
                     }

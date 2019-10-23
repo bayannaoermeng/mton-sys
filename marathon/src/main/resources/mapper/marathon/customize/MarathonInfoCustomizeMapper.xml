@@ -6,26 +6,30 @@
 
     <select id="selectMrtProcs" resultType="com.marathon.qvo.MrtonProcInfoVO">
         SELECT
-            info.id AS mrtonProcId,
-            cfg.proc_id AS procId,
-            cfg.proc_name AS procName,
-            cfg.proc_seq AS procSeq,
-            cfg.parent_proc_id AS parentProcId,
-            plan_starttime AS planStarttime,
-            plan_endtime AS planEndtime,
-            GROUP_CONCAT(userr.user_name) AS principals
+            complex.marathon_id as mrtonId,
+            complex.parent_proc_id as parentProcId,
+            config.proc_name as procName,
+            GROUP_CONCAT(sysuser.user_name) AS principals
         FROM
-            mrton_proc_cfg cfg
-        INNER JOIN `mrton_proc_info` info ON cfg.proc_id = info.proc_id
-        AND info.marathon_id = #{marathonId}
-        LEFT JOIN mrton_proc_user mpuser ON info.id = mpuser.proc_id
-        LEFT JOIN sys_user userr ON mpuser.user_id = userr.user_id
-        WHERE
-            cfg.parent_proc_id = #{procId}
+            (
+                SELECT
+                    mtoninfo.marathon_id,
+                    mtoninfo.parent_proc_id
+                FROM
+                    mrton_proc_info mtoninfo
+                WHERE
+                    mtoninfo.marathon_id = #{marathonId}
+                GROUP BY
+                    mtoninfo.marathon_id,
+                    mtoninfo.parent_proc_id
+            ) complex
+        LEFT JOIN mrton_proc_cfg config ON complex.parent_proc_id = config.proc_id
+        LEFT JOIN mrton_proc_user mtonuser ON complex.marathon_id = mtonuser.mrton_id
+        AND complex.parent_proc_id = mtonuser.parent_proc_id
+        LEFT JOIN sys_user sysuser ON mtonuser.user_id = sysuser.user_id
         GROUP BY
-            info.id
-        ORDER BY
-            proc_seq
+            complex.marathon_id,
+            complex.parent_proc_id
     </select>
 
     <select id="selectMyMrtonProc" resultType="com.marathon.qvo.MyMrtonProcVO">
@@ -50,6 +54,7 @@
         FROM
             mrton_proc_info procinfo
         INNER JOIN mrton_proc_user procuser ON procuser.mrton_id = procinfo.marathon_id
+        AND procinfo.parent_proc_id = procuser.parent_proc_id
         AND procuser.user_id = #{userId}
         INNER JOIN mrton_proc_cfg cfg ON cfg.proc_id = procinfo.parent_proc_id
         LEFT JOIN mrton_proc_cfg cfg1 ON cfg1.proc_id = procinfo.proc_id

@@ -13,26 +13,18 @@ import java.util.Date;
  */
 @Data
 public class MrtonProcInfoVO extends BaseEntity {
-    @ApiModelProperty(value = "唯一ID",name = "martonProcId")
-    private String mrtonProcId;
+    @ApiModelProperty(value = "赛事ID",name = "mrtonId")
+    private String mrtonId;
 
-    @ApiModelProperty(value="步骤ID",name="procId")
-    private String procId;
+    @ApiModelProperty(value="父步骤ID",name="parentProcId")
+    private String parentProcId;
+
 
     @ApiModelProperty(value="步骤名称",name="procName")
     private String procName;
 
     @ApiModelProperty(value="序号，排序使用",name="procSeq")
     private Integer procSeq;
-
-    @ApiModelProperty(value="父步骤ID",name="parentProcId")
-    private String parentProcId;
-
-    @ApiModelProperty(value="计划开始时间",name="planStarttime")
-    private Date planStarttime;
-
-    @ApiModelProperty(value="计划结束时间",name="planEndtime")
-    private Date planEndtime;
 
     @ApiModelProperty(value = "责任人",name = "principals")
     private String principals;

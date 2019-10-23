@@ -89,6 +89,7 @@ public class MrtonProcUserServiceImpl implements IMrtonProcUserService {
         //TODO
         MrtonProcUser user=new MrtonProcUser();
         user.setParentProcId(qo.getParentProcId());
+        user.setMrtonId(qo.getMrtonId());
         List<MrtonProcUser> lstUser=mrtonProcUserMapper.selectMrtonProcUserList(user);
 
         if(!CollectionUtils.isEmpty(lstUser)){

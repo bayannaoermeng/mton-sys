@@ -13,12 +13,11 @@ import java.util.List;
 public interface MrtProcInfoCustomizeMapper {
 
     /**
-     * 根据父任务ID和mrthonId查询任务实例列表
-     * @param procId
+     * 根据mrthonId查询父任务实例列表
      * @param marathonId
      * @return
      */
-    List<MrtonProcInfoVO> selectMrtProcs(@Param("procId") String procId, @Param("marathonId") String marathonId);
+    List<MrtonProcInfoVO> selectMrtProcs(String marathonId);
 
     List<MyMrtonProcVO> selectMyMrtonProc(@Param("userId") Long userId, @Param("procName") String name, @Param("marathonId") String marathonId);
 

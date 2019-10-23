@@ -2,7 +2,7 @@ package com.marathon;
 
 public enum MrthonMenuEnum {
 
-    MRTON_MENU_NAME_SAFETY("安全防护","mrtonproc/safety/%s");
+    MRTON_MENU_NAME_SAFETY("安全防护","mrtonproc/safety/%s"),MRTON_MENU_NAME_LIIVNG("直播","mrtonproc/living/%s");
 
     private final String menuName;
     private final String url;
