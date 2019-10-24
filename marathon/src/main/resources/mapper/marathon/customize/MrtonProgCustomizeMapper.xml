@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.marathon.mapper.customize.MrtonProgCustomizeMapper">
+
+    <select id="getMyMrtonProgStatistic" resultType="com.marathon.domain.beans.MrtonProgBean">
+
+        SELECT
+            mrtoninfo.marathon_uuid as mrtonId ,
+            mrtoninfo.marathon_name as mrtonName,
+            procinfo.parent_proc_id as procId,
+            config.proc_name as procName,
+            count(procinfo.proc_id) as number
+        FROM
+            marathon_info mrtoninfo
+        LEFT JOIN mrton_proc_info procinfo ON mrtoninfo.marathon_uuid = procinfo.marathon_id
+        LEFT JOIN mrton_proc_cfg config on procinfo.parent_proc_id = config.proc_id
+        WHERE
+            mrtoninfo.marathon_creater = #{userId}
+        <if test="status != null ">and procinfo.status = #{status}</if>
+        group by mrtoninfo.marathon_uuid, procinfo.parent_proc_id
+    </select>
+</mapper>
