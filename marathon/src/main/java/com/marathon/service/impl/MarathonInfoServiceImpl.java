@@ -132,7 +132,7 @@ public class MarathonInfoServiceImpl implements IMarathonInfoService {
                 if(MrtonProcEnum.SAFTY_PROTECTION.getName().equals(config.getProcName()) &&
                         MrtonSafetyChildTaskEnum.CHILD_GRASP.getName().equals(mrtonProcCfg.getProcName())){
                     MrtonSafetyGrasp grasp=new MrtonSafetyGrasp();
-                    grasp.setProcId(info.getProcId());
+                    grasp.setProcId(info.getId());
                     mrtonSafetyGraspService.insertMrtonSafetyGrasp(grasp);
                 }
             }

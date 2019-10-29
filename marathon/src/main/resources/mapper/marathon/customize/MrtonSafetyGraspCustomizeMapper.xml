@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.marathon.mapper.customize.MrtonSafetyGraspCustomizeMapper">
+    <select id="getGraspByProcId" resultType="com.marathon.qvo.MrtonSafeGraspVO">
+        SELECT
+            grasp.id as id,
+            grasp.project_setting as projectSetting,
+            grasp.project_num as projectNum,
+            grasp.mrton_standard as mrtonStandard,
+            mrtoninfo.marathon_starttime as mrtonStarttime,
+            mrtoninfo.marathon_name as mrtonName
+        FROM
+            mrton_safety_grasp grasp
+        LEFT JOIN mrton_proc_info procinfo ON grasp.proc_id = procinfo.id
+        LEFT JOIN marathon_info mrtoninfo ON procinfo.marathon_id = mrtoninfo.marathon_uuid
+        WHERE
+        procinfo.id = #{mrtonprocId};
+
+    </select>
+</mapper>

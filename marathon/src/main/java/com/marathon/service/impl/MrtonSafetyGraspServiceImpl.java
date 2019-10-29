@@ -3,7 +3,8 @@ package com.marathon.service.impl;
 import java.util.List;
 
 import cn.hutool.core.convert.Convert;
-import com.google.common.base.Preconditions;
+import com.marathon.mapper.customize.MrtonSafetyGraspCustomizeMapper;
+import com.marathon.qvo.MrtonSafeGraspVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.marathon.mapper.MrtonSafetyGraspMapper;
@@ -20,6 +21,10 @@ import com.marathon.service.IMrtonSafetyGraspService;
 public class MrtonSafetyGraspServiceImpl implements IMrtonSafetyGraspService {
     @Autowired
     private MrtonSafetyGraspMapper mrtonSafetyGraspMapper;
+
+    @Autowired
+    private MrtonSafetyGraspCustomizeMapper mrtonSafetyGraspCustomizeMapper;
+
 
     /**
      * 查询安保-了解赛事，确定赛事规模信息
@@ -77,14 +82,7 @@ public class MrtonSafetyGraspServiceImpl implements IMrtonSafetyGraspService {
     }
 
     @Override
-    public MrtonSafetyGrasp getGraspByProcId(String mrtonprocId) {
-        MrtonSafetyGrasp grasp=new MrtonSafetyGrasp();
-        grasp.setProcId(mrtonprocId);
-        List<MrtonSafetyGrasp> lstGrasp=selectMrtonSafetyGraspList(grasp);
-        Preconditions.checkArgument(lstGrasp.size() == 1,"安保任务第一任务为空！");
-
-        //TODO　赛事基本信息补充
-
-        return lstGrasp.get(0);
+    public MrtonSafeGraspVO getGraspByProcId(String mrtonprocId) {
+        return mrtonSafetyGraspCustomizeMapper.getGraspByProcId(mrtonprocId);
     }
 }
