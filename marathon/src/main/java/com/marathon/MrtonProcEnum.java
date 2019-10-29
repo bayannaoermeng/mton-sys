@@ -5,7 +5,7 @@ package com.marathon;
  */
 public enum MrtonProcEnum {
 
-    SAFTY_PROTECTION(12,"安全防护"),LIVING_PRO(11,"直播");
+    SAFTY_PROTECTION(12,"安保"),LIVING_PRO(11,"直播");
 
     private final int sequence;
     private final String name;

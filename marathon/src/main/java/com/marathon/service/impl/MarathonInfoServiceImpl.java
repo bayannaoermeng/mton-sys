@@ -12,15 +12,15 @@ import java.util.UUID;
 import cn.hutool.core.convert.Convert;
 import com.google.common.base.Strings;
 import com.marathon.MrtonConstants;
-import com.marathon.domain.MrtonProcCfg;
-import com.marathon.domain.MrtonProcInfo;
+import com.marathon.MrtonProcEnum;
+import com.marathon.MrtonSafetyChildTaskEnum;
+import com.marathon.domain.*;
 import com.marathon.mapper.MarathonInfoMapper;
-import com.marathon.domain.MarathonInfo;
-import com.marathon.domain.MarathonUser;
 import com.marathon.mapper.MarathonUserMapper;
 import com.marathon.service.IMarathonInfoService;
 import com.marathon.service.IMrtonProcCfgService;
 import com.marathon.service.IMrtonProcInfoService;
+import com.marathon.service.IMrtonSafetyGraspService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +44,9 @@ public class MarathonInfoServiceImpl implements IMarathonInfoService {
 
     @Autowired
     private IMrtonProcInfoService mrtonProcInfoService;
+
+    @Autowired
+    private IMrtonSafetyGraspService mrtonSafetyGraspService;
 
     /**
      * 查询赛事信息
@@ -124,8 +127,15 @@ public class MarathonInfoServiceImpl implements IMarathonInfoService {
                 calcPlanTime(mrtonProcCfg, info, marathon_info.getMarathon_starttime());
 
                 mrtonProcInfoService.insertMrtonProcInfo(info);
-            }
 
+                //安保任务第一条初始化记录
+                if(MrtonProcEnum.SAFTY_PROTECTION.getName().equals(config.getProcName()) &&
+                        MrtonSafetyChildTaskEnum.CHILD_GRASP.getName().equals(mrtonProcCfg.getProcName())){
+                    MrtonSafetyGrasp grasp=new MrtonSafetyGrasp();
+                    grasp.setProcId(info.getProcId());
+                    mrtonSafetyGraspService.insertMrtonSafetyGrasp(grasp);
+                }
+            }
         });
     }
 

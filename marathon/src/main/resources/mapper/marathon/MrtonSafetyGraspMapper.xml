@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.marathon.mapper.MrtonSafetyGraspMapper">
+
+    <resultMap type="MrtonSafetyGrasp" id="MrtonSafetyGraspResult">
+        <result property="id" column="id"/>
+        <result property="procId" column="proc_id"/>
+        <result property="projectSetting" column="project_setting"/>
+        <result property="projectNum" column="project_num"/>
+        <result property="mrtonStandard" column="mrton_standard"/>
+    </resultMap>
+
+    <sql id="selectMrtonSafetyGraspVo">
+        select id, proc_id, project_setting, project_num, mrton_standard from mrton_safety_grasp
+    </sql>
+
+    <select id="selectMrtonSafetyGraspList" parameterType="MrtonSafetyGrasp" resultMap="MrtonSafetyGraspResult">
+        <include refid="selectMrtonSafetyGraspVo"/>
+        <where>
+            <if test="id != null ">and id = #{id}
+            </if>
+            <if test="procId != null  and procId != '' ">and proc_id = #{procId}
+            </if>
+            <if test="projectSetting != null  and projectSetting != '' ">and project_setting = #{projectSetting}
+            </if>
+            <if test="projectNum != null ">and project_num = #{projectNum}
+            </if>
+            <if test="mrtonStandard != null  and mrtonStandard != '' ">and mrton_standard = #{mrtonStandard}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectMrtonSafetyGraspById" parameterType="Integer" resultMap="MrtonSafetyGraspResult">
+        <include refid="selectMrtonSafetyGraspVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMrtonSafetyGrasp" parameterType="MrtonSafetyGrasp" useGeneratedKeys="true" keyProperty="id">
+        insert into mrton_safety_grasp
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="procId != null  and procId != ''  ">proc_id,
+            </if>
+            <if test="projectSetting != null  and projectSetting != ''  ">project_setting,
+            </if>
+            <if test="projectNum != null  ">project_num,
+            </if>
+            <if test="mrtonStandard != null  and mrtonStandard != ''  ">mrton_standard,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="procId != null  and procId != ''  ">#{procId},
+            </if>
+            <if test="projectSetting != null  and projectSetting != ''  ">#{projectSetting},
+            </if>
+            <if test="projectNum != null  ">#{projectNum},
+            </if>
+            <if test="mrtonStandard != null  and mrtonStandard != ''  ">#{mrtonStandard},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateMrtonSafetyGrasp" parameterType="MrtonSafetyGrasp">
+        update mrton_safety_grasp
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="procId != null  and procId != ''  ">proc_id = #{procId},
+            </if>
+            <if test="projectSetting != null  and projectSetting != ''  ">project_setting = #{projectSetting},
+            </if>
+            <if test="projectNum != null  ">project_num = #{projectNum},
+            </if>
+            <if test="mrtonStandard != null  and mrtonStandard != ''  ">mrton_standard = #{mrtonStandard},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMrtonSafetyGraspById" parameterType="Integer">
+        delete from mrton_safety_grasp where id = #{id}
+    </delete>
+
+    <delete id="deleteMrtonSafetyGraspByIds" parameterType="String">
+        delete from mrton_safety_grasp where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

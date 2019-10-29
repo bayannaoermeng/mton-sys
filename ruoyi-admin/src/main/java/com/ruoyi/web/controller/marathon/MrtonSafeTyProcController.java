@@ -3,10 +3,13 @@ package com.ruoyi.web.controller.marathon;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.marathon.MrtonProcEnum;
+import com.marathon.MrtonSafetyChildTaskEnum;
 import com.marathon.domain.MrtonProcCfg;
 import com.marathon.domain.MrtonProcInfo;
+import com.marathon.domain.MrtonSafetyGrasp;
 import com.marathon.service.IMrtonProcCfgService;
 import com.marathon.service.IMrtonProcInfoService;
+import com.marathon.service.IMrtonSafetyGraspService;
 import com.ruoyi.common.base.AjaxResult;
 import com.ruoyi.framework.web.base.BaseController;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +38,9 @@ public class MrtonSafeTyProcController extends BaseController {
     @Autowired
     private IMrtonProcInfoService mrtonProcInfoService;
 
+    @Autowired
+    private IMrtonSafetyGraspService mrtonSafetyGraspService;
+
     private String prefix = "marathon/procedure" ;
 
     @RequestMapping("/{marathonId}")
@@ -61,8 +67,14 @@ public class MrtonSafeTyProcController extends BaseController {
     @RequestMapping("/edit/{mrtonprocId}")
     public String edit(@PathVariable("mrtonprocId") String mrtonprocId,ModelMap modelMap){
         MrtonProcInfo mrtonProcInfo=mrtonProcInfoService.queryMrtonInfoById(mrtonprocId);
-        modelMap.put("mrtonProcInfo",mrtonProcInfo);
-        return prefix + "/safety/edit";
+        if(MrtonSafetyChildTaskEnum.CHILD_GRASP.getName().equals(mrtonProcInfo.getProcName())){
+            MrtonSafetyGrasp grasp=mrtonSafetyGraspService.getGraspByProcId(mrtonprocId);
+            modelMap.put("grasp",grasp);
+            return prefix +"/safety/graspedit";
+        }else{
+            modelMap.put("mrtonProcInfo",mrtonProcInfo);
+            return prefix + "/safety/edit";
+        }
     }
 
     @RequestMapping("/save")
