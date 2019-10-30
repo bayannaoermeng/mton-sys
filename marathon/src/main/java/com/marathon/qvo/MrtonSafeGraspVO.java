@@ -17,5 +17,5 @@ public class MrtonSafeGraspVO extends MrtonSafetyGrasp {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date mrtonStarttime;
 
-    private String mrtonName;
+    private String mrtonAddress;
 }
