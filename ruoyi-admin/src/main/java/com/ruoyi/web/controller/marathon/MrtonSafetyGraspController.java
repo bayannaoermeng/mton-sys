@@ -6,6 +6,8 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.base.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.framework.web.base.BaseController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/marathon/mrtonSafetyGrasp")
+@Api(tags = "安保-了解赛事子任务")
 public class MrtonSafetyGraspController extends BaseController {
 
     @Autowired
@@ -34,6 +37,7 @@ public class MrtonSafetyGraspController extends BaseController {
     @Log(title = "安保-了解赛事，确定赛事规模" , businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
+    @ApiOperation("保存安保-了解赛事信息接口")
     public AjaxResult editSave(MrtonSafetyGrasp mrtonSafetyGrasp) {
         return toAjax(mrtonSafetyGraspService.updateMrtonSafetyGrasp(mrtonSafetyGrasp));
     }

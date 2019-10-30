@@ -19,7 +19,7 @@ public class MrtonSafetyGrasp extends BaseEntity{
 
     private static final long serialVersionUID=1L;
     
-    @ApiModelProperty(value="",name="id")
+    @ApiModelProperty(value="id",name="id")
     private Integer id;
         
     @ApiModelProperty(value="任务ID",name="procId")

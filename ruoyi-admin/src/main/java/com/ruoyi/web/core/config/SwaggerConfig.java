@@ -45,9 +45,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         // 用ApiInfoBuilder进行定制
         return new ApiInfoBuilder()
-                .title("标题：若依管理系统_接口文档")
-                .description("更多内容请关注：https://github.com/lerry903/RuoYi")
-                .contact(new Contact(Global.getName(), "https://github.com/lerry903/RuoYi", "lerry903@163.com"))
+                .title("马拉松赛事管理系统_接口文档")
                 .version("版本号:" + Global.getVersion())
                 .build();
     }

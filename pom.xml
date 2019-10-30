@@ -24,6 +24,7 @@
         <bitwalker.version>1.21</bitwalker.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <swagger.version>2.9.2</swagger.version>
+        <swagger.bootstrap.version>1.9.3</swagger.bootstrap.version>
         <pagehelper.boot.version>1.2.10</pagehelper.boot.version>
         <oshi.version>3.9.1</oshi.version>
         <lombok.version>1.18.4</lombok.version>
@@ -112,9 +113,36 @@
 
         <!-- swagger2-->
         <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>${swagger.bootstrap.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${swagger.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-models</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.21</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>1.5.21</version>
         </dependency>
 
     </dependencies>

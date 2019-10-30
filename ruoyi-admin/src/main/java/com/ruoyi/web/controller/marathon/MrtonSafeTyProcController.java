@@ -12,10 +12,13 @@ import com.marathon.service.IMrtonProcInfoService;
 import com.marathon.service.IMrtonSafetyGraspService;
 import com.ruoyi.common.base.AjaxResult;
 import com.ruoyi.framework.web.base.BaseController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,6 +33,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping("mrtonproc/safety")
+@Api(tags = "安保任务")
 public class MrtonSafeTyProcController extends BaseController {
 
     @Autowired
@@ -49,7 +53,8 @@ public class MrtonSafeTyProcController extends BaseController {
         return prefix + "/safety/safetyprotection";
     }
 
-    @RequestMapping("/add/{marathonId}")
+    @GetMapping("/add/{marathonId}")
+    @ApiOperation(value = "添加自定义任务")
     public String add(@PathVariable("marathonId") String marathonId, ModelMap modelMap){
         MrtonProcInfo mrtonProcInfo=new MrtonProcInfo();
         mrtonProcInfo.setMarathonId(marathonId);
@@ -64,7 +69,8 @@ public class MrtonSafeTyProcController extends BaseController {
         return prefix + "/safety/add";
     }
 
-    @RequestMapping("/edit/{mrtonprocId}")
+    @GetMapping("/edit/{mrtonprocId}")
+    @ApiOperation(value = "编辑任务")
     public String edit(@PathVariable("mrtonprocId") String mrtonprocId,ModelMap modelMap){
         MrtonProcInfo mrtonProcInfo=mrtonProcInfoService.queryMrtonInfoById(mrtonprocId);
         if(MrtonSafetyChildTaskEnum.CHILD_GRASP.getName().equals(mrtonProcInfo.getProcName())){

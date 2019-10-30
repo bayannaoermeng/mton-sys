@@ -286,6 +286,13 @@ public class ShiroConfig {
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login" , "anon,captchaValidate");
 
+        // shiro 不过滤swagger相关
+        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+        filterChainDefinitionMap.put("/swagger-resources/**", "anon");
+        filterChainDefinitionMap.put("/v2/**", "anon");
+        filterChainDefinitionMap.put("/webjars/**", "anon");
+        filterChainDefinitionMap.put("/doc.html", "anon");
+
         Map<String, Filter> filters = new LinkedHashMap<>();
         filters.put("onlineSession" , onlineSessionFilter());
         filters.put("syncOnlineSession" , syncOnlineSessionFilter());

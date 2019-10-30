@@ -71,7 +71,7 @@ public class Global {
      * 获取项目名称
      */
     public static String getName() {
-        return Convert.toStr(getConfig("ruoyi.name"), "RuoYi");
+        return Convert.toStr(getConfig("ruoyi.name"), "mrton");
     }
 
     /**
