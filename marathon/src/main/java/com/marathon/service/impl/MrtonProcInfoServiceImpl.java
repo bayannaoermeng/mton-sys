@@ -8,22 +8,19 @@ import java.util.UUID;
 
 import cn.hutool.core.convert.Convert;
 import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
 import com.marathon.MrthonMenuEnum;
-import com.marathon.MrtonConstants;
 import com.marathon.MrtonProcEnum;
 import com.marathon.MrtonProcStatusEnum;
 import com.marathon.domain.MarathonInfo;
-import com.marathon.domain.MrtonProcCfg;
 import com.marathon.mapper.customize.MrtProcInfoCustomizeMapper;
 import com.marathon.qvo.MrthonMenuBean;
 import com.marathon.qvo.MrtonProcInfoVO;
 import com.marathon.qvo.MyMrtonProcVO;
 import com.marathon.service.IMrtonProcCfgService;
-import com.ruoyi.common.utils.DateUtil;
-import com.ruoyi.system.domain.SysMenu;
-import com.ruoyi.system.domain.SysUser;
-import com.ruoyi.system.service.ISysUserService;
+import com.mton.common.utils.DateUtil;
+import com.mton.system.domain.SysMenu;
+import com.mton.system.domain.SysUser;
+import com.mton.system.service.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -144,7 +141,6 @@ public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
                 while (iterator.hasNext()){
                     SysMenu child=iterator.next();
                     String menuName=child.getMenuName();
-                    log.info(menuName);
                     MrthonMenuEnum mrthonMenu=MrthonMenuEnum.getValue(menuName);
                     if(mrthonMenu!=null){
                         if(lstMrtonMenu.size()<=0){

@@ -7,7 +7,7 @@ import com.marathon.domain.beans.MrtonProgRequest;
 import com.marathon.mapper.customize.MrtonProgCustomizeMapper;
 import com.marathon.qvo.MrtonProgDetailVO;
 import com.marathon.service.IMrtonProgressService;
-import com.ruoyi.system.domain.SysUser;
+import com.mton.system.domain.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

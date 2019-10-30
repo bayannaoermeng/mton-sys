@@ -8,7 +8,7 @@ import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.marathon.qvo.SaveProcPrincipalQO;
-import com.ruoyi.common.base.AjaxResult;
+import com.mton.common.base.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.marathon.mapper.MrtonProcUserMapper;

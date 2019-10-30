@@ -1,7 +1,7 @@
 package com.marathon.qvo;
 
 import com.google.common.collect.Lists;
-import com.ruoyi.common.base.BaseEntity;
+import com.mton.common.base.BaseEntity;
 import lombok.Data;
 
 import java.util.List;

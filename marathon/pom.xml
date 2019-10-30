@@ -3,8 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>ruoyi</artifactId>
-        <groupId>com.ruoyi</groupId>
+        <artifactId>mton</artifactId>
+        <groupId>com.mton</groupId>
         <version>3.4.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -13,15 +13,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-common</artifactId>
-            <version>${ruoyi.version}</version>
+            <groupId>com.mton</groupId>
+            <artifactId>mton-common</artifactId>
+            <version>${mton.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-system</artifactId>
-            <version>${ruoyi.version}</version>
+            <groupId>com.mton</groupId>
+            <artifactId>mton-system</artifactId>
+            <version>${mton.version}</version>
         </dependency>
     </dependencies>
 </project>

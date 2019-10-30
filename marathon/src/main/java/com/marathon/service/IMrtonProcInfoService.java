@@ -5,8 +5,8 @@ import com.marathon.domain.MarathonInfo;
 import com.marathon.domain.MrtonProcInfo;
 import com.marathon.qvo.MrtonProcInfoVO;
 import com.marathon.qvo.MyMrtonProcVO;
-import com.ruoyi.system.domain.SysMenu;
-import com.ruoyi.system.domain.SysUser;
+import com.mton.system.domain.SysMenu;
+import com.mton.system.domain.SysUser;
 
 import java.util.List;
 

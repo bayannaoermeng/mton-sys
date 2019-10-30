@@ -2,7 +2,7 @@ package com.marathon.service;
 
 import com.marathon.domain.MrtonProcUser;
 import com.marathon.qvo.SaveProcPrincipalQO;
-import com.ruoyi.common.base.AjaxResult;
+import com.mton.common.base.AjaxResult;
 
 import java.util.List;
 

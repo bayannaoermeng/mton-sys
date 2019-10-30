@@ -1,6 +1,6 @@
 package com.marathon.qvo;
 
-import com.ruoyi.common.base.BaseEntity;
+import com.mton.common.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

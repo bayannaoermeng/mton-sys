@@ -4,16 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ruoyi</groupId>
-    <artifactId>ruoyi</artifactId>
+    <groupId>com.mton</groupId>
+    <artifactId>mton</artifactId>
     <version>3.4.0</version>
 
-    <name>ruoyi</name>
-    <url>https://github.com/lerry903/RuoYi</url>
-    <description>若依管理系统</description>
-
     <properties>
-        <ruoyi.version>3.4.0</ruoyi.version>
+        <mton.version>3.4.0</mton.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -46,13 +42,13 @@
     </dependencyManagement>
 
     <modules>
-        <module>ruoyi-admin</module>
-        <module>ruoyi-framework</module>
-        <module>ruoyi-system</module>
-        <module>ruoyi-quartz</module>
-        <module>ruoyi-generator</module>
-        <module>ruoyi-common</module>
-        <module>ruoyi-mq</module>
+        <module>mton-admin</module>
+        <module>mton-framework</module>
+        <module>mton-system</module>
+        <module>mton-quartz</module>
+        <module>mton-generator</module>
+        <module>mton-common</module>
+        <module>mton-mq</module>
         <module>marathon</module>
     </modules>
     <packaging>pom</packaging>

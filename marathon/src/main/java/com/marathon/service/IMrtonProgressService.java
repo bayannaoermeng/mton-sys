@@ -1,7 +1,7 @@
 package com.marathon.service;
 
 import com.marathon.qvo.MrtonProgDetailVO;
-import com.ruoyi.system.domain.SysUser;
+import com.mton.system.domain.SysUser;
 
 import java.util.List;
 
