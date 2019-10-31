@@ -14,8 +14,7 @@ import java.util.Date;
 @Data
 public class MrtonSafeGraspVO extends MrtonSafetyGrasp {
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date mrtonStarttime;
+    private String mrtonStarttime;
 
     private String mrtonAddress;
 }

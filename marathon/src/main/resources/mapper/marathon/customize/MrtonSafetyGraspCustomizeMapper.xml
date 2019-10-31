@@ -9,8 +9,8 @@
             grasp.project_setting as projectSetting,
             grasp.project_num as projectNum,
             grasp.mrton_standard as mrtonStandard,
-            mrtoninfo.marathon_starttime as mrtonStarttime,
-            mrtoninfo.marathon_name as mrtonName
+            date_format(mrtoninfo.marathon_starttime, '%Y-%m-%d') as mrtonStarttime,
+            mrtoninfo.marathon_address as mrtonAddress
         FROM
             mrton_safety_grasp grasp
         LEFT JOIN mrton_proc_info procinfo ON grasp.proc_id = procinfo.id
