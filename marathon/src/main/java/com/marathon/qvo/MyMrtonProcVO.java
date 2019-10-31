@@ -26,16 +26,10 @@ public class MyMrtonProcVO extends BaseEntity {
     private Integer procSeq;
 
     @ApiModelProperty(value="计划开始时间",name="planStarttime")
-    private Date planStarttime;
+    private String planStarttime;
 
     @ApiModelProperty(value="计划结束时间",name="planEndtime")
-    private Date planEndtime;
-
-    @ApiModelProperty(value = "实际开始时间")
-    private Date realStarttime;
-
-    @ApiModelProperty(value = "实际结束时间")
-    private Date realEndtime;
+    private String planEndtime;
 
     @ApiModelProperty(value = "状态")
     private Integer status;
