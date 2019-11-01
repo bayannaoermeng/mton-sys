@@ -37,6 +37,12 @@
 					<input id="mrtonStarttime" name="mrtonStarttime" readonly th:field="*{mrtonStarttime}" class="form-control" type="text">
 				</div>
 			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">竞赛规程：</label>
+				<div class="col-sm-8">
+					<a id="amrtonFileName"  href="javascript:void(0);" onclick="downLoad('1111.txt')" th:field="*{mrtonStarttime}" class="form-control" title="点击下载文件" >[[*{mrtonAddress}]]</a>
+				</div>
+			</div>
 		</form>
     </div>
     <div th:include="include::footer"></div>
@@ -56,6 +62,10 @@
 	            $.operate.save(prefix + "/edit", $('#form-mrtonSafetyGrasp-edit').serialize());
 	        }
 	    }
+
+	    function downLoad(filename) {
+			window.location.href = prefix + "/downloadfile?filename="+ encodeURI(filename)
+		}
 	</script>
 </body>
 </html>
