@@ -46,10 +46,8 @@
             cfg1.proc_name AS procName,
             cfg1.proc_seq AS procSeq,
             procinfo.customize as customize,
-            procinfo.plan_starttime AS planStarttime,
-            procinfo.plan_endtime AS planEndtime,
-            procinfo.real_starttime AS realStarttime,
-            procinfo.real_endtime AS realEndtime,
+            date_format(procinfo.plan_starttime, '%Y-%m-%d') AS planStarttime,
+            date_format(procinfo.plan_endtime, '%Y-%m-%d') AS planEndtime,
             procinfo.`status` AS STATUS
         FROM
             mrton_proc_info procinfo
