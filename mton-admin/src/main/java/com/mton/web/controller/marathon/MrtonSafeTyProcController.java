@@ -74,7 +74,7 @@ public class MrtonSafeTyProcController extends BaseController {
     public String edit(@PathVariable("mrtonprocId") String mrtonprocId,ModelMap modelMap){
         MrtonProcInfo mrtonProcInfo=mrtonProcInfoService.queryMrtonInfoById(mrtonprocId);
         if(MrtonSafetyChildTaskEnum.CHILD_GRASP.getName().equals(mrtonProcInfo.getProcName())){
-            MrtonSafetyGrasp grasp=mrtonSafetyGraspService.getGraspByProcId(mrtonprocId);
+            MrtonSafetyGrasp grasp=mrtonSafetyGraspService.getGraspByProcId(mrtonProcInfo.getMarathonId(),mrtonprocId);
             modelMap.put("grasp",grasp);
             return prefix +"/safety/graspedit";
         }else{

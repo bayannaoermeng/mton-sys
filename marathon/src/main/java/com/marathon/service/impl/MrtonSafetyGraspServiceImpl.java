@@ -1,10 +1,14 @@
 package com.marathon.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import cn.hutool.core.convert.Convert;
+import com.marathon.MrtonConstants;
+import com.marathon.domain.MrtonResource;
 import com.marathon.mapper.customize.MrtonSafetyGraspCustomizeMapper;
 import com.marathon.qvo.MrtonSafeGraspVO;
+import com.marathon.service.IMrtonResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.marathon.mapper.MrtonSafetyGraspMapper;
@@ -25,6 +29,8 @@ public class MrtonSafetyGraspServiceImpl implements IMrtonSafetyGraspService {
     @Autowired
     private MrtonSafetyGraspCustomizeMapper mrtonSafetyGraspCustomizeMapper;
 
+    @Autowired
+    private IMrtonResourceService mrtonResourceService;
 
     /**
      * 查询安保-了解赛事，确定赛事规模信息
@@ -82,7 +88,20 @@ public class MrtonSafetyGraspServiceImpl implements IMrtonSafetyGraspService {
     }
 
     @Override
-    public MrtonSafeGraspVO getGraspByProcId(String mrtonprocId) {
-        return mrtonSafetyGraspCustomizeMapper.getGraspByProcId(mrtonprocId);
+    public MrtonSafeGraspVO getGraspByProcId(String maratonId,String mrtonprocId) {
+        MrtonSafeGraspVO result= mrtonSafetyGraspCustomizeMapper.getGraspByProcId(mrtonprocId);
+
+        //TODO　生成文件信息
+        MrtonResource resource=new MrtonResource();
+        resource.setProcId(mrtonprocId);
+        List<MrtonResource> lstResource=mrtonResourceService.selectMrtonResourceList(resource);
+        List<MrtonResource> competitionResource=lstResource.stream().filter(mrtonResource -> MrtonConstants.RESOURCE_COMPETITION_RULE.equals(mrtonResource.getResourceName())).collect(Collectors.toList());
+        if(competitionResource.size() == 1){
+            MrtonResource mrtonResource=competitionResource.get(0);
+            result.getParams().put("url",mrtonResource.getResourceUrl());
+            result.getParams().put("name",mrtonResource.getResourceName());
+        }
+        return result;
     }
 }
+

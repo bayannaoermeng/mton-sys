@@ -17,10 +17,7 @@ import com.marathon.MrtonSafetyChildTaskEnum;
 import com.marathon.domain.*;
 import com.marathon.mapper.MarathonInfoMapper;
 import com.marathon.mapper.MarathonUserMapper;
-import com.marathon.service.IMarathonInfoService;
-import com.marathon.service.IMrtonProcCfgService;
-import com.marathon.service.IMrtonProcInfoService;
-import com.marathon.service.IMrtonSafetyGraspService;
+import com.marathon.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +44,9 @@ public class MarathonInfoServiceImpl implements IMarathonInfoService {
 
     @Autowired
     private IMrtonSafetyGraspService mrtonSafetyGraspService;
+
+    @Autowired
+    private IMrtonResourceService mrtonResourceService;
 
     /**
      * 查询赛事信息
@@ -134,6 +134,15 @@ public class MarathonInfoServiceImpl implements IMarathonInfoService {
                     MrtonSafetyGrasp grasp=new MrtonSafetyGrasp();
                     grasp.setProcId(info.getId());
                     mrtonSafetyGraspService.insertMrtonSafetyGrasp(grasp);
+
+                    //插入资源表
+                    MrtonResource resource=new MrtonResource();
+                    resource.setProcId(info.getId());
+                    resource.setResourceName(MrtonConstants.RESOURCE_COMPETITION_RULE);
+                    resource.setUploader(1);
+                    resource.setResourceUrl("/"+marathon_info.getMarathon_uuid()+"/"+MrtonConstants.RESOURCE_COMPETITION_RULE+".docx");
+                    mrtonResourceService.insertMrtonResource(resource);
+
                 }
             }
         });

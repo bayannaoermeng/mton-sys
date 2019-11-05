@@ -50,5 +50,5 @@ public interface IMrtonSafetyGraspService {
      */
     public int deleteMrtonSafetyGraspByIds(String ids);
 
-    MrtonSafetyGrasp getGraspByProcId(String mrtonprocId);
+    MrtonSafetyGrasp getGraspByProcId(String martonId,String mrtonprocId);
 }
