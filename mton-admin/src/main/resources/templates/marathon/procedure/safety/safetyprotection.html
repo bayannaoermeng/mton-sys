@@ -2,6 +2,14 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<th:block th:include="include :: header('安保')" />
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<style>
+		tr.danger{
+			background:red;
+		}
+	</style>
+
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -57,6 +65,20 @@
 				updateUrl: ctx + "mrtonproc/safety/edit/{id}",
 				removeUrl: ctx + "mrtonproc/safety/remove/{id}",
 				showExport: true,
+				rowStyle: function (row, index) {
+					//这里有5个取值代表5中颜色['active', 'success', 'info', 'warning', 'danger'];
+					var strclass = "";
+					if (row.statusStr == "新建") {
+						strclass = 'success';//还有一个active
+					}
+					else if (row.statusStr == "进行中") {
+						strclass = 'danger';
+					}
+					else {
+						return {};
+					}
+					return { classes: strclass }
+				},
 				columns: [
 					{
 						field : 'mrtonProcId',
@@ -117,6 +139,7 @@
 				$.table.search();
 			})
 		}
+
     </script>
 </body>
 </html>
