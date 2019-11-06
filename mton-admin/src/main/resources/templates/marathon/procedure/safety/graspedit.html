@@ -40,7 +40,7 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label"></label>
 				<div class="col-sm-8">
-					<a id="amrtonFileName"  href="javascript:void(0);" onclick="downLoad('1111.txt')"  class="form-control" title="点击下载文件" >[[*{params[name]}]]</a>
+					<a id="amrtonFileName"  href="javascript:void(0);" onclick="downLoad('*{params[url]}')"  class="form-control" title="点击下载文件" >[[*{params[name]}]]</a>
 				</div>
 			</div>
 		</form>
@@ -64,7 +64,7 @@
 	    }
 
 	    function downLoad(filename) {
-			window.location.href = prefix + "/downloadfile?filename="+ encodeURI(filename)
+			window.location.href = ctx + "common/download?fileName=" + encodeURI(filename) + "&delete=" + false
 		}
 	</script>
 </body>

@@ -52,9 +52,10 @@ public class CommonController {
             @ApiImplicitParam(name = "delete",value = "是否删除临时文件",required = true,dataType ="boolean")
     })
     public void fileDownload(String fileName, Boolean delete, HttpServletResponse response, HttpServletRequest request) {
-        String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf('_') + 1);
+        String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf('/') + 1);
         try {
-            if (!FileUtils.isValidFilename(fileName)){
+            String fileName_=fileName.substring(fileName.lastIndexOf("/")+1);
+            if (!FileUtils.isValidFilename(fileName_)){
                 throw new BusinessException(String.format(" 文件名称(%s)非法，不允许下载。 ", fileName));
             }
             String filePath = Global.getDownloadPath() + fileName;
