@@ -2,6 +2,8 @@ package com.marathon.service.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +24,7 @@ import com.mton.system.domain.SysMenu;
 import com.mton.system.domain.SysUser;
 import com.mton.system.service.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.marathon.mapper.MrtonProcInfoMapper;
@@ -119,6 +122,18 @@ public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
         lstResult.forEach(myMrtonProcVO -> {
             if(myMrtonProcVO.getStatus()!=null){
                 myMrtonProcVO.setStatusStr(MrtonProcStatusEnum.getObject(myMrtonProcVO.getStatus()).getValue());
+            }
+            //是否延期判断
+            if(myMrtonProcVO.getStatus().equals(MrtonProcStatusEnum.STATUS_NEW.getKey())){
+                if(!Strings.isNullOrEmpty(myMrtonProcVO.getPlanStarttime())){
+                    LocalDate planStartime=LocalDate.parse(myMrtonProcVO.getPlanStarttime(),DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    myMrtonProcVO.getParams().put("isDelay", LocalDate.now().isAfter(planStartime));
+                }
+            }else if(myMrtonProcVO.getStatus().equals(MrtonProcStatusEnum.STATUS_RUNNING)){
+                if(!Strings.isNullOrEmpty(myMrtonProcVO.getPlanEndtime())){
+                    LocalDate planEndtime=LocalDate.parse(myMrtonProcVO.getPlanEndtime(),DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    myMrtonProcVO.getParams().put("isDelay",LocalDate.now().isAfter(planEndtime));
+                }
             }
         });
 

@@ -68,10 +68,7 @@
 				rowStyle: function (row, index) {
 					//这里有5个取值代表5中颜色['active', 'success', 'info', 'warning', 'danger'];
 					var strclass = "";
-					if (row.statusStr == "新建") {
-						strclass = 'success';//还有一个active
-					}
-					else if (row.statusStr == "进行中") {
+					if (row.params.isDelay == true) {
 						strclass = 'danger';
 					}
 					else {
