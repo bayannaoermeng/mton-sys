@@ -65,18 +65,6 @@
 				updateUrl: ctx + "mrtonproc/safety/edit/{id}",
 				removeUrl: ctx + "mrtonproc/safety/remove/{id}",
 				showExport: true,
-				// rowStyle: function (row, index) {
-				// 	//这里有5个取值代表5中颜色['active', 'success', 'info', 'warning', 'danger'];
-				// 	debugger;
-				// 	var strclass = "";
-				// 	if (row.params.isDelay == true) {
-				// 		strclass = 'danger';
-				// 	}
-				// 	else {
-				// 		return {};
-				// 	}
-				// 	return { classes: strclass }
-				// },
 				columns: [
 					{
 						field : 'mrtonProcId',
@@ -108,14 +96,11 @@
 						title : '状态',
 						sortable: true,
 						cellStyle:function(value,row,index){
-							debugger;
-							console.log(value+row+index);
-							if (row.params.isDelay == true){
+							if (row.params.isDelay != undefined && row.params.isDelay == true){
 								return {css:{"background-color":"red !important"}}
+							}else{
+								return {css:{}}
 							}
-							// else{
-							// 	return {css:{"background-color":"green"}}
-							// }
 						}
 					},
 					{
