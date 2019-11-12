@@ -129,7 +129,7 @@ public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
                     LocalDate planStartime=LocalDate.parse(myMrtonProcVO.getPlanStarttime(),DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                     myMrtonProcVO.getParams().put("isDelay", LocalDate.now().isAfter(planStartime));
                 }
-            }else if(myMrtonProcVO.getStatus().equals(MrtonProcStatusEnum.STATUS_RUNNING)){
+            }else if(myMrtonProcVO.getStatus().equals(MrtonProcStatusEnum.STATUS_RUNNING.getKey())){
                 if(!Strings.isNullOrEmpty(myMrtonProcVO.getPlanEndtime())){
                     LocalDate planEndtime=LocalDate.parse(myMrtonProcVO.getPlanEndtime(),DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                     myMrtonProcVO.getParams().put("isDelay",LocalDate.now().isAfter(planEndtime));
