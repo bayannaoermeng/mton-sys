@@ -216,6 +216,9 @@ $(function() {
         dataIndex = $(this).data('index'),
         menuName = $.trim($(this).text()),
         flag = true;
+        if(dataUrl.startsWith("mrtonproc/safety/")){
+            menuName='安保-'+menuName;
+        }
         $(".nav ul li").removeClass("active");
         $(this).parent("li").addClass("active");
         if (dataUrl == undefined || $.trim(dataUrl).length == 0) return false;
