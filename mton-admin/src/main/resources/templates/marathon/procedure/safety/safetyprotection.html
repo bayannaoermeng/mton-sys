@@ -4,17 +4,12 @@
 	<th:block th:include="include :: header('安保')" />
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
-	<style>
-		tr.danger{
-			background:red;
-		}
-	</style>
 
 </head>
 <body class="gray-bg">
      <div class="container-div">
 		<div class="row">
-			<div class="col-sm-12 search-collapse">
+			<div class="col-sm-12 search-collapse" style="display: none;">
 				<form id="formId">
 					<div class="select-list">
 						<ul>
@@ -62,6 +57,8 @@
 				updateUrl: ctx + "mrtonproc/safety/edit/{id}",
 				removeUrl: ctx + "mrtonproc/safety/remove/{id}",
 				showExport: true,
+				search: false,
+				showSearch: false,
 				columns: [
 					{
 						field : 'mrtonProcId',
