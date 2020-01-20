@@ -3,6 +3,7 @@ package com.marathon.service;
 import com.marathon.MrtonProcEnum;
 import com.marathon.domain.MarathonInfo;
 import com.marathon.domain.MrtonProcInfo;
+import com.marathon.qvo.MrtonProcCommonQVO;
 import com.marathon.qvo.MrtonProcInfoVO;
 import com.marathon.qvo.MyMrtonProcVO;
 import com.mton.system.domain.SysMenu;
@@ -96,5 +97,5 @@ public interface IMrtonProcInfoService {
      * @param mrtonprocId
      * @return
      */
-    MrtonProcInfo queryMrtonInfoById(String mrtonprocId);
+    MrtonProcCommonQVO queryMrtonInfoById(String mrtonprocId);
 }

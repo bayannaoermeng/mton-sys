@@ -4,6 +4,7 @@ import com.marathon.MrthonMenuEnum;
 import com.marathon.domain.MarathonInfo;
 import com.marathon.domain.MrtonProcInfo;
 import com.marathon.qvo.MrthonMenuBean;
+import com.marathon.qvo.MrtonProcCommonQVO;
 import com.marathon.qvo.MrtonProcInfoVO;
 import com.marathon.qvo.MyMrtonProcVO;
 import org.apache.ibatis.annotations.Param;
@@ -25,6 +26,6 @@ public interface MrtProcInfoCustomizeMapper {
 
     List<MrthonMenuBean> getMrtonMenu(Long userId);
 
-    MrtonProcInfo queryMrtonInfoById(String mrtonprocId);
+    MrtonProcCommonQVO queryMrtonInfoById(String mrtonprocId);
 }
 

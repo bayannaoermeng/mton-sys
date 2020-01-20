@@ -89,9 +89,10 @@
             cfg.parent_proc_id = "0"
     </select>
 
-    <select id="queryMrtonInfoById" resultType="com.marathon.domain.MrtonProcInfo">
+    <select id="queryMrtonInfoById" resultType="com.marathon.qvo.MrtonProcCommonQVO">
         SELECT
             id,
+            config.proc_id as procCfgId,
             (
                 CASE
                 WHEN customize = 1 THEN
@@ -102,7 +103,23 @@
             ) AS procName,
             customize,
             plan_starttime AS planStarttime,
-            plan_endtime AS planEndtime
+            plan_endtime AS planEndtime,
+            (
+                CASE
+                WHEN customize = 1 THEN
+                    procinfo.reserve2
+                ELSE
+                    config.proc_content
+                END
+            ) AS procContent,
+            (
+                CASE
+                WHEN customize = 1 THEN
+                    procinfo.reserve3
+                ELSE
+                    config.proc_descri
+                END
+            ) AS procDescri
         FROM
             `mrton_proc_info` procinfo
         LEFT JOIN mrton_proc_cfg config ON procinfo.proc_id = config.proc_id

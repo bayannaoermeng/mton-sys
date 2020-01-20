@@ -88,7 +88,7 @@ public class MrtonSafetyGraspServiceImpl implements IMrtonSafetyGraspService {
     }
 
     @Override
-    public MrtonSafeGraspVO getGraspByProcId(String maratonId,String mrtonprocId) {
+    public MrtonSafeGraspVO getGraspByProcId(String mrtonprocId) {
         MrtonSafeGraspVO result= mrtonSafetyGraspCustomizeMapper.getGraspByProcId(mrtonprocId);
 
         //TODO　生成文件信息

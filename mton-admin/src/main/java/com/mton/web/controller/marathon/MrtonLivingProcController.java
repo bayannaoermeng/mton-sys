@@ -5,6 +5,7 @@ import com.google.common.base.Strings;
 import com.marathon.MrtonProcEnum;
 import com.marathon.domain.MrtonProcCfg;
 import com.marathon.domain.MrtonProcInfo;
+import com.marathon.qvo.MrtonProcCommonQVO;
 import com.marathon.service.IMrtonProcCfgService;
 import com.marathon.service.IMrtonProcInfoService;
 import com.mton.common.base.AjaxResult;
@@ -60,7 +61,7 @@ public class MrtonLivingProcController extends BaseController {
 
     @RequestMapping("/edit/{mrtonprocId}")
     public String edit(@PathVariable("mrtonprocId") String mrtonprocId,ModelMap modelMap){
-        MrtonProcInfo mrtonProcInfo=mrtonProcInfoService.queryMrtonInfoById(mrtonprocId);
+        MrtonProcCommonQVO mrtonProcInfo=mrtonProcInfoService.queryMrtonInfoById(mrtonprocId);
         modelMap.put("mrtonProcInfo",mrtonProcInfo);
         return prefix + "/living/edit";
     }

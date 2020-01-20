@@ -7,6 +7,7 @@ import com.marathon.MrtonSafetyChildTaskEnum;
 import com.marathon.domain.MrtonProcCfg;
 import com.marathon.domain.MrtonProcInfo;
 import com.marathon.domain.MrtonSafetyGrasp;
+import com.marathon.qvo.MrtonProcCommonQVO;
 import com.marathon.service.IMrtonProcCfgService;
 import com.marathon.service.IMrtonProcInfoService;
 import com.marathon.service.IMrtonSafetyGraspService;
@@ -72,9 +73,9 @@ public class MrtonSafeTyProcController extends BaseController {
     @GetMapping("/edit/{mrtonprocId}")
     @ApiOperation(value = "编辑任务")
     public String edit(@PathVariable("mrtonprocId") String mrtonprocId,ModelMap modelMap){
-        MrtonProcInfo mrtonProcInfo=mrtonProcInfoService.queryMrtonInfoById(mrtonprocId);
+        MrtonProcCommonQVO mrtonProcInfo=mrtonProcInfoService.queryMrtonInfoById(mrtonprocId);
         if(MrtonSafetyChildTaskEnum.CHILD_GRASP.getName().equals(mrtonProcInfo.getProcName())){
-            MrtonSafetyGrasp grasp=mrtonSafetyGraspService.getGraspByProcId(mrtonProcInfo.getMarathonId(),mrtonprocId);
+            MrtonSafetyGrasp grasp=mrtonSafetyGraspService.getGraspByProcId(mrtonprocId);
             modelMap.put("grasp",grasp);
             return prefix +"/safety/graspedit";
         }else{
