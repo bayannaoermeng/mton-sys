@@ -50,6 +50,7 @@
         <module>mton-common</module>
         <module>mton-mq</module>
         <module>marathon</module>
+        <module>mton-mybatis-generator</module>
     </modules>
     <packaging>pom</packaging>
 
