@@ -31,8 +31,12 @@ public class MrtonProcCommonQVO extends BaseEntity {
     @ApiModelProperty(value="计划开始时间",name="planStarttime")
     private Date planStarttime;
 
+    private String planStarttimeStr;
+
     @ApiModelProperty(value="计划结束时间",name="planEndtime")
     private Date planEndtime;
+
+    private String planEndtimeStr;
 
     @ApiModelProperty(value="工作内容",name="procContent")
     private String procContent;

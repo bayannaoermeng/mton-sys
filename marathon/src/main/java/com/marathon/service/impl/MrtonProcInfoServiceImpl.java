@@ -10,13 +10,13 @@ import java.util.UUID;
 
 import cn.hutool.core.convert.Convert;
 import com.google.common.base.Strings;
+import com.google.common.collect.Collections2;
 import com.marathon.MrthonMenuEnum;
 import com.marathon.MrtonProcEnum;
 import com.marathon.MrtonProcStatusEnum;
-import com.marathon.domain.MarathonInfo;
-import com.marathon.domain.MrtonProcCfgResource;
-import com.marathon.domain.MrtonProcCfgResourceExample;
+import com.marathon.domain.*;
 import com.marathon.mapper.MrtonProcCfgResourceMapper;
+import com.marathon.mapper.MrtonResourceMapper;
 import com.marathon.mapper.customize.MrtProcInfoCustomizeMapper;
 import com.marathon.qvo.MrthonMenuBean;
 import com.marathon.qvo.MrtonProcCommonQVO;
@@ -29,10 +29,10 @@ import com.mton.system.domain.SysUser;
 import com.mton.system.service.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.asm.Advice;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.marathon.mapper.MrtonProcInfoMapper;
-import com.marathon.domain.MrtonProcInfo;
 import com.marathon.service.IMrtonProcInfoService;
 
 /**
@@ -52,6 +52,9 @@ public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
 
     @Autowired
     private MrtonProcCfgResourceMapper mrtonProcCfgResourceMapper;
+
+    @Autowired
+    private MrtonResourceMapper mrtonResourceMapper;
 
     /**
      * 查询赛事过程关系信息
@@ -188,14 +191,14 @@ public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
     }
 
     @Override
-    public void addOrEditSave(MrtonProcInfo mrtonProcInfo) {
-        String startTime = (String) mrtonProcInfo.getParams().get("planStarttime");
+    public void addOrEditSave(MrtonProcCommonQVO mrtonProcInfo) {
+        String startTime = mrtonProcInfo.getPlanStarttimeStr();
         try {
             if (!Strings.isNullOrEmpty(startTime)) {
                 mrtonProcInfo.setPlanStarttime(new SimpleDateFormat("yyyy-MM-dd").parse(startTime));
             }
 
-            String endTime = (String) mrtonProcInfo.getParams().get("planEndtime");
+            String endTime = mrtonProcInfo.getPlanEndtimeStr();
             if (!Strings.isNullOrEmpty(endTime)) {
                 mrtonProcInfo.setPlanEndtime(new SimpleDateFormat("yyyy-MM-dd").parse(endTime));
             }
@@ -206,10 +209,23 @@ public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
         if(Strings.isNullOrEmpty(mrtonProcInfo.getId())){
             mrtonProcInfo.setId(UUID.randomUUID().toString());
             mrtonProcInfo.setCustomize(1);
-            mrtonProcInfo.setStatus(MrtonProcStatusEnum.STATUS_NEW.getKey());
-            this.insertMrtonProcInfo(mrtonProcInfo);
+            //TODO　新加自定义任务
         }else{
-            this.updateMrtonProcInfo(mrtonProcInfo);
+            MrtonProcInfo mrtonProcInfo1 = new MrtonProcInfo();
+            BeanUtils.copyProperties(mrtonProcInfo,mrtonProcInfo1);
+            this.updateMrtonProcInfo(mrtonProcInfo1);
+
+            if(mrtonProcInfo.getLstResource() !=null && mrtonProcInfo.getLstResource().size() > 0){
+                for(MrtonProcCfgResource resource : mrtonProcInfo.getLstResource()){
+
+                    MrtonResource mrtonResource = new MrtonResource();
+                    mrtonResource.setId(resource.getId());
+                    mrtonResource.setProcId(mrtonProcInfo.getId());
+
+                    mrtonResourceMapper.updateMrtonResource(mrtonResource);
+
+                }
+            }
         }
     }
 

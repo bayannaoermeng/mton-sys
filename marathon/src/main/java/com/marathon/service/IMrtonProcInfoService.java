@@ -90,7 +90,7 @@ public interface IMrtonProcInfoService {
      * 保存自定义赛事任务
      * @param mrtonProcInfo
      */
-    void addOrEditSave(MrtonProcInfo mrtonProcInfo);
+    void addOrEditSave(MrtonProcCommonQVO mrtonProcInfo);
 
     /**
      * 查询赛事任务

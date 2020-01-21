@@ -2,6 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
 	<th:block th:include="include :: header('修改赛事过程关系')" />
+	<th:block th:include="include :: bootstrap-fileinput-css" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -38,9 +39,36 @@
 					<textarea id="procDescri" name="procDescri" class="form-control" readonly>[[*{procDescri}]]</textarea>
 				</div>
 			</div>
+
+			<div class="form-group" th:if="${not #lists.isEmpty(mrtonProcInfo.lstResource)}">
+				<label class="col-sm-3 control-label">资源列表</label>
+				<div class="list-group col-sm-8" id="atachment_list" style="margin-top: 10px;margin-left: 15px">
+					<li class="list-group-item" th:each="resource:${mrtonProcInfo.lstResource}">
+						<span th:text="${resource.resourceName}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button class="btn-default btn" th:onclick="downLoad([[${resource.resourceUrl}]])">下载</button>
+					</li>
+
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">文件列表</label>
+				<div class="list-group col-sm-8" id="atachment_list_uploaded" style="margin-top: 10px;margin-left: 15px">
+
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">文件上传</label>
+				<div class="col-xs-8">
+					<input id="file-0a" name="file" type="file" multiple class="file-loading">
+				</div>
+			</div>
+
 		</form>
     </div>
     <div th:include="include::footer"></div>
+	<th:block th:include="include :: bootstrap-fileinput-js" />
     <script type="text/javascript">
 		var prefix = ctx + "mrtonproc/safety";
 		$("#form-mrtonProcInfo-edit").validate({
@@ -60,9 +88,117 @@
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/save", $('#form-mrtonProcInfo-edit').serialize());
+	            // $.operate.save(prefix + "/save", $('#form-mrtonProcInfo-edit').serialize());
+				var mrtonProcCommon = {
+					id: $.trim($('#id').val()),
+					planStarttimeStr: $.trim($('#startTime').val()),
+					planEndtimeStr: $.trim($('#endTime').val()),
+				}
+
+				mrtonProcCommon.lstResource=[];
+				$('#atachment_list .list-group-item').each(function(index,item){
+					var resource = {
+						id: $(item).data("file").id
+					}
+					activity.lstFileResourceId.push(res);
+				});
+
+				$.ajax({
+					url: ctx + '/mrtonproc/safety/save',
+					method: 'post',
+					dataType: "json",
+					contentType: 'application/json;charset=UTF-8',
+					data: JSON.stringify(mrtonProcCommon),
+					success: function (response) {
+						if (response.code != 0) {
+
+						} else {
+
+						}
+					},
+					error: function (response) {
+
+					}
+				});
+
 	        }
 	    }
+
+		function downLoad(filename) {
+			window.location.href = ctx + "common/download?fileName=" + encodeURI(filename) + "&delete=" + false
+		}
+
+		$("#file-0a").fileinput({
+			language: 'zh', //设置语言
+			uploadUrl: ctx + "fileresource/add", //上传的地址
+			uploadAsync: true, //默认异步上传
+			showUpload: true, //是否显示上传按钮
+			showRemove: true, //显示移除按钮
+			showPreview: true, //是否显示预览
+			showCaption: true,//是否显示标题
+			browseClass: "btn btn-primary", //按钮样式
+			dropZoneEnabled: false,//是否显示拖拽区域
+			maxFileCount: 1, //表示允许同时上传的最大文件个数
+			enctype: 'multipart/form-data',
+			validateInitialCount: true,
+			uploadExtraData: function(previewId, index) {
+				var data = {
+					activityId : "test",
+				};
+				return data;
+			},
+		});
+
+		$('#file-0a').on('fileuploaderror', function (event, data, previewId, index) {
+			var form = data.form, files = data.files, extra = data.extra,
+					response = data.response, reader = data.reader;
+			console.log(data);
+			console.log('File upload error');
+		});
+
+		$('#file-0a').on('fileerror', function (event, data) {
+			console.log(data.id);
+			console.log(data.index);
+			console.log(data.file);
+			console.log(data.reader);
+			console.log(data.files);
+		});
+
+		$('#file-0a').on('fileuploaded', function (event, data, previewId, index) {
+			var form = data.form, files = data.files, extra = data.extra,
+					response = data.response, reader = data.reader;
+			var tmplate=
+					'<li class="list-group-item" id='+response.id+'>' +
+					'<span>'+response.resourceName+'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+					'<button class="btn-danger btn" id="delFileBtn">删除</button>' +
+					'</li>';
+			$(tmplate).appendTo($('#atachment_list_uploaded'))
+					.data("file",response)
+					.find('button').click(function(){
+				var fileResource=$(this).parent().data("file");
+				$.ajax({
+					url: ctx + 'fileresource/deleteFile',
+					method: 'post',
+					dataType: "json",
+					contentType: 'application/json;charset=UTF-8',
+					data: JSON.stringify(fileResource),
+					success: function (response) {
+						if (response.code != 0) {
+							bootbox.alert(response.message);
+						} else {
+							$('#'+fileResource.id).remove();
+						}
+					},
+					error: function (response) {
+						bootbox.alert("error");
+					}
+				});
+			});
+		});
+
+		$('#file-0a').on('filebatchuploadcomplete', function(event, files, extra) {
+			$("#file-0a").fileinput('reset');
+		});
 	</script>
 </body>
 </html>

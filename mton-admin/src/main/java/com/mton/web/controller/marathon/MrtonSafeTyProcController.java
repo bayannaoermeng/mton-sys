@@ -19,10 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -86,16 +83,11 @@ public class MrtonSafeTyProcController extends BaseController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public AjaxResult save(MrtonProcInfo mrtonProcInfo){
+    public AjaxResult save(@RequestBody  MrtonProcCommonQVO mrtonProcInfo){
 
-        if(Strings.isNullOrEmpty(mrtonProcInfo.getId())){
-            Preconditions.checkArgument(!Strings.isNullOrEmpty(mrtonProcInfo.getMarathonId()),"安全防护-保存-赛事ID不能为空");
-            Preconditions.checkArgument(!Strings.isNullOrEmpty(mrtonProcInfo.getParentProcId()),"安全防护-保存-父任务ID不能为空");
-        }
+//        Preconditions.checkArgument(!Strings.isNullOrEmpty(mrtonProcInfo.getProcName()),"安全防护-保存-任务名称不能为空");
 
-        Preconditions.checkArgument(!Strings.isNullOrEmpty(mrtonProcInfo.getProcName()),"安全防护-保存-任务名称不能为空");
-
-        mrtonProcInfoService.addOrEditSave(mrtonProcInfo);
+        mrtonProcInfoService.addOrEditSave(MrtonProcCommonQVO);
         return AjaxResult.success();
     }
 
