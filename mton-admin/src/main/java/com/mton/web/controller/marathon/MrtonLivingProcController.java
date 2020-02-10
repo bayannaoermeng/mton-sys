@@ -77,9 +77,9 @@ public class MrtonLivingProcController extends BaseController {
 
         Preconditions.checkArgument(!Strings.isNullOrEmpty(mrtonProcInfo.getProcName()),"直播-保存-任务名称不能为空");
 
-        mrtonProcInfoService.addOrEditSave(mrtonProcInfo);
+//        mrtonProcInfoService.addOrEditSave(mrtonProcInfo);
         return AjaxResult.success();
-    }
+}
 
     @RequestMapping("/remove/{mrtonprocId}")
     @ResponseBody

@@ -87,7 +87,7 @@ public class MrtonSafeTyProcController extends BaseController {
 
 //        Preconditions.checkArgument(!Strings.isNullOrEmpty(mrtonProcInfo.getProcName()),"安全防护-保存-任务名称不能为空");
 
-        mrtonProcInfoService.addOrEditSave(MrtonProcCommonQVO);
+//        mrtonProcInfoService.addOrEditSave(MrtonProcCommonQVO);
         return AjaxResult.success();
     }
 
