@@ -18,7 +18,7 @@ mton:
 # 开发环境配置
 server:
   # 服务端口
-  port: 8080
+  port: 80
   servlet:
     # 项目contextPath
     context-path: /
@@ -69,7 +69,7 @@ spring:
       master:
         url: jdbc:mysql://118.190.97.162:3306/mrthon?useUnicode=true&characterEncoding=utf8&useTimezone=true&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull&useSSL=true
         username: root
-        password: Abc123!_
+        password: QUtkteA6D*5
       # 从库数据源
       slave:
         # 从数据源开关/默认关闭

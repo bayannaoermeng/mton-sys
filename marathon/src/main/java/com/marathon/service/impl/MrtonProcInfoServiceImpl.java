@@ -10,8 +10,9 @@ import java.util.UUID;
 
 import cn.hutool.core.convert.Convert;
 import com.google.common.base.Strings;
-import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 import com.marathon.MrthonMenuEnum;
+import com.marathon.MrtonConstants;
 import com.marathon.MrtonProcEnum;
 import com.marathon.MrtonProcStatusEnum;
 import com.marathon.domain.*;
@@ -22,13 +23,11 @@ import com.marathon.qvo.MrthonMenuBean;
 import com.marathon.qvo.MrtonProcCommonQVO;
 import com.marathon.qvo.MrtonProcInfoVO;
 import com.marathon.qvo.MyMrtonProcVO;
-import com.marathon.service.IMrtonProcCfgService;
-import com.mton.common.utils.DateUtil;
+import com.marathon.service.IOfficeToolService;
+import com.marathon.service.IReferOfficeService;
 import com.mton.system.domain.SysMenu;
 import com.mton.system.domain.SysUser;
-import com.mton.system.service.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +54,12 @@ public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
 
     @Autowired
     private MrtonResourceMapper mrtonResourceMapper;
+
+    @Autowired
+    private IOfficeToolService officeToolService;
+
+    @Autowired
+    private IReferOfficeService referOfficeService;
 
     /**
      * 查询赛事过程关系信息
@@ -230,7 +235,7 @@ public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
     }
 
     @Override
-    public MrtonProcCommonQVO queryMrtonInfoById(String mrtonprocId) {
+    public MrtonProcCommonQVO queryMrtonInfoById(String mrtonprocId, Long userId) {
         MrtonProcCommonQVO mrtonProcInfo= mrtProcInfoCustomizeMapper.queryMrtonInfoById(mrtonprocId);
         if(mrtonProcInfo!=null){
             if (mrtonProcInfo.getPlanStarttime() != null) {
@@ -245,6 +250,32 @@ public class MrtonProcInfoServiceImpl implements IMrtonProcInfoService {
                 List<MrtonProcCfgResource> lstResource = mrtonProcCfgResourceMapper.selectByExample(example);
                 mrtonProcInfo.setLstResource(lstResource);
             }
+
+            if(mrtonProcInfo.getCustomize()!=1){
+                //获取参考文件url列表
+                MrtonProcCfgResourceExample example = new MrtonProcCfgResourceExample();
+                example.or().andCfgProcIdEqualTo(mrtonProcInfo.getProcCfgId());
+                List<MrtonProcCfgResource> lstResource = mrtonProcCfgResourceMapper.selectByExample(example);
+
+                List<String> lstUrl = Lists.newArrayList();
+                for (MrtonProcCfgResource resource:lstResource){
+                    lstUrl.add(referOfficeService.getLink(String.valueOf(resource.getId()),userId.intValue(), MrtonConstants.OFFICE_PREVIEW_KEY));
+                }
+
+                mrtonProcInfo.setLstReferOfficeUrl(lstUrl);
+            }
+
+            //获取待完善的office文件url列表
+            MrtonResource mrtonResource = new MrtonResource();
+            mrtonResource.setProcId(mrtonprocId);
+            List<MrtonResource> lstMrtonResouce = mrtonResourceMapper.selectMrtonResourceList(mrtonResource);
+            List<String> lstUrl = Lists.newArrayList();
+            for(MrtonResource resource:lstMrtonResouce){
+
+                lstUrl.add(officeToolService.getLink(String.valueOf(resource.getId()),userId.intValue(),MrtonConstants.OFFICE_EDIT_KEY));
+
+            }
+            mrtonProcInfo.setLstOfficeUrl(lstUrl);
         }
         return mrtonProcInfo;
     }

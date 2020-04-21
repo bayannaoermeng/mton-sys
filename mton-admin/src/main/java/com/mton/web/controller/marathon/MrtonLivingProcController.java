@@ -10,6 +10,7 @@ import com.marathon.service.IMrtonProcCfgService;
 import com.marathon.service.IMrtonProcInfoService;
 import com.mton.common.base.AjaxResult;
 import com.mton.framework.web.base.BaseController;
+import com.mton.system.domain.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,7 +62,8 @@ public class MrtonLivingProcController extends BaseController {
 
     @RequestMapping("/edit/{mrtonprocId}")
     public String edit(@PathVariable("mrtonprocId") String mrtonprocId,ModelMap modelMap){
-        MrtonProcCommonQVO mrtonProcInfo=mrtonProcInfoService.queryMrtonInfoById(mrtonprocId);
+        SysUser user = getSysUser();
+        MrtonProcCommonQVO mrtonProcInfo=mrtonProcInfoService.queryMrtonInfoById(mrtonprocId, user.getUserId());
         modelMap.put("mrtonProcInfo",mrtonProcInfo);
         return prefix + "/living/edit";
     }

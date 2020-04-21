@@ -45,10 +45,8 @@
         <module>mton-admin</module>
         <module>mton-framework</module>
         <module>mton-system</module>
-        <module>mton-quartz</module>
         <module>mton-generator</module>
         <module>mton-common</module>
-        <module>mton-mq</module>
         <module>marathon</module>
         <module>mton-mybatis-generator</module>
     </modules>

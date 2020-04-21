@@ -2,6 +2,7 @@ package com.marathon.qvo;
 
 import com.marathon.domain.MrtonProcCfgResource;
 import com.mton.common.base.BaseEntity;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * @description 赛事任务详细信息共用数据结构
  */
 @Data
+@ApiModel(value = "任务详情")
 public class MrtonProcCommonQVO extends BaseEntity {
 
     @ApiModelProperty(value="主键ID",name="id")
@@ -46,5 +48,11 @@ public class MrtonProcCommonQVO extends BaseEntity {
 
     @ApiModelProperty(value = "资源列表",name ="lstResource")
     private List<MrtonProcCfgResource> lstResource;
+
+    @ApiModelProperty(value = "参考office文件URL",name ="lstReferOfficeUrl")
+    private List<String> lstReferOfficeUrl;
+
+    @ApiModelProperty(value = "待编辑office文件URL",name = "lstOfficeUrl")
+    private List<String> lstOfficeUrl;
 
 }

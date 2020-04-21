@@ -14,4 +14,8 @@ public class MrtonConstants {
     public static final String MRTON_PROC_SAFETY_PROTECTION="安保";
 
     public static final String RESOURCE_COMPETITION_RULE="竞赛章程";
+
+    //OFFICE 毕升关键字 预览|编辑
+    public static final String OFFICE_PREVIEW_KEY= "openPreview";
+    public static final String OFFICE_EDIT_KEY = "openEditor";
 }

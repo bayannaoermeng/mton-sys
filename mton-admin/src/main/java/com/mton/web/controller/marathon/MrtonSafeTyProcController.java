@@ -13,6 +13,7 @@ import com.marathon.service.IMrtonProcInfoService;
 import com.marathon.service.IMrtonSafetyGraspService;
 import com.mton.common.base.AjaxResult;
 import com.mton.framework.web.base.BaseController;
+import com.mton.system.domain.SysUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -43,57 +44,60 @@ public class MrtonSafeTyProcController extends BaseController {
     @Autowired
     private IMrtonSafetyGraspService mrtonSafetyGraspService;
 
-    private String prefix = "marathon/procedure" ;
+    private String prefix = "marathon/procedure";
 
     @RequestMapping("/{marathonId}")
-    public String safety(@PathVariable("marathonId") String marathonId, ModelMap modelMap){
-        modelMap.put("marathonId",marathonId);
+    public String safety(@PathVariable("marathonId") String marathonId, ModelMap modelMap) {
+        modelMap.put("marathonId", marathonId);
         return prefix + "/safety/safetyprotection";
     }
 
     @GetMapping("/add/{marathonId}")
     @ApiOperation(value = "添加自定义任务")
-    public String add(@PathVariable("marathonId") String marathonId, ModelMap modelMap){
-        MrtonProcInfo mrtonProcInfo=new MrtonProcInfo();
+    public String add(@PathVariable("marathonId") String marathonId, ModelMap modelMap) {
+        MrtonProcInfo mrtonProcInfo = new MrtonProcInfo();
         mrtonProcInfo.setMarathonId(marathonId);
 
-        MrtonProcCfg config=new MrtonProcCfg();
+        MrtonProcCfg config = new MrtonProcCfg();
         config.setProcName(MrtonProcEnum.SAFTY_PROTECTION.getName());
-        List<MrtonProcCfg> lstSafetyProc=mrtonProcCfgService.selectMrtonProcCfgList(config);
-        Preconditions.checkArgument(lstSafetyProc.size()>0,"没有安全防护任务的配置");
+        List<MrtonProcCfg> lstSafetyProc = mrtonProcCfgService.selectMrtonProcCfgList(config);
+        Preconditions.checkArgument(lstSafetyProc.size() > 0, "没有安全防护任务的配置");
         mrtonProcInfo.setParentProcId(lstSafetyProc.get(0).getProcId());
 
-        modelMap.put("mrtonProcInfo",mrtonProcInfo);
+        modelMap.put("mrtonProcInfo", mrtonProcInfo);
         return prefix + "/safety/add";
     }
 
     @GetMapping("/edit/{mrtonprocId}")
     @ApiOperation(value = "编辑任务")
-    public String edit(@PathVariable("mrtonprocId") String mrtonprocId,ModelMap modelMap){
-        MrtonProcCommonQVO mrtonProcInfo=mrtonProcInfoService.queryMrtonInfoById(mrtonprocId);
-        if(MrtonSafetyChildTaskEnum.CHILD_GRASP.getName().equals(mrtonProcInfo.getProcName())){
-            MrtonSafetyGrasp grasp=mrtonSafetyGraspService.getGraspByProcId(mrtonprocId);
-            modelMap.put("grasp",grasp);
-            return prefix +"/safety/graspedit";
-        }else{
-            modelMap.put("mrtonProcInfo",mrtonProcInfo);
-            return prefix + "/safety/edit";
-        }
+    public String edit(@PathVariable("mrtonprocId") String mrtonprocId, ModelMap modelMap) {
+        SysUser user = getSysUser();
+        MrtonProcCommonQVO mrtonProcInfo = mrtonProcInfoService.queryMrtonInfoById(mrtonprocId, user.getUserId());
+
+//        if(MrtonSafetyChildTaskEnum.CHILD_GRASP.getName().equals(mrtonProcInfo.getProcName())){
+//            MrtonSafetyGrasp grasp=mrtonSafetyGraspService.getGraspByProcId(mrtonprocId);
+//            modelMap.put("grasp",grasp);
+//            return prefix +"/safety/graspedit";
+//        }else{
+        modelMap.put("mrtonProcInfo", mrtonProcInfo);
+        return prefix + "/safety/edit";
+//        }
     }
 
     @RequestMapping("/save")
     @ResponseBody
-    public AjaxResult save(@RequestBody  MrtonProcCommonQVO mrtonProcInfo){
+    public AjaxResult save(@RequestBody MrtonProcCommonQVO mrtonProcInfo) {
 
-//        Preconditions.checkArgument(!Strings.isNullOrEmpty(mrtonProcInfo.getProcName()),"安全防护-保存-任务名称不能为空");
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(mrtonProcInfo.getProcName()), "安全防护-保存-任务名称不能为空");
 
-//        mrtonProcInfoService.addOrEditSave(MrtonProcCommonQVO);
+        mrtonProcInfoService.addOrEditSave(mrtonProcInfo);
+
         return AjaxResult.success();
     }
 
     @RequestMapping("/remove/{mrtonprocId}")
     @ResponseBody
-    public AjaxResult remove(@PathVariable("mrtonprocId") String mrtonProcId){
+    public AjaxResult remove(@PathVariable("mrtonprocId") String mrtonProcId) {
         mrtonProcInfoService.deleteMrtonProcInfoByIds(mrtonProcId);
         return AjaxResult.success();
     }

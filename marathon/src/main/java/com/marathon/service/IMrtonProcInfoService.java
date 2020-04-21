@@ -95,7 +95,8 @@ public interface IMrtonProcInfoService {
     /**
      * 查询赛事任务
      * @param mrtonprocId
+     * @param userId
      * @return
      */
-    MrtonProcCommonQVO queryMrtonInfoById(String mrtonprocId);
+    MrtonProcCommonQVO queryMrtonInfoById(String mrtonprocId, Long userId);
 }
