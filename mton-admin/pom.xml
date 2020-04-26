@@ -40,7 +40,7 @@
         </dependency>
         <dependency>
             <groupId>com.mton</groupId>
-            <artifactId>marathon</artifactId>
+            <artifactId>mton-service</artifactId>
             <version>${mton.version}</version>
         </dependency>
 

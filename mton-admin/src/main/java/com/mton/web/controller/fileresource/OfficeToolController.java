@@ -96,12 +96,14 @@ public class OfficeToolController extends BaseController {
             @ApiImplicitParam(name = "fileId",value = "文件id",required = true)
     })
     public void fileDownload(String fileId, HttpServletResponse response, HttpServletRequest request) {
+
         MrtonResource fileResource =  mrtonResourceService.selectMrtonResourceById(Integer.valueOf(fileId));
         String fileName = fileResource.getResourceName();
         String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf('/') + 1);
         try {
             String relavateFilePath=fileResource.getResourceUrl();
             String filePath = Global.getUploadPath() + relavateFilePath;
+            log.info("接收到编辑文件下载请求【{}】",filePath);
             response.setCharacterEncoding(CharsetKit.UTF8);
             response.setContentType("multipart/form-data");
             response.setHeader("Content-Disposition", "attachment;fileName=" + FileUtils.setFileDownloadHeader(request, realFileName));

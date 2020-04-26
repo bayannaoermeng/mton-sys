@@ -97,19 +97,6 @@
             <version>${mton.version}</version>
         </dependency>
 
-        <!-- 定时任务-->
-<!--        <dependency>-->
-<!--            <groupId>com.mton/groupId>-->
-<!--            <artifactId>mton-quartz</artifactId>-->
-<!--            <version>${mton.version}</version>-->
-<!--        </dependency>-->
-
-        <!-- 代码生成-->
-        <dependency>
-            <groupId>com.mton</groupId>
-            <artifactId>mton-generator</artifactId>
-            <version>${mton.version}</version>
-        </dependency>
 
         <!-- pagehelper 分页插件 -->
         <dependency>

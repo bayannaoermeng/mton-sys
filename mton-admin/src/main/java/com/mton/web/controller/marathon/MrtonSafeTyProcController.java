@@ -3,14 +3,11 @@ package com.mton.web.controller.marathon;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.marathon.MrtonProcEnum;
-import com.marathon.MrtonSafetyChildTaskEnum;
 import com.marathon.domain.MrtonProcCfg;
 import com.marathon.domain.MrtonProcInfo;
-import com.marathon.domain.MrtonSafetyGrasp;
 import com.marathon.qvo.MrtonProcCommonQVO;
 import com.marathon.service.IMrtonProcCfgService;
 import com.marathon.service.IMrtonProcInfoService;
-import com.marathon.service.IMrtonSafetyGraspService;
 import com.mton.common.base.AjaxResult;
 import com.mton.framework.web.base.BaseController;
 import com.mton.system.domain.SysUser;
@@ -40,9 +37,6 @@ public class MrtonSafeTyProcController extends BaseController {
 
     @Autowired
     private IMrtonProcInfoService mrtonProcInfoService;
-
-    @Autowired
-    private IMrtonSafetyGraspService mrtonSafetyGraspService;
 
     private String prefix = "marathon/procedure";
 
@@ -74,11 +68,6 @@ public class MrtonSafeTyProcController extends BaseController {
         SysUser user = getSysUser();
         MrtonProcCommonQVO mrtonProcInfo = mrtonProcInfoService.queryMrtonInfoById(mrtonprocId, user.getUserId());
 
-//        if(MrtonSafetyChildTaskEnum.CHILD_GRASP.getName().equals(mrtonProcInfo.getProcName())){
-//            MrtonSafetyGrasp grasp=mrtonSafetyGraspService.getGraspByProcId(mrtonprocId);
-//            modelMap.put("grasp",grasp);
-//            return prefix +"/safety/graspedit";
-//        }else{
         modelMap.put("mrtonProcInfo", mrtonProcInfo);
         return prefix + "/safety/edit";
 //        }

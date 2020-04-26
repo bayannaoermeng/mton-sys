@@ -1,17 +1,10 @@
 package com.mton.web.controller.fileresource;
 
 import com.marathon.domain.MrtonProcCfgResource;
-import com.marathon.domain.MrtonResource;
 import com.marathon.mapper.MrtonProcCfgResourceMapper;
 import com.marathon.qvo.OfficeFileAclVO;
-import com.marathon.qvo.OfficeFileSaveBackQO;
-import com.marathon.qvo.OfficeFileSaveBackVO;
-import com.marathon.service.IMrtonProcCfgService;
-import com.marathon.service.IMrtonResourceService;
-import com.marathon.service.IOfficeToolService;
-import com.mton.common.base.AjaxResult;
+import com.marathon.service.IReferOfficeService;
 import com.mton.common.config.Global;
-import com.mton.common.json.JSON;
 import com.mton.common.support.CharsetKit;
 import com.mton.common.utils.file.FileUtils;
 import com.mton.framework.web.base.BaseController;
@@ -23,13 +16,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @author cuiguangqiang
@@ -47,13 +38,13 @@ public class ReferOfficeController extends BaseController {
     private MrtonProcCfgResourceMapper mrtonProcCfgResourceMapper;
 
     @Autowired
-    private IOfficeToolService officeToolService;
+    private IReferOfficeService referOfficeService;
 
     @RequestMapping("fileAcl/{fileId}/{userId}")
     @ResponseBody
     public OfficeFileAclVO fileAcl(@PathVariable("fileId") String fileId,@PathVariable("userId") String userId){
 
-        return officeToolService.fileAcl(fileId,userId);
+        return referOfficeService.fileAcl(fileId,userId);
 
     }
 
@@ -69,6 +60,7 @@ public class ReferOfficeController extends BaseController {
         try {
             String relavateFilePath=fileResource.getResourceUrl();
             String filePath = Global.getUploadPath() + relavateFilePath;
+            log.info("接收到参考文件下载请求【{}】",filePath);
             response.setCharacterEncoding(CharsetKit.UTF8);
             response.setContentType("multipart/form-data");
             response.setHeader("Content-Disposition", "attachment;fileName=" + FileUtils.setFileDownloadHeader(request, realFileName));
