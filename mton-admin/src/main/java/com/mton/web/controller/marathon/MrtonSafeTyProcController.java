@@ -54,7 +54,8 @@ public class MrtonSafeTyProcController extends BaseController {
 
         MrtonProcCfg config = new MrtonProcCfg();
         config.setProcName(MrtonProcEnum.SAFTY_PROTECTION.getName());
-        List<MrtonProcCfg> lstSafetyProc = mrtonProcCfgService.selectMrtonProcCfgList(config);
+//        List<MrtonProcCfg> lstSafetyProc = mrtonProcCfgService.selectMrtonProcCfgList(config);
+        List<MrtonProcCfg> lstSafetyProc = null;
         Preconditions.checkArgument(lstSafetyProc.size() > 0, "没有安全防护任务的配置");
         mrtonProcInfo.setParentProcId(lstSafetyProc.get(0).getProcId());
 

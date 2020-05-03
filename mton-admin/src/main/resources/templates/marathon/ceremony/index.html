@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('脑图')" />
+    <meta charset="utf-8">
+    <title>Organization Chart Plugin</title>
+</head>
+<body class="gray-bg">
+<div id="chart-container"></div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    $(function () {
+
+        var oc = $('#chart-container').orgchart({
+            'data': '/ceremony/data',
+            'direction': 'l2r'
+        });
+
+    });
+</script>
+</body>
+</html>

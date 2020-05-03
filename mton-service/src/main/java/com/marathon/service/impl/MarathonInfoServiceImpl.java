@@ -4,10 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import cn.hutool.core.convert.Convert;
 import com.google.common.base.Strings;
@@ -16,6 +13,8 @@ import com.marathon.MrtonProcEnum;
 import com.marathon.domain.*;
 import com.marathon.mapper.MarathonInfoMapper;
 import com.marathon.mapper.MarathonUserMapper;
+import com.marathon.mapper.MrtonProcCfgMapper;
+import com.marathon.qvo.OrgChartDataVO;
 import com.marathon.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +39,9 @@ public class MarathonInfoServiceImpl implements IMarathonInfoService {
 
     @Autowired
     private IMrtonProcInfoService mrtonProcInfoService;
+
+    @Autowired
+    private MrtonProcCfgMapper mrtonProcCfgMapper;
 
     /**
      * 查询赛事信息
@@ -98,30 +100,35 @@ public class MarathonInfoServiceImpl implements IMarathonInfoService {
 
     private void initMaratonProcInfo(MarathonInfo marathon_info) {
 
-        MrtonProcCfg cfg = new MrtonProcCfg();
-        cfg.setParentProcId(MrtonConstants.DEFAULT_PROC_TOP);
-        List<MrtonProcCfg> lstParent = mrtonProcCfgService.selectMrtonProcCfgList(cfg);
+        MrtonProcCfgExample cfg = new MrtonProcCfgExample();
+        cfg.or().andParentProcIdIsNull();
+        List<MrtonProcCfg> lstParent = mrtonProcCfgService.selectByExample(cfg);
 
         lstParent.forEach(config -> {
 
             String uuid = config.getProcId();
 
-            MrtonProcCfg cfgExmple = new MrtonProcCfg();
-            cfgExmple.setParentProcId(uuid);
-            List<MrtonProcCfg> lstChildren = mrtonProcCfgService.selectMrtonProcCfgList(cfgExmple);
+            recursiveTree(marathon_info.getMarathon_uuid(),uuid);
 
-            for (MrtonProcCfg mrtonProcCfg : lstChildren) {
-                MrtonProcInfo info = new MrtonProcInfo();
-                info.setMarathonId(marathon_info.getMarathon_uuid());
-                info.setParentProcId(config.getProcId());
-                info.setProcId(mrtonProcCfg.getProcId());
-                info.setId(UUID.randomUUID().toString());
-
-                calcPlanTime(mrtonProcCfg, info, marathon_info.getMarathon_starttime());
-
-                mrtonProcInfoService.insertMrtonProcInfo(info);
-            }
         });
+    }
+
+    public void recursiveTree(String mrtonId,String procId) {
+        MrtonProcInfo procInfo = new MrtonProcInfo();
+        MrtonProcCfg cfg = mrtonProcCfgMapper.selectByPrimaryKey(procId);
+        procInfo.setId(UUID.randomUUID().toString());
+        procInfo.setMarathonId(mrtonId);
+        procInfo.setParentProcId(cfg.getParentProcId());
+        procInfo.setProcId(procId);
+        mrtonProcInfoService.insertMrtonProcInfo(procInfo);
+
+        MrtonProcCfgExample example = new MrtonProcCfgExample();
+        example.or().andParentProcIdEqualTo(procId);
+        List<MrtonProcCfg> lstCfg = mrtonProcCfgMapper.selectByExample(example);
+        for (MrtonProcCfg child : lstCfg) {
+             recursiveTree(mrtonId,child.getProcId()); //递归
+        }
+
     }
 
     //生成默认起终时间

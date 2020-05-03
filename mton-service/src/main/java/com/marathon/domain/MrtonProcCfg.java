@@ -1,61 +1,202 @@
 package com.marathon.domain;
 
-import com.mton.common.base.BaseEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import java.io.Serializable;
 
-                                                    /**
- * 赛事分解过程(步骤)配置表 mrton_proc_cfg
- *
- * @author cuigq
- * @date 2019-10-08
- */
-@EqualsAndHashCode(callSuper = true)
-@Data
-@ApiModel(description="赛事分解过程(步骤)配置",parent=BaseEntity.class)
-public class MrtonProcCfg extends BaseEntity{
-
-    private static final long serialVersionUID=1L;
-    
-    @ApiModelProperty(value="步骤ID",name="procId")
+public class MrtonProcCfg implements Serializable {
+    /**
+     * 步骤ID
+     *
+     * @mbggenerated
+     */
     private String procId;
-        
-    @ApiModelProperty(value="步骤名称",name="procName")
+
+    /**
+     * 步骤名称
+     *
+     * @mbggenerated
+     */
     private String procName;
-        
-    @ApiModelProperty(value="序号，排序使用",name="procSeq")
+
+    /**
+     * 序号，排序使用
+     *
+     * @mbggenerated
+     */
     private Integer procSeq;
-        
-    @ApiModelProperty(value="父步骤ID",name="parentProcId")
+
+    /**
+     * 父步骤ID
+     *
+     * @mbggenerated
+     */
     private String parentProcId;
-        
-    @ApiModelProperty(value="时间要对于比赛时间，true 之前，false 之后",name="comparativelyToMrton")
+
+    /**
+     * 时间要对于比赛时间，true 之前，false 之后
+     *
+     * @mbggenerated
+     */
     private Integer comparativelyToMrton;
-        
-    @ApiModelProperty(value="开始时间偏移量（天）",name="starttimeOffset")
+
+    /**
+     * 开始时间偏移量（天）
+     *
+     * @mbggenerated
+     */
     private Integer starttimeOffset;
-        
-    @ApiModelProperty(value="结束时间偏移量",name="endtimeOffset")
+
+    /**
+     * 结束时间偏移量
+     *
+     * @mbggenerated
+     */
     private Integer endtimeOffset;
-        
-    @ApiModelProperty(value="工作内容",name="procContent")
+
+    /**
+     * 工作内容
+     *
+     * @mbggenerated
+     */
     private String procContent;
-        
-    @ApiModelProperty(value="工作描述说明",name="procDescri")
+
+    /**
+     * 工作描述说明
+     *
+     * @mbggenerated
+     */
     private String procDescri;
-        
-    @ApiModelProperty(value="附件资源ID",name="attachResourceId")
+
+    /**
+     * 附件资源ID
+     *
+     * @mbggenerated
+     */
     private String attachResourceId;
-        
-    @ApiModelProperty(value="状态，0正常，1禁用",name="procStatus")
+
+    /**
+     * 状态，0正常，1禁用
+     *
+     * @mbggenerated
+     */
     private Integer procStatus;
-        
-    @ApiModelProperty(value="预留字段",name="reserved")
+
+    /**
+     * 预留字段
+     *
+     * @mbggenerated
+     */
     private String reserved;
-        
-    @ApiModelProperty(value="是否被删除",name="delFlag")
+
+    /**
+     * 是否被删除
+     *
+     * @mbggenerated
+     */
     private Integer delFlag;
-    
+
+    private static final long serialVersionUID = 1L;
+
+    public String getProcId() {
+        return procId;
+    }
+
+    public void setProcId(String procId) {
+        this.procId = procId == null ? null : procId.trim();
+    }
+
+    public String getProcName() {
+        return procName;
+    }
+
+    public void setProcName(String procName) {
+        this.procName = procName == null ? null : procName.trim();
+    }
+
+    public Integer getProcSeq() {
+        return procSeq;
+    }
+
+    public void setProcSeq(Integer procSeq) {
+        this.procSeq = procSeq;
+    }
+
+    public String getParentProcId() {
+        return parentProcId;
+    }
+
+    public void setParentProcId(String parentProcId) {
+        this.parentProcId = parentProcId == null ? null : parentProcId.trim();
+    }
+
+    public Integer getComparativelyToMrton() {
+        return comparativelyToMrton;
+    }
+
+    public void setComparativelyToMrton(Integer comparativelyToMrton) {
+        this.comparativelyToMrton = comparativelyToMrton;
+    }
+
+    public Integer getStarttimeOffset() {
+        return starttimeOffset;
+    }
+
+    public void setStarttimeOffset(Integer starttimeOffset) {
+        this.starttimeOffset = starttimeOffset;
+    }
+
+    public Integer getEndtimeOffset() {
+        return endtimeOffset;
+    }
+
+    public void setEndtimeOffset(Integer endtimeOffset) {
+        this.endtimeOffset = endtimeOffset;
+    }
+
+    public String getProcContent() {
+        return procContent;
+    }
+
+    public void setProcContent(String procContent) {
+        this.procContent = procContent == null ? null : procContent.trim();
+    }
+
+    public String getProcDescri() {
+        return procDescri;
+    }
+
+    public void setProcDescri(String procDescri) {
+        this.procDescri = procDescri == null ? null : procDescri.trim();
+    }
+
+    public String getAttachResourceId() {
+        return attachResourceId;
+    }
+
+    public void setAttachResourceId(String attachResourceId) {
+        this.attachResourceId = attachResourceId == null ? null : attachResourceId.trim();
+    }
+
+    public Integer getProcStatus() {
+        return procStatus;
+    }
+
+    public void setProcStatus(Integer procStatus) {
+        this.procStatus = procStatus;
+    }
+
+    public String getReserved() {
+        return reserved;
+    }
+
+    public void setReserved(String reserved) {
+        this.reserved = reserved == null ? null : reserved.trim();
+    }
+
+    public Integer getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(Integer delFlag) {
+        this.delFlag = delFlag;
+    }
 }

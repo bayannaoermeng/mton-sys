@@ -37,55 +37,56 @@ public class MrtonLivingProcController extends BaseController {
     @Autowired
     private IMrtonProcInfoService mrtonProcInfoService;
 
-    private String prefix = "marathon/procedure" ;
+    private String prefix = "marathon/procedure";
 
     @RequestMapping("/{marathonId}")
-    public String safety(@PathVariable("marathonId") String marathonId, ModelMap modelMap){
-        modelMap.put("marathonId",marathonId);
+    public String safety(@PathVariable("marathonId") String marathonId, ModelMap modelMap) {
+        modelMap.put("marathonId", marathonId);
         return prefix + "/living/living";
     }
 
     @RequestMapping("/add/{marathonId}")
-    public String add(@PathVariable("marathonId") String marathonId, ModelMap modelMap){
-        MrtonProcInfo mrtonProcInfo=new MrtonProcInfo();
+    public String add(@PathVariable("marathonId") String marathonId, ModelMap modelMap) {
+        MrtonProcInfo mrtonProcInfo = new MrtonProcInfo();
         mrtonProcInfo.setMarathonId(marathonId);
 
-        MrtonProcCfg config=new MrtonProcCfg();
+        MrtonProcCfg config = new MrtonProcCfg();
         config.setProcName(MrtonProcEnum.LIVING_PRO.getName());
-        List<MrtonProcCfg> lstSafetyProc=mrtonProcCfgService.selectMrtonProcCfgList(config);
-        Preconditions.checkArgument(lstSafetyProc.size()>0,"没有直播任务的配置");
+//        List<MrtonProcCfg> lstSafetyProc=mrtonProcCfgService.selectMrtonProcCfgList(config);
+        List<MrtonProcCfg> lstSafetyProc = null;
+        Preconditions.checkArgument(lstSafetyProc.size() > 0, "没有直播任务的配置");
         mrtonProcInfo.setParentProcId(lstSafetyProc.get(0).getProcId());
 
-        modelMap.put("mrtonProcInfo",mrtonProcInfo);
+        modelMap.put("mrtonProcInfo", mrtonProcInfo);
         return prefix + "/living/add";
     }
 
     @RequestMapping("/edit/{mrtonprocId}")
-    public String edit(@PathVariable("mrtonprocId") String mrtonprocId,ModelMap modelMap){
+    public String edit(@PathVariable("mrtonprocId") String mrtonprocId, ModelMap modelMap) {
         SysUser user = getSysUser();
-        MrtonProcCommonQVO mrtonProcInfo=mrtonProcInfoService.queryMrtonInfoById(mrtonprocId, user.getUserId());
-        modelMap.put("mrtonProcInfo",mrtonProcInfo);
+        MrtonProcCommonQVO mrtonProcInfo = mrtonProcInfoService.queryMrtonInfoById(mrtonprocId, user.getUserId());
+        modelMap.put("mrtonProcInfo", mrtonProcInfo);
         return prefix + "/living/edit";
     }
 
     @RequestMapping("/save")
     @ResponseBody
-    public AjaxResult save(MrtonProcInfo mrtonProcInfo){
+    public AjaxResult save(MrtonProcInfo mrtonProcInfo) {
 
-        if(Strings.isNullOrEmpty(mrtonProcInfo.getId())){
-            Preconditions.checkArgument(!Strings.isNullOrEmpty(mrtonProcInfo.getMarathonId()),"直播-保存-赛事ID不能为空");
-            Preconditions.checkArgument(!Strings.isNullOrEmpty(mrtonProcInfo.getParentProcId()),"直播-保存-父任务ID不能为空");
+        if (Strings.isNullOrEmpty(mrtonProcInfo.getId())) {
+            Preconditions.checkArgument(!Strings.isNullOrEmpty(mrtonProcInfo.getMarathonId()), "直播-保存-赛事ID不能为空");
+            Preconditions.checkArgument(!Strings.isNullOrEmpty(mrtonProcInfo.getParentProcId()), "直播-保存-父任务ID不能为空");
         }
 
-        Preconditions.checkArgument(!Strings.isNullOrEmpty(mrtonProcInfo.getProcName()),"直播-保存-任务名称不能为空");
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(mrtonProcInfo.getProcName()), "直播-保存-任务名称不能为空");
 
 //        mrtonProcInfoService.addOrEditSave(mrtonProcInfo);
         return AjaxResult.success();
-}
+    }
 
     @RequestMapping("/remove/{mrtonprocId}")
     @ResponseBody
-    public AjaxResult remove(@PathVariable("mrtonprocId") String mrtonProcId){
+    public AjaxResult remove(@PathVariable("mrtonprocId") String mrtonProcId) {
         mrtonProcInfoService.deleteMrtonProcInfoByIds(mrtonProcId);
         return AjaxResult.success();
     }

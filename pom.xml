@@ -24,6 +24,7 @@
         <pagehelper.boot.version>1.2.10</pagehelper.boot.version>
         <oshi.version>3.9.1</oshi.version>
         <lombok.version>1.18.4</lombok.version>
+        <docx4j.version>6.1.2</docx4j.version>
         <hutool.version>4.5.10</hutool.version>
         <rocketmq.starter.version>2.0.2</rocketmq.starter.version>
     </properties>
@@ -96,6 +97,13 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- docx4j操作word -->
+        <dependency>
+            <groupId>org.docx4j</groupId>
+            <artifactId>docx4j</artifactId>
+            <version>${docx4j.version}</version>
         </dependency>
 
         <!--Java工具集-->
