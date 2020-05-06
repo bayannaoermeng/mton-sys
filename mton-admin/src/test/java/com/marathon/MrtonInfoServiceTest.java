@@ -29,7 +29,6 @@ public class MrtonInfoServiceTest {
         MarathonInfo info = new MarathonInfo();
         info.setMarathon_name("测试事例");
         info.setMarathon_creater("1");
-
         marathonInfoService.insertMarathon_info(info);
 
     }

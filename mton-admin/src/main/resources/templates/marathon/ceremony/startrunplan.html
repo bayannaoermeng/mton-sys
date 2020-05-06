@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('起跑仪式方案')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-mrtonProcInfo-edit" th:object="${startRunPlan}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">年份</label>
+				<div class="col-sm-8">
+					<input id="year" name="year" th:field="*{year}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">赛事名称</label>
+				<div class="col-sm-8">
+					<input id="mrtonName" name="year" th:field="*{mrtonName}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">开始时间</label>
+				<div class="col-sm-8" >
+					<input id="starttime" name="starttime" th:field="*{starttime}" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">结束时间</label>
+				<div class="col-sm-8" >
+					<input id="endtime" name="endtime" th:field="*{endtime}" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">地点</label>
+				<div class="col-sm-8" >
+					<input id="location" name="location" th:field="*{location}" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">出席领导及嘉宾</label>
+				<div class="col-sm-8" >
+					<input id="participants" name="participants" th:field="*{participants}" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">暖场表演</label>
+				<div class="col-sm-8" >
+					<input id="warmShow" name="warmShow" th:field="*{warmShow}" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">运动员热身</label>
+				<div class="col-sm-8" >
+					<input id="athleteWarm" name="athleteWarm" th:field="*{athleteWarm}" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">主持人开场</label>
+				<div class="col-sm-8" >
+					<input id="hostOpen" name="hostOpen" th:field="*{hostOpen}" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">领导嘉宾登场</label>
+				<div class="col-sm-8" >
+					<input id="guestShow" name="guestShow" th:field="*{guestShow}" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">介绍领导嘉宾</label>
+				<div class="col-sm-8" >
+					<input id="introduction" name="introduction" th:field="*{introduction}" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">奏唱国歌</label>
+				<div class="col-sm-8" >
+					<input id="playAnthem" name="playAnthem" th:field="*{playAnthem}" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">鸣枪发令</label>
+				<div class="col-sm-8" >
+					<input id="fireGun" name="fireGun" th:field="*{fireGun}" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">比赛正式开始</label>
+				<div class="col-sm-8" >
+					<input id="gameStart" name="gameStart" th:field="*{gameStart}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "mrtonproc/safety";
+		$("#form-mrtonProcInfo-edit").validate({
+			rules:{
+				procName:{
+					required:true,
+				},
+				startTime:{
+					required:true,
+				},
+				endTime:{
+					required:true,
+				}
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            // $.operate.save(prefix + "/save", $('#form-mrtonProcInfo-edit').serialize());
+				var mrtonProcCommon = {
+					id: $.trim($('#id').val()),
+					planStarttimeStr: $.trim($('#startTime').val()),
+					planEndtimeStr: $.trim($('#endTime').val()),
+				}
+
+				mrtonProcCommon.lstResource=[];
+				$('#atachment_list .list-group-item').each(function(index,item){
+					var resource = {
+						id: $(item).data("file").id
+					}
+					activity.lstFileResourceId.push(res);
+				});
+
+				$.ajax({
+					url: ctx + '/mrtonproc/safety/save',
+					method: 'post',
+					dataType: "json",
+					contentType: 'application/json;charset=UTF-8',
+					data: JSON.stringify(mrtonProcCommon),
+					success: function (response) {
+						if (response.code != 0) {
+
+						} else {
+
+						}
+					},
+					error: function (response) {
+
+					}
+				});
+
+	        }
+	    }
+
+		function downLoad(filename) {
+			window.location.href = ctx + "common/download?fileName=" + encodeURI(filename) + "&delete=" + false
+		}
+	</script>
+</body>
+</html>

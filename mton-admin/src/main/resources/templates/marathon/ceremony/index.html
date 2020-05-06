@@ -10,9 +10,9 @@
 <div th:include="include :: footer"></div>
 <script th:inline="javascript">
     $(function () {
-
+        var mrtonId = [[${marathonId}]];
         var oc = $('#chart-container').orgchart({
-            'data': '/ceremony/data',
+            'data': '/ceremony/data/'+mrtonId,
             'direction': 'l2r'
         });
 

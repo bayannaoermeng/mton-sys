@@ -48,10 +48,8 @@
 
         <!-- 表结构 -->
 
-        <table tableName="mrton_proc_cfg" domainObjectName="MrtonProcCfg">
+        <table tableName="mrton_word_item" domainObjectName="MrtonWordItem">
             <generatedKey column="id" sqlStatement="MySql" type="post" identity="true" />
-            <columnOverride column="comparatively_to_mrton" javaType="java.lang.Integer" jdbcType="TINYINT" />
-            <columnOverride column="del_flag" javaType="java.lang.Integer" jdbcType="TINYINT" />
         </table>
     </context>
 </generatorConfiguration>

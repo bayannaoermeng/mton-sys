@@ -131,31 +131,4 @@ public class Global {
         return getConfig(CONFIG_KEY) + "upload/";
     }
 
-    /**
-     * 获取作者
-     */
-    public static String getAuthor() {
-        return Convert.toStr(getConfig("gen.author"), "mton");
-    }
-
-    /**
-     * 生成包路径
-     */
-    public static String getPackageName() {
-        return Convert.toStr(getConfig("gen.packageName"), "com.mton.project.module");
-    }
-
-    /**
-     * 是否自动去除表前缀
-     */
-    public static String getAutoRemovePre() {
-        return Convert.toStr(getConfig("gen.autoRemovePre"), "true");
-    }
-
-    /**
-     * 表前缀(类名不会包含表前缀)
-     */
-    public static String getTablePrefix() {
-        return Convert.toStr(getConfig("gen.tablePrefix"), "sys_");
-    }
 }

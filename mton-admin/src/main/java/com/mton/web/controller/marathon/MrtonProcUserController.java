@@ -62,6 +62,11 @@ public class MrtonProcUserController extends BaseController {
     }
 
 
+    /**
+     * 罗列本赛事的所有任务，树形展示
+     * @param marathonId
+     * @return
+     */
     //    @RequiresPermissions("marathon:marathon_info:proclist")
     @GetMapping("/proclist/{marathon_uuid}")
     @ResponseBody

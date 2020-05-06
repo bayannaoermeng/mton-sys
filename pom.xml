@@ -26,6 +26,7 @@
         <lombok.version>1.18.4</lombok.version>
         <docx4j.version>6.1.2</docx4j.version>
         <hutool.version>4.5.10</hutool.version>
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
         <rocketmq.starter.version>2.0.2</rocketmq.starter.version>
     </properties>
 
@@ -104,6 +105,12 @@
             <groupId>org.docx4j</groupId>
             <artifactId>docx4j</artifactId>
             <version>${docx4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${commons-beanutils.version}</version>
         </dependency>
 
         <!--Java工具集-->

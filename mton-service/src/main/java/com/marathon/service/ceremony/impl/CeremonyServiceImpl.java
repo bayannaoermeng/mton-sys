@@ -29,20 +29,20 @@ public class CeremonyServiceImpl implements ICeremonyService {
     private MrtonProcInfoMapper mrtonProcInfoMapper;
 
     @Override
-    public OrgChartDataVO getData(MrtonProcEnum mrtonProcEnum) {
+    public OrgChartDataVO getData(String mrtonId, MrtonProcEnum mrtonProcEnum) {
 
         MrtonProcCfgExample example = new MrtonProcCfgExample();
         example.or().andProcNameEqualTo(mrtonProcEnum.getName());
         List<MrtonProcCfg> lstProcCfg = mrtonProcCfgMapper.selectByExample(example);
         if (lstProcCfg.size() == 1) {
             MrtonProcCfg cfg = lstProcCfg.get(0);
-            return recursiveTree(cfg.getProcId());
+            return recursiveTree(mrtonId, cfg.getProcId());
         }
 
         throw new IllegalArgumentException("无数据。。。。。。。。");
     }
 
-    public OrgChartDataVO recursiveTree(String procId) {
+    public OrgChartDataVO recursiveTree(String mrtonId, String procId) {
         OrgChartDataVO vo = new OrgChartDataVO();
         MrtonProcCfg cfg = mrtonProcCfgMapper.selectByPrimaryKey(procId);
         vo.setName(cfg.getProcName());
@@ -51,8 +51,9 @@ public class CeremonyServiceImpl implements ICeremonyService {
 
         MrtonProcInfo mrtonProcInfo = new MrtonProcInfo();
         mrtonProcInfo.setProcId(procId);
-        List<MrtonProcInfo>infoList = mrtonProcInfoMapper.selectMrtonProcInfoList(mrtonProcInfo);
-        if(infoList.size() == 1){
+        mrtonProcInfo.setMarathonId(mrtonId);
+        List<MrtonProcInfo> infoList = mrtonProcInfoMapper.selectMrtonProcInfoList(mrtonProcInfo);
+        if (infoList.size() == 1) {
             vo.setId(infoList.get(0).getId());
         }
 
@@ -60,7 +61,7 @@ public class CeremonyServiceImpl implements ICeremonyService {
         example.or().andParentProcIdEqualTo(procId);
         List<MrtonProcCfg> lstCfg = mrtonProcCfgMapper.selectByExample(example);
         for (MrtonProcCfg child : lstCfg) {
-            OrgChartDataVO node = recursiveTree(child.getProcId()); //递归
+            OrgChartDataVO node = recursiveTree(mrtonId, child.getProcId()); //递归
             vo.getChildren().add(node);
         }
         vo.getChildren().sort(new Comparator<OrgChartDataVO>() {

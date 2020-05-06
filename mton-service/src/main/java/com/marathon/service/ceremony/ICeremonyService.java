@@ -5,6 +5,6 @@ import com.marathon.qvo.OrgChartDataVO;
 
 public interface ICeremonyService {
 
-    OrgChartDataVO getData(MrtonProcEnum mrtonProcEnum);
+    OrgChartDataVO getData(String mrtonId,MrtonProcEnum mrtonProcEnum);
 
 }

@@ -6,24 +6,24 @@
 
     <select id="selectMrtProcs" resultType="com.marathon.qvo.MrtonProcInfoVO">
         SELECT
-            complex.marathon_id as mrtonId,
-            complex.parent_proc_id as parentProcId,
-            config.proc_name as procName,
+            complex.marathon_id AS mrtonId,
+            complex.parent_proc_id AS parentProcId,
+            config.proc_name AS procName,
             GROUP_CONCAT(sysuser.user_name) AS principals
         FROM
             (
                 SELECT
-                    mtoninfo.marathon_id,
-                    mtoninfo.parent_proc_id
+                    proc_info.marathon_id,
+                    proc_info.parent_proc_id
                 FROM
-                    mrton_proc_info mtoninfo
+                    mrton_proc_info proc_info
                 WHERE
-                    mtoninfo.marathon_id = #{marathonId}
+                    proc_info.marathon_id = #{marathonId}
                 GROUP BY
-                    mtoninfo.marathon_id,
-                    mtoninfo.parent_proc_id
+                    proc_info.marathon_id,
+                    proc_info.parent_proc_id
             ) complex
-        LEFT JOIN mrton_proc_cfg config ON complex.parent_proc_id = config.proc_id
+        INNER JOIN mrton_proc_cfg config ON complex.parent_proc_id = config.proc_id and config.parent_proc_id is NULL
         LEFT JOIN mrton_proc_user mtonuser ON complex.marathon_id = mtonuser.mrton_id
         AND complex.parent_proc_id = mtonuser.parent_proc_id
         LEFT JOIN sys_user sysuser ON mtonuser.user_id = sysuser.user_id
@@ -86,7 +86,7 @@
         AND user_id = #{userId}
         INNER JOIN marathon_info mrton ON mpuser.mrton_id = mrton.marathon_uuid
         WHERE
-            cfg.parent_proc_id = "0"
+            cfg.parent_proc_id is null
     </select>
 
     <select id="queryMrtonInfoById" resultType="com.marathon.qvo.MrtonProcCommonQVO">

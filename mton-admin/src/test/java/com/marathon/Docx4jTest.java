@@ -37,5 +37,4 @@ public class Docx4jTest {
             e.printStackTrace();
         }
     }
-
 }
