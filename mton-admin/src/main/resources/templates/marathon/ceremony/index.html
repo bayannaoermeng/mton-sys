@@ -15,8 +15,7 @@
         var nodeTemplate = function(data) {
             return `
             <div class="title">
-                <span hidden>${data.id}</span>
-                <a href="#">${data.name}</a>
+                <a href="javascript:void(0)" onclick="registerEvent('${data.id}','${data.name}')">${data.name}</a>
             </div>
             <div class="content">${data.title}</div>
       `;
@@ -27,19 +26,15 @@
             'nodeTemplate': nodeTemplate,
             'direction': 'l2r'
         });
-
-
-        $('a').click(function(){
-            console.log(this.text);
-            var paroId = this.prev('span').text();
-            var text = this.text;
-            if('起跑仪式方案' == text){
-                modal.openTab(text,ctx +'/ceremony/edit/'+paroId)
-            }
-            return false;
-        });
-
     });
+
+    function registerEvent(procoId,procName){
+        console.log(procoId);
+        if('起跑仪式方案' == procName){
+            $.modal.openTab(procName,'ceremony/edit/'+procoId)
+        }
+        return false;
+    }
 </script>
 </body>
 </html>

@@ -9,6 +9,7 @@ import lombok.Data;
  */
 @Data
 public class StartRunPlan {
+    private String id;
     private String title;
     private String hostOpen;
     private String endtime;
