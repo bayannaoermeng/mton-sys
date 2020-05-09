@@ -9,9 +9,8 @@ import lombok.Data;
  */
 @Data
 public class StartRunPlan {
-    private String mrtonName;
+    private String title;
     private String hostOpen;
-    private String year;
     private String endtime;
     private String starttime;
     private String playAnthem;

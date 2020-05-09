@@ -11,9 +11,32 @@
 <script th:inline="javascript">
     $(function () {
         var mrtonId = [[${marathonId}]];
+
+        var nodeTemplate = function(data) {
+            return `
+            <div class="title">
+                <span hidden>${data.id}</span>
+                <a href="#">${data.name}</a>
+            </div>
+            <div class="content">${data.title}</div>
+      `;
+        };
+
         var oc = $('#chart-container').orgchart({
             'data': '/ceremony/data/'+mrtonId,
+            'nodeTemplate': nodeTemplate,
             'direction': 'l2r'
+        });
+
+
+        $('a').click(function(){
+            console.log(this.text);
+            var paroId = this.prev('span').text();
+            var text = this.text;
+            if('起跑仪式方案' == text){
+                modal.openTab(text,ctx +'/ceremony/edit/'+paroId)
+            }
+            return false;
         });
 
     });

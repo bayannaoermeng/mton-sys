@@ -1,8 +1,8 @@
 package com.marathon;
 
 
-import com.marathon.service.office.Docx4jTemplate;
-import com.marathon.service.office.WordToolService;
+import com.marathon.service.docx4j.Docx4jTempateServiceImpl;
+import com.marathon.service.docx4j.Docx4jTemplate;
 import com.marathon.service.office.impl.WordToolServiceImpl;
 import com.mton.MrtonApplication;
 import org.junit.Test;
@@ -36,5 +36,11 @@ public class Docx4jTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testAwardsPlan() throws Exception {
+        Docx4jTempateServiceImpl test = new Docx4jTempateServiceImpl();
+        test.replaceTemplateDocx();
     }
 }
