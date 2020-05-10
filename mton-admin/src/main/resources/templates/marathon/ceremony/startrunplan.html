@@ -5,7 +5,7 @@
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-mrtonProcInfo-edit" th:object="${startRunPlan}">
+        <form class="form-horizontal m" id="form-startrunplan-edit" th:object="${startRunPlan}">
             <input id="id" name="id" th:field="*{id}"  type="hidden">
 			<div class="form-group">
 				<label class="col-sm-3 control-label">赛事名称</label>
@@ -98,18 +98,55 @@
 			</div>
 		</form>
     </div>
+
+	<div class="row">
+		<div class="col-sm-offset-5 col-sm-10">
+			<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>生 成</button>&nbsp;
+		</div>
+	</div>
+
     <div th:include="include::footer"></div>
     <script type="text/javascript">
-		var prefix = ctx + "mrtonproc/safety";
-		$("#form-mrtonProcInfo-edit").validate({
+		var prefix = ctx + "ceremony";
+		$("#form-startrunplan-edit").validate({
 			rules:{
-				procName:{
+				title:{
 					required:true,
 				},
-				startTime:{
+				starttime:{
 					required:true,
 				},
-				endTime:{
+				hostOpen:{
+					required:true,
+				},
+				endtime:{
+					required:true,
+				},
+				playAnthem:{
+					required:true,
+				},
+				gameStart:{
+					required:true,
+				},
+				fireGun:{
+					required:true,
+				},
+				location:{
+					required:true,
+				},
+				warmShow:{
+					required:true,
+				},
+				guestShow:{
+					required:true,
+				},
+				athleteWarm:{
+					required:true,
+				},
+				introduction:{
+					required:true,
+				},
+				participants:{
 					required:true,
 				}
 			},
@@ -118,39 +155,8 @@
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
-	            // $.operate.save(prefix + "/save", $('#form-mrtonProcInfo-edit').serialize());
-				var mrtonProcCommon = {
-					id: $.trim($('#id').val()),
-					planStarttimeStr: $.trim($('#startTime').val()),
-					planEndtimeStr: $.trim($('#endTime').val()),
-				}
-
-				mrtonProcCommon.lstResource=[];
-				$('#atachment_list .list-group-item').each(function(index,item){
-					var resource = {
-						id: $(item).data("file").id
-					}
-					activity.lstFileResourceId.push(res);
-				});
-
-				$.ajax({
-					url: ctx + '/mrtonproc/safety/save',
-					method: 'post',
-					dataType: "json",
-					contentType: 'application/json;charset=UTF-8',
-					data: JSON.stringify(mrtonProcCommon),
-					success: function (response) {
-						if (response.code != 0) {
-
-						} else {
-
-						}
-					},
-					error: function (response) {
-
-					}
-				});
-
+				var data = $("#form-startrunplan-edit").serializeArray();
+				$.operate.saveTab(prefix + "/savestartrunplan", data);
 	        }
 	    }
 

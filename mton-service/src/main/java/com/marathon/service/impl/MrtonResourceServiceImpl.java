@@ -3,10 +3,10 @@ package com.marathon.service.impl;
 import java.util.List;
 
 import cn.hutool.core.convert.Convert;
+import com.marathon.domain.MrtonResource;
+import com.marathon.mapper.MrtonResourceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.marathon.mapper.MrtonResourceMapper;
-import com.marathon.domain.MrtonResource;
 import com.marathon.service.IMrtonResourceService;
 
 /**
@@ -50,7 +50,7 @@ public class MrtonResourceServiceImpl implements IMrtonResourceService {
      */
     @Override
     public int insertMrtonResource(MrtonResource mrtonResource) {
-        return mrtonResourceMapper.insertMrtonResource(mrtonResource);
+        return mrtonResourceMapper.insertSelective(mrtonResource);
     }
 
     /**

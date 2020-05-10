@@ -4,6 +4,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.marathon.service.office.WordToolService;
 import lombok.extern.slf4j.Slf4j;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
@@ -36,15 +37,17 @@ public class WordToolServiceImpl implements WordToolService {
             WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new File(tempaltePath));
             MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
 
+            Map<String,String> datMapCopy = Maps.newHashMap(dataMap);
+
             specialMap.forEach((k, v) -> {
-                if (dataMap.containsKey(k)) {
-                    String value = dataMap.get(k);
-                    dataMap.put(k, v.convert(value));
+                if (datMapCopy.containsKey(k)) {
+                    String value = datMapCopy.get(k);
+                    datMapCopy.put(k, v.convert(value));
                 }
             });
 
             // 替换普通变量
-            documentPart.variableReplace(dataMap);
+            documentPart.variableReplace(datMapCopy);
             // 保存结果
             wordMLPackage.save(new File(outputFilePath));
         } catch (Docx4JException e) {

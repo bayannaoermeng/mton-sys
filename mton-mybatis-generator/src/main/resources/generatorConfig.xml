@@ -48,7 +48,7 @@
 
         <!-- 表结构 -->
 
-        <table tableName="mrton_word_item" domainObjectName="MrtonWordItem">
+        <table tableName="mrton_resource" domainObjectName="MrtonResource">
             <generatedKey column="id" sqlStatement="MySql" type="post" identity="true" />
         </table>
     </context>

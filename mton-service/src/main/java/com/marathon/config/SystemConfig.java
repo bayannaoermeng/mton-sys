@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
 public class SystemConfig {
 
     //文档模板路径
-    @Value("task.template.dir")
+    @Value("${task.template.dir}")
     private String taskTemplateDir;
 
     //生成的文档存放路径
-    @Value("task.document.dir")
+    @Value("${task.document.dir}")
     private String taskDocDir;
 
 }

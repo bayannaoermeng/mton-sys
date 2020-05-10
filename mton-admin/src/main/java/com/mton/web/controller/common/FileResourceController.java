@@ -1,6 +1,5 @@
 package com.mton.web.controller.common;
 
-import com.marathon.domain.MrtonProcCfgResource;
 import com.marathon.domain.MrtonResource;
 import com.marathon.mapper.MrtonResourceMapper;
 import com.mton.common.base.AjaxResult;

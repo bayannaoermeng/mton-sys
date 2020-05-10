@@ -6,16 +6,15 @@ import com.marathon.domain.MrtonWordItem;
 import com.marathon.qvo.OrgChartDataVO;
 import com.marathon.qvo.ceremony.StartRunPlan;
 import com.marathon.service.ceremony.ICeremonyService;
+import com.marathon.service.office.WordTaskService;
 import com.marathon.service.worditem.WordItemService;
+import com.mton.common.base.AjaxResult;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -35,6 +34,9 @@ public class CeremonyController {
 
     @Autowired
     private WordItemService wordItemService;
+
+    @Autowired
+    private WordTaskService wordTaskService;
 
     @GetMapping("/init/{marathonId}")
     public String marathon_info(@PathVariable String marathonId, ModelMap modelMap) {
@@ -58,6 +60,11 @@ public class CeremonyController {
     @GetMapping("/startrunplan/{mrtonprocId}")
     @ApiOperation(value = "起跑仪式方案")
     public String edit(@PathVariable("mrtonprocId") String mrtonprocId, ModelMap modelMap) {
+
+        StartRunPlan startRunPlan = new StartRunPlan();
+
+        startRunPlan.setId(mrtonprocId);
+
         List<MrtonWordItem> lstItem = wordItemService.getWordItem(mrtonprocId);
 
         if(lstItem.size() > 0){
@@ -68,16 +75,32 @@ public class CeremonyController {
                 tmpMap.put(item.getPlaceholderKey(),item.getPlaceholderValue());
             });
 
-            StartRunPlan startRunPlan = new StartRunPlan();
-
             try {
                 BeanUtils.populate(startRunPlan,tmpMap);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            modelMap.put("startRunPlan", startRunPlan);
+
+        }
+        modelMap.put("startRunPlan", startRunPlan);
+        return prefix + "/startrunplan";
+    }
+
+    @ApiOperation("保存起跑仪式方案")
+    @PostMapping("savestartrunplan")
+    @ResponseBody
+    public AjaxResult saveStartRunPlan(StartRunPlan startRunPlan){
+        try {
+           Map<String,String> dataMap = BeanUtils.describe(startRunPlan);
+
+           String taskId = dataMap.remove("id");
+
+           wordTaskService.genWordDoc(taskId,dataMap);
+
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
         }
 
-        return prefix + "/startrunplan";
+        return AjaxResult.success();
     }
 }

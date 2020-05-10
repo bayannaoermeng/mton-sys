@@ -1,5 +1,6 @@
 package com.mton.web.controller.fileresource;
 
+import com.marathon.config.SystemConfig;
 import com.marathon.domain.MrtonResource;
 import com.marathon.qvo.OfficeFileAclVO;
 import com.marathon.qvo.OfficeFileSaveBackQO;
@@ -7,7 +8,6 @@ import com.marathon.qvo.OfficeFileSaveBackVO;
 import com.marathon.service.IMrtonResourceService;
 import com.marathon.service.IOfficeToolService;
 import com.mton.common.base.AjaxResult;
-import com.mton.common.config.Global;
 import com.mton.common.json.JSON;
 import com.mton.common.support.CharsetKit;
 import com.mton.common.utils.file.FileUtils;
@@ -45,6 +45,9 @@ public class OfficeToolController extends BaseController {
 
     @Autowired
     private IOfficeToolService officeToolService;
+
+    @Autowired
+    private SystemConfig systemConfig;
 
     /**
      * 查看文档
@@ -102,7 +105,7 @@ public class OfficeToolController extends BaseController {
         String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf('/') + 1);
         try {
             String relavateFilePath=fileResource.getResourceUrl();
-            String filePath = Global.getUploadPath() + relavateFilePath;
+            String filePath = systemConfig.getTaskDocDir() + relavateFilePath;
             log.info("接收到编辑文件下载请求【{}】",filePath);
             response.setCharacterEncoding(CharsetKit.UTF8);
             response.setContentType("multipart/form-data");

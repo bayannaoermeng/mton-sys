@@ -1,15 +1,35 @@
 package com.marathon.mapper;
 
 import com.marathon.domain.MrtonResource;
+import com.marathon.domain.MrtonResourceExample;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
-/**
- * 任务关联资源（文件） 数据层
- *
- * @author cuigq
- * @date 2019-11-05
- */
 public interface MrtonResourceMapper {
+    int countByExample(MrtonResourceExample example);
+
+    int deleteByExample(MrtonResourceExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(MrtonResource record);
+
+    int insertSelective(MrtonResource record);
+
+    List<MrtonResource> selectByExample(MrtonResourceExample example);
+
+    MrtonResource selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") MrtonResource record, @Param("example") MrtonResourceExample example);
+
+    int updateByExample(@Param("record") MrtonResource record, @Param("example") MrtonResourceExample example);
+
+    int updateByPrimaryKeySelective(MrtonResource record);
+
+    int updateByPrimaryKey(MrtonResource record);
+
+    int deleteMrtonResourceByIds(List<String> toStrArray);
+
     /**
      * 查询任务关联资源（文件）信息
      *
@@ -57,5 +77,4 @@ public interface MrtonResourceMapper {
      * @return 结果
      */
     public int deleteMrtonResourceByIds(String[] ids);
-
 }

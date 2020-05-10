@@ -1,48 +1,113 @@
 package com.marathon.domain;
 
-import com.mton.common.base.BaseEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
+import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 任务关联资源（文件）表 mrton_resource
- *
- * @author cuigq
- * @date 2019-11-05
- */
-@EqualsAndHashCode(callSuper = true)
-@Data
-@ApiModel(description="任务关联资源（文件）",parent=BaseEntity.class)
-public class MrtonResource extends BaseEntity{
-
-    private static final long serialVersionUID=1L;
-    
-    @ApiModelProperty(value="",name="id")
+public class MrtonResource implements Serializable {
     private Integer id;
-        
-    @ApiModelProperty(value="",name="procId")
+
     private String procId;
-        
-    @ApiModelProperty(value="文件名",name="resourceName")
+
+    /**
+     * 文件名
+     *
+     * @mbggenerated
+     */
     private String resourceName;
-        
-    @ApiModelProperty(value="",name="resourceUrl")
+
     private String resourceUrl;
-        
-    @ApiModelProperty(value="上传时间",name="createtime")
+
+    /**
+     * 上传时间
+     *
+     * @mbggenerated
+     */
     private Date createtime;
-        
-    @ApiModelProperty(value="编辑者",name="uploader")
+
+    /**
+     * 编辑者
+     *
+     * @mbggenerated
+     */
     private Integer uploader;
-        
-    @ApiModelProperty(value="是否是模板",name="isTemplate")
-    private Integer isTemplate;
-        
-    @ApiModelProperty(value="是否被删除",name="delFlag")
-    private Integer delFlag;
-    
+
+    /**
+     * 是否是模板
+     *
+     * @mbggenerated
+     */
+    private Boolean istemplate;
+
+    /**
+     * 是否被删除
+     *
+     * @mbggenerated
+     */
+    private Boolean delFlag;
+
+    private static final long serialVersionUID = 1L;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getProcId() {
+        return procId;
+    }
+
+    public void setProcId(String procId) {
+        this.procId = procId == null ? null : procId.trim();
+    }
+
+    public String getResourceName() {
+        return resourceName;
+    }
+
+    public void setResourceName(String resourceName) {
+        this.resourceName = resourceName == null ? null : resourceName.trim();
+    }
+
+    public String getResourceUrl() {
+        return resourceUrl;
+    }
+
+    public void setResourceUrl(String resourceUrl) {
+        this.resourceUrl = resourceUrl == null ? null : resourceUrl.trim();
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+
+    public Integer getUploader() {
+        return uploader;
+    }
+
+    public void setUploader(Integer uploader) {
+        this.uploader = uploader;
+    }
+
+    public Boolean getIstemplate() {
+        return istemplate;
+    }
+
+    public void setIstemplate(Boolean istemplate) {
+        this.istemplate = istemplate;
+    }
+
+    public Boolean getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(Boolean delFlag) {
+        this.delFlag = delFlag;
+    }
 }

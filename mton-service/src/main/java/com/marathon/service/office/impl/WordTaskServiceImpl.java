@@ -5,6 +5,7 @@ import com.marathon.config.SystemConfig;
 import com.marathon.domain.*;
 import com.marathon.mapper.MrtonProcCfgMapper;
 import com.marathon.mapper.MrtonProcCfgResourceMapper;
+import com.marathon.mapper.MrtonResourceMapper;
 import com.marathon.mapper.MrtonWordItemMapper;
 import com.marathon.service.*;
 import com.marathon.service.office.WordTaskService;
@@ -50,6 +51,9 @@ public class WordTaskServiceImpl implements WordTaskService {
     private IMrtonResourceService mrtonResourceService;
 
     @Autowired
+    private MrtonResourceMapper mrtonResourceMapper;
+
+    @Autowired
     private IOfficeToolService officeToolService;
 
     @Autowired
@@ -79,6 +83,7 @@ public class WordTaskServiceImpl implements WordTaskService {
         log.info("模板文件路径【{}】", templateUrl);
 
         String outputFilePathDir = getOutputFileDir(mrtonProcInfo);
+        log.info("生成文档路径【{}】",outputFilePathDir);
 
         String outputFileName = "sys_" + System.currentTimeMillis() + ".docx";
         String outputFilePath = outputFilePathDir + File.separator + outputFileName;
@@ -89,6 +94,11 @@ public class WordTaskServiceImpl implements WordTaskService {
         MrtonWordItemExample mrtonWordItemExample = new MrtonWordItemExample();
         mrtonWordItemExample.or().andProcIdEqualTo(taskId);
         mrtonWordItemMapper.deleteByExample(mrtonWordItemExample);
+
+        MrtonResourceExample mrtonResourceExample = new MrtonResourceExample();
+        mrtonResourceExample.or().andProcIdEqualTo(taskId);
+        mrtonResourceMapper.deleteByExample(mrtonResourceExample);
+
 
         dataMap.forEach((k, v) -> {
             MrtonWordItem item = new MrtonWordItem();
@@ -102,7 +112,8 @@ public class WordTaskServiceImpl implements WordTaskService {
         resource.setProcId(taskId);
         resource.setResourceName(resources.get(0).getResourceName());
 
-        resource.setResourceUrl(outputFilePathDir.replaceAll(systemConfig.getTaskTemplateDir() + File.separator, "") + File.separator + outputFileName);
+        String dir = outputFilePathDir.replaceAll(systemConfig.getTaskDocDir(), "");
+        resource.setResourceUrl( dir + File.separator + outputFileName);
         mrtonResourceService.insertMrtonResource(resource);
 
         return officeToolService.getLink(String.valueOf(resource.getId()), 1, MrtonConstants.OFFICE_PREVIEW_KEY);
@@ -122,7 +133,7 @@ public class WordTaskServiceImpl implements WordTaskService {
         MrtonProcCfg mrtonProcCfg = mrtonProcCfgMapper.selectByPrimaryKey(mrtonProcInfo.getProcId());
         String taskName = mrtonProcCfg.getProcName();
 
-        String outputFileDir = systemConfig.getTaskDocDir() + File.separator + marathonName + File.separator + taskName;
+        String outputFileDir = systemConfig.getTaskDocDir() + marathonName + File.separator + taskName;
         if (!new File(outputFileDir).exists()) {
             new File(outputFileDir).mkdirs();
         }
