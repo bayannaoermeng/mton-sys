@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * @author cuiguangqiang
  * @version CeremonyController, v0.1 2020/4/27 9:12
- * @description 类说明
+ * @description 仪式模块接口类
  */
 @Controller
 @RequestMapping("/ceremony")
@@ -55,7 +55,7 @@ public class CeremonyController {
 
     }
 
-    @GetMapping("/edit/{mrtonprocId}")
+    @GetMapping("/startrunplan/{mrtonprocId}")
     @ApiOperation(value = "起跑仪式方案")
     public String edit(@PathVariable("mrtonprocId") String mrtonprocId, ModelMap modelMap) {
         List<MrtonWordItem> lstItem = wordItemService.getWordItem(mrtonprocId);

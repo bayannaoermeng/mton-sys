@@ -1,6 +1,7 @@
 package com.marathon.service.impl;
 
 import com.google.common.collect.ImmutableMap;
+import com.marathon.config.BishengConfig;
 import com.marathon.domain.MrtonResource;
 import com.marathon.qvo.OfficeFileAclVO;
 import com.marathon.qvo.OfficeFileSaveBackQO;
@@ -30,11 +31,8 @@ public class OfficeToolServiceImpl implements IOfficeToolService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Value("${office.editorCaller}")
-    private String editorCaller;
-
-    @Value("${office.editorHost}")
-    private String editorHost;
+    @Autowired
+    private BishengConfig bishengConfig;
 
     @Autowired
     private IMrtonResourceService mrtonResourceService;
@@ -56,13 +54,13 @@ public class OfficeToolServiceImpl implements IOfficeToolService {
 
         MrtonResource fileResource = mrtonResourceService.selectMrtonResourceById(Integer.valueOf(fileId));
 
-        String callURL = editorCaller + "/office/fileAcl/" + fileId + "/" + userId;
+        String callURL = bishengConfig.getEditorCaller() + "/office/fileAcl/" + fileId + "/" + userId;
 
         try {
             //url 64编码
             String base64CallURL = Base64.getEncoder().encodeToString(callURL.getBytes("utf-8"));
 
-            String result = editorHost + "apps/editor/" + operation + "?callURL=" + base64CallURL;
+            String result = bishengConfig.getEditorHost() + "apps/editor/" + operation + "?callURL=" + base64CallURL;
 
             logger.info("文件【{}】链接地址【{}】", fileResource.getResourceName(), result);
 
@@ -93,7 +91,7 @@ public class OfficeToolServiceImpl implements IOfficeToolService {
         String url = fileResource.getResourceUrl();
         String ext = url.substring(url.lastIndexOf(".") + 1);
         doc.setMimeType(mapMimeType.get(ext));
-        doc.setFetchUrl(editorCaller + "/office/file/download/?fileId=" + fileId);
+        doc.setFetchUrl(bishengConfig.getEditorCaller() + "/office/file/download/?fileId=" + fileId);
         vo.setDoc(doc);
 
         return vo;
@@ -121,7 +119,7 @@ public class OfficeToolServiceImpl implements IOfficeToolService {
                 String filePath = Global.getUploadPath() + relavateFilePath;
 
                 //下载覆盖文件
-                String fetchUrl = editorHost+data.getDocURL();
+                String fetchUrl = bishengConfig.getEditorHost()+data.getDocURL();
                 FileUtils.downLoadFromUrl(fetchUrl, filePath);
                 logger.info("文件【{}】被修改覆盖成功！", filePath);
             }
