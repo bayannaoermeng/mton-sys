@@ -3,6 +3,7 @@ package com.marathon;
 
 import com.marathon.service.docx4j.Docx4jTempateServiceImpl;
 import com.marathon.service.docx4j.Docx4jTemplate;
+import com.marathon.service.office.Word2PdfService;
 import com.marathon.service.office.impl.WordToolServiceImpl;
 import com.mton.MrtonApplication;
 import org.junit.Test;
@@ -42,5 +43,14 @@ public class Docx4jTest {
     public void testAwardsPlan() throws Exception {
         Docx4jTempateServiceImpl test = new Docx4jTempateServiceImpl();
         test.replaceTemplateDocx();
+    }
+
+    @Test
+    public void testWord2PdfService(){
+        try {
+            System.out.println(Word2PdfService.convert("D:\\mrton\\document\\测试20200504\\起跑仪式方案\\sys_1589111015298.docx"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
