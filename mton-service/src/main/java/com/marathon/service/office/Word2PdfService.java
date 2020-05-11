@@ -27,11 +27,10 @@ import org.docx4j.convert.out.FOSettings;
 import org.docx4j.convert.out.fo.renderers.FORendererApacheFOP;
 import org.docx4j.fonts.IdentityPlusMapper;
 import org.docx4j.fonts.Mapper;
-import org.docx4j.fonts.PhysicalFont;
 import org.docx4j.fonts.PhysicalFonts;
-import org.docx4j.model.fields.FieldUpdater;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 
+import java.io.File;
 import java.io.OutputStream;
 
 /**
@@ -43,7 +42,7 @@ public class Word2PdfService {
     // Don't do this in production!
     static boolean saveFO;
 
-    public static String convert(String inputfilepath) throws Exception {
+    public static String convert(String inputfilepath, String outputFilePath) throws Exception {
         // Document loading (required)
         WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new java.io.File(inputfilepath));
 
@@ -97,9 +96,13 @@ public class Word2PdfService {
         //foSettings.setApacheFopMime(FOSettings.INTERNAL_FO_MIME);
 
         // exporter writes to an OutputStream.
+
+        String temp[] = inputfilepath.split("\\\\");
+        String fileName = temp[temp.length - 1];
         String ext = Files.getFileExtension(inputfilepath);
-        String outputfilepath = inputfilepath.replaceAll(ext, "pdf");
-        OutputStream os = new java.io.FileOutputStream(outputfilepath);
+        fileName = fileName.replaceAll(ext, "pdf");
+        outputFilePath = outputFilePath + File.separator + fileName;
+        OutputStream os = new java.io.FileOutputStream(outputFilePath);
 
         // Specify whether PDF export uses XSLT or not to create the FO
         // (XSLT takes longer, but is more complete).
@@ -122,6 +125,6 @@ public class Word2PdfService {
         foSettings = null;
         wordMLPackage = null;
 
-        return outputfilepath;
+        return fileName;
     }
 }

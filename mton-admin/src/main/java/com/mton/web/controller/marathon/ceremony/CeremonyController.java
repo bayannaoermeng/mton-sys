@@ -10,12 +10,15 @@ import com.marathon.service.office.WordTaskService;
 import com.marathon.service.worditem.WordItemService;
 import com.mton.common.base.AjaxResult;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +27,7 @@ import java.util.Map;
  * @version CeremonyController, v0.1 2020/4/27 9:12
  * @description 仪式模块接口类
  */
+@Slf4j
 @Controller
 @RequestMapping("/ceremony")
 public class CeremonyController {
@@ -67,16 +71,16 @@ public class CeremonyController {
 
         List<MrtonWordItem> lstItem = wordItemService.getWordItem(mrtonprocId);
 
-        if(lstItem.size() > 0){
+        if (lstItem.size() > 0) {
 
-            Map<String,String> tmpMap = Maps.newHashMap();
+            Map<String, String> tmpMap = Maps.newHashMap();
 
-            lstItem.forEach(item->{
-                tmpMap.put(item.getPlaceholderKey(),item.getPlaceholderValue());
+            lstItem.forEach(item -> {
+                tmpMap.put(item.getPlaceholderKey(), item.getPlaceholderValue());
             });
 
             try {
-                BeanUtils.populate(startRunPlan,tmpMap);
+                BeanUtils.populate(startRunPlan, tmpMap);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -89,18 +93,23 @@ public class CeremonyController {
     @ApiOperation("保存起跑仪式方案")
     @PostMapping("savestartrunplan")
     @ResponseBody
-    public AjaxResult saveStartRunPlan(StartRunPlan startRunPlan){
+    public AjaxResult saveStartRunPlan(StartRunPlan startRunPlan, HttpServletRequest request) {
+        String previewUrl = "";
         try {
-           Map<String,String> dataMap = BeanUtils.describe(startRunPlan);
+            Map<String, String> dataMap = BeanUtils.describe(startRunPlan);
 
-           String taskId = dataMap.remove("id");
+            String taskId = dataMap.remove("id");
 
-           wordTaskService.genWordDoc(taskId,dataMap);
+            String fileName = wordTaskService.genWordDoc(taskId, dataMap);
+
+            previewUrl = request.getContextPath() + "/doc/preview/" + fileName;
+
+            log.info("文档预览地址【{}】", previewUrl);
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
 
-        return AjaxResult.success();
+        return AjaxResult.success("操作成功",previewUrl);
     }
 }

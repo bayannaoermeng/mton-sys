@@ -48,7 +48,7 @@ public class Docx4jTest {
     @Test
     public void testWord2PdfService(){
         try {
-            System.out.println(Word2PdfService.convert("D:\\mrton\\document\\测试20200504\\起跑仪式方案\\sys_1589111015298.docx"));
+            System.out.println(Word2PdfService.convert("test", "D:\\mrton\\document\\测试20200504\\起跑仪式方案\\sys_1589111015298.docx"));
         } catch (Exception e) {
             e.printStackTrace();
         }

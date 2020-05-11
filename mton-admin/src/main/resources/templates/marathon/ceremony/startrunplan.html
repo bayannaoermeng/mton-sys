@@ -4,105 +4,113 @@
 	<th:block th:include="include :: header('起跑仪式方案')" />
 </head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-startrunplan-edit" th:object="${startRunPlan}">
-            <input id="id" name="id" th:field="*{id}"  type="hidden">
-			<div class="form-group">
-				<label class="col-sm-3 control-label">赛事名称</label>
-				<div class="col-sm-8">
-					<input id="title" name="s_title" th:field="*{title}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">开始时间</label>
-				<div class="col-sm-8" >
-					<input id="starttime" name="s_starttime" th:field="*{starttime}" class="form-control" type="text">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<form class="form-horizontal m" id="form-startrunplan-edit" th:object="${startRunPlan}">
+					<input id="id" name="id" th:field="*{id}"  type="hidden">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">赛事名称</label>
+						<div class="col-sm-8">
+							<input id="title" name="s_title" th:field="*{title}" class="form-control" type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">开始时间</label>
+						<div class="col-sm-8" >
+							<input id="starttime" name="s_starttime" th:field="*{starttime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">结束时间</label>
+						<div class="col-sm-8" >
+							<input id="endtime" name="s_endtime" th:field="*{endtime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">地点</label>
+						<div class="col-sm-8" >
+							<input id="location" name="s_location" th:field="*{location}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">出席领导及嘉宾</label>
+						<div class="col-sm-8" >
+							<input id="participants" name="s_participants" th:field="*{participants}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">暖场表演</label>
+						<div class="col-sm-8" >
+							<input id="warmShow" name="s_warmShow" th:field="*{warmShow}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">运动员热身</label>
+						<div class="col-sm-8" >
+							<input id="athleteWarm" name="s_athleteWarm" th:field="*{athleteWarm}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">主持人开场</label>
+						<div class="col-sm-8" >
+							<input id="hostOpen" name="s_hostOpen" th:field="*{hostOpen}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">领导嘉宾登场</label>
+						<div class="col-sm-8" >
+							<input id="guestShow" name="s_guestShow" th:field="*{guestShow}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">介绍领导嘉宾</label>
+						<div class="col-sm-8" >
+							<input id="introduction" name="s_introduction" th:field="*{introduction}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">奏唱国歌</label>
+						<div class="col-sm-8" >
+							<input id="playAnthem" name="s_playAnthem" th:field="*{playAnthem}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">鸣枪发令</label>
+						<div class="col-sm-8" >
+							<input id="fireGun" name="s_fireGun" th:field="*{fireGun}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">比赛正式开始</label>
+						<div class="col-sm-8" >
+							<input id="gameStart" name="s_gameStart" th:field="*{gameStart}" class="form-control" type="text">
+						</div>
+					</div>
+				</form>
+
+				<div class="row">
+					<div class="col-sm-offset-5 col-sm-10">
+						<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>生 成</button>&nbsp;
+					</div>
 				</div>
 			</div>
 
-			<div class="form-group">
-				<label class="col-sm-3 control-label">结束时间</label>
-				<div class="col-sm-8" >
-					<input id="endtime" name="s_endtime" th:field="*{endtime}" class="form-control" type="text">
-				</div>
+			<div id="handout_wrap_inner" class="col-md-8" style="background-color: rgb(255, 255, 255);height:100%;">
 			</div>
-
-			<div class="form-group">
-				<label class="col-sm-3 control-label">地点</label>
-				<div class="col-sm-8" >
-					<input id="location" name="s_location" th:field="*{location}" class="form-control" type="text">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-3 control-label">出席领导及嘉宾</label>
-				<div class="col-sm-8" >
-					<input id="participants" name="s_participants" th:field="*{participants}" class="form-control" type="text">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-3 control-label">暖场表演</label>
-				<div class="col-sm-8" >
-					<input id="warmShow" name="s_warmShow" th:field="*{warmShow}" class="form-control" type="text">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-3 control-label">运动员热身</label>
-				<div class="col-sm-8" >
-					<input id="athleteWarm" name="s_athleteWarm" th:field="*{athleteWarm}" class="form-control" type="text">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-3 control-label">主持人开场</label>
-				<div class="col-sm-8" >
-					<input id="hostOpen" name="s_hostOpen" th:field="*{hostOpen}" class="form-control" type="text">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-3 control-label">领导嘉宾登场</label>
-				<div class="col-sm-8" >
-					<input id="guestShow" name="s_guestShow" th:field="*{guestShow}" class="form-control" type="text">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-3 control-label">介绍领导嘉宾</label>
-				<div class="col-sm-8" >
-					<input id="introduction" name="s_introduction" th:field="*{introduction}" class="form-control" type="text">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-3 control-label">奏唱国歌</label>
-				<div class="col-sm-8" >
-					<input id="playAnthem" name="s_playAnthem" th:field="*{playAnthem}" class="form-control" type="text">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-3 control-label">鸣枪发令</label>
-				<div class="col-sm-8" >
-					<input id="fireGun" name="s_fireGun" th:field="*{fireGun}" class="form-control" type="text">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-3 control-label">比赛正式开始</label>
-				<div class="col-sm-8" >
-					<input id="gameStart" name="s_gameStart" th:field="*{gameStart}" class="form-control" type="text">
-				</div>
-			</div>
-		</form>
-    </div>
-
-	<div class="row">
-		<div class="col-sm-offset-5 col-sm-10">
-			<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>生 成</button>&nbsp;
 		</div>
+
 	</div>
 
     <div th:include="include::footer"></div>
@@ -156,7 +164,25 @@
 		function submitHandler() {
 	        if ($.validate.form()) {
 				var data = $("#form-startrunplan-edit").serializeArray();
-				$.operate.saveTab(prefix + "/savestartrunplan", data);
+				$.ajax({
+					cache : true,
+					type : "POST",
+					url : prefix + "/savestartrunplan",
+					data :data,
+					async : false,
+					error : function(request) {
+						$.modal.alertError("系统错误");
+					},
+					success : function(data) {
+						console.log(data);
+						$('#handout_wrap_inner').media({
+							width: '100%',
+							height: '100%',
+							autoplay: true,
+							src:data.data,
+						});
+					}
+				});
 	        }
 	    }
 

@@ -1,20 +1,27 @@
 package com.marathon.service.office.impl;
 
-import com.marathon.MrtonConstants;
 import com.marathon.config.SystemConfig;
 import com.marathon.domain.*;
 import com.marathon.mapper.MrtonProcCfgMapper;
 import com.marathon.mapper.MrtonProcCfgResourceMapper;
 import com.marathon.mapper.MrtonResourceMapper;
 import com.marathon.mapper.MrtonWordItemMapper;
-import com.marathon.service.*;
+import com.marathon.service.IMarathonInfoService;
+import com.marathon.service.IMrtonProcInfoService;
+import com.marathon.service.IMrtonResourceService;
+import com.marathon.service.IOfficeToolService;
+import com.marathon.service.office.Word2PdfService;
 import com.marathon.service.office.WordTaskService;
 import com.marathon.service.office.WordToolService;
+import com.mton.common.base.AjaxResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ClassUtils;
+import org.springframework.util.ResourceUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -83,7 +90,7 @@ public class WordTaskServiceImpl implements WordTaskService {
         log.info("模板文件路径【{}】", templateUrl);
 
         String outputFilePathDir = getOutputFileDir(mrtonProcInfo);
-        log.info("生成文档路径【{}】",outputFilePathDir);
+        log.info("生成文档路径【{}】", outputFilePathDir);
 
         String outputFileName = "sys_" + System.currentTimeMillis() + ".docx";
         String outputFilePath = outputFilePathDir + File.separator + outputFileName;
@@ -113,10 +120,23 @@ public class WordTaskServiceImpl implements WordTaskService {
         resource.setResourceName(resources.get(0).getResourceName());
 
         String dir = outputFilePathDir.replaceAll(systemConfig.getTaskDocDir(), "");
-        resource.setResourceUrl( dir + File.separator + outputFileName);
+        resource.setResourceUrl(dir + File.separator + outputFileName);
         mrtonResourceService.insertMrtonResource(resource);
-
-        return officeToolService.getLink(String.valueOf(resource.getId()), 1, MrtonConstants.OFFICE_PREVIEW_KEY);
+        try {
+            File resourceDir = new File(ResourceUtils.getURL("classpath:static").getPath().replace("%20", " ").replace('/', '\\'));
+            if (!resourceDir.exists()) {
+                resourceDir = new File("");
+            }
+            //如果上传目录为/static/images/upload/，则可以如下获取：
+            File previewDir = new File(resourceDir.getAbsolutePath(), "doc/preview/");
+            if (!previewDir.exists()) {
+                previewDir.mkdirs();
+            }
+            return Word2PdfService.convert(outputFilePath, previewDir.getAbsolutePath());
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        }
+//        return officeToolService.getLink(String.valueOf(resource.getId()), 1, MrtonConstants.OFFICE_PREVIEW_KEY);
     }
 
     /**
