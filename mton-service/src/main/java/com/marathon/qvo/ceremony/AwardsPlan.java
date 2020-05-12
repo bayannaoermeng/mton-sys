@@ -10,6 +10,8 @@ import lombok.Data;
 @Data
 public class AwardsPlan {
 
+    private String id;
+
     private String title;
 
     private String time;

@@ -4,13 +4,13 @@ import com.google.common.collect.Maps;
 import com.marathon.MrtonProcEnum;
 import com.marathon.domain.MrtonWordItem;
 import com.marathon.qvo.OrgChartDataVO;
+import com.marathon.qvo.ceremony.AwardsPlan;
 import com.marathon.qvo.ceremony.StartRunPlan;
 import com.marathon.service.ceremony.ICeremonyService;
 import com.marathon.service.office.WordTaskService;
 import com.marathon.service.worditem.WordItemService;
 import com.mton.common.base.AjaxResult;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +69,53 @@ public class CeremonyController {
 
         startRunPlan.setId(mrtonprocId);
 
+        getWordItemBean(mrtonprocId, startRunPlan);
+
+        modelMap.put("startRunPlan", startRunPlan);
+        return prefix + "/startrunplan";
+    }
+
+    @ApiOperation("保存起跑仪式方案")
+    @PostMapping("savestartrunplan")
+    @ResponseBody
+    public AjaxResult saveStartRunPlan(StartRunPlan startRunPlan, HttpServletRequest request) {
+        String previewUrl = genWordAndPreview(startRunPlan, request);
+
+        return AjaxResult.success("操作成功", previewUrl);
+    }
+
+    @GetMapping("awardsplan/{mrtonprocId}")
+    @ApiOperation(value = "颁奖仪式方案")
+    public String awardsplan(@PathVariable("mrtonprocId") String mrtonprocId, ModelMap modelMap) {
+
+        AwardsPlan awardsPlan = new AwardsPlan();
+
+        awardsPlan.setId(mrtonprocId);
+
+        getWordItemBean(mrtonprocId, awardsPlan);
+
+        modelMap.put("awardPlan", awardsPlan);
+
+        return prefix + "/awardplan";
+    }
+
+    @ApiOperation("保存起跑仪式方案")
+    @PostMapping("saveawardsplan")
+    @ResponseBody
+    public AjaxResult saveAwardsPlan(AwardsPlan awardsPlan, HttpServletRequest request) {
+
+        String previewUrl = genWordAndPreview(awardsPlan, request);
+
+        return AjaxResult.success("操作成功", previewUrl);
+    }
+
+    /**
+     * wordItem转化成bean
+     *
+     * @param mrtonprocId
+     * @param bean
+     */
+    private void getWordItemBean(String mrtonprocId, Object bean) {
         List<MrtonWordItem> lstItem = wordItemService.getWordItem(mrtonprocId);
 
         if (lstItem.size() > 0) {
@@ -80,23 +127,24 @@ public class CeremonyController {
             });
 
             try {
-                BeanUtils.populate(startRunPlan, tmpMap);
+                BeanUtils.populate(bean, tmpMap);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
-        modelMap.put("startRunPlan", startRunPlan);
-        return prefix + "/startrunplan";
     }
 
-    @ApiOperation("保存起跑仪式方案")
-    @PostMapping("savestartrunplan")
-    @ResponseBody
-    public AjaxResult saveStartRunPlan(StartRunPlan startRunPlan, HttpServletRequest request) {
-        String previewUrl = "";
+    /**
+     * 渲染word并且生成PDF预览，返回预览地址
+     *
+     * @param object
+     * @param request
+     * @return
+     */
+    private String genWordAndPreview(Object object, HttpServletRequest request) {
+        String previewUrl;
         try {
-            Map<String, String> dataMap = BeanUtils.describe(startRunPlan);
+            Map<String, String> dataMap = BeanUtils.describe(object);
 
             String taskId = dataMap.remove("id");
 
@@ -109,7 +157,6 @@ public class CeremonyController {
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
-
-        return AjaxResult.success("操作成功",previewUrl);
+        return previewUrl;
     }
 }

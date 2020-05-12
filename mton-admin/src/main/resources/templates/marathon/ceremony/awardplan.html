@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('颁奖仪式方案')" />
+</head>
+<body class="white-bg">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<form class="form-horizontal m" id="form-awardsplan-edit" th:object="${awardPlan}">
+					<input id="id" name="id" th:field="*{id}"  type="hidden">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">赛事名称</label>
+						<div class="col-sm-8">
+							<input id="title" name="s_title" th:field="*{title}" class="form-control" type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">时间</label>
+						<div class="col-sm-8" >
+							<input id="time" name="time" th:field="*{time}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">地点</label>
+						<div class="col-sm-8" >
+							<input id="location" name="location" th:field="*{location}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">男子组颁发奖牌嘉宾</label>
+						<div class="col-sm-8" >
+							<input id="guestMenModal" name="guestMenModal" th:field="*{guestMenModal}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">男子组颁发奖杯嘉宾</label>
+						<div class="col-sm-8" >
+							<input id="guestMenTrophy" name="guestMenTrophy" th:field="*{guestMenTrophy}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">男子组颁发支票版嘉宾</label>
+						<div class="col-sm-8" >
+							<input id="guestMenCheck" name="guestMenCheck" th:field="*{guestMenCheck}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">男子组颁发奖品嘉宾</label>
+						<div class="col-sm-8" >
+							<input id="guestMenPrize" name="guestMenPrize" th:field="*{guestMenPrize}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">女子组颁发奖牌嘉宾</label>
+						<div class="col-sm-8" >
+							<input id="guestWomenModal" name="guestWomenModal" th:field="*{guestWomenModal}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">女子组颁发奖杯嘉宾</label>
+						<div class="col-sm-8" >
+							<input id="guestWomenTrophy" name="guestWomenTrophy" th:field="*{guestWomenTrophy}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">女子组颁发支票版嘉宾</label>
+						<div class="col-sm-8" >
+							<input id="guestWomenCheck" name="guestWomenCheck" th:field="*{guestWomenCheck}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">女子组颁发奖品嘉宾</label>
+						<div class="col-sm-8" >
+							<input id="guestWomenPrize" name="guestWomenPrize" th:field="*{guestWomenPrize}" class="form-control" type="text">
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">男子组颁奖仪式</label>
+						<div class="col-sm-8" >
+							<input id="menAwardsTime" name="menAwardsTime" th:field="*{menAwardsTime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">主持人邀请运动员、颁奖嘉宾上场</label>
+						<div class="col-sm-8" >
+							<input id="menPlayTime" name="menPlayTime" th:field="*{menPlayTime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">主持人介绍颁奖嘉宾、获奖运动员</label>
+						<div class="col-sm-8" >
+							<input id="menIntrTime" name="menIntrTime" th:field="*{menIntrTime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">为前三名颁发奖牌</label>
+						<div class="col-sm-8" >
+							<input id="menModalTime" name="menModalTime" th:field="*{menModalTime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">为前三名颁发奖杯</label>
+						<div class="col-sm-8" >
+							<input id="menTrophyTime" name="menTrophyTime" th:field="*{menTrophyTime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">为前三名颁发支票</label>
+						<div class="col-sm-8" >
+							<input id="menCheckTime" name="menCheckTime" th:field="*{menCheckTime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">为前三名颁发奖品</label>
+						<div class="col-sm-8" >
+							<input id="menPrizeTime" name="menPrizeTime" th:field="*{menPrizeTime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">嘉宾和运动员合影留念</label>
+						<div class="col-sm-8" >
+							<input id="menPhotoTime" name="menPhotoTime" th:field="*{menPhotoTime}" class="form-control" type="text">
+						</div>
+					</div>
+
+
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">女子组颁奖仪式</label>
+						<div class="col-sm-8" >
+							<input id="womenAwardsTime" name="womenAwardsTime" th:field="*{womenAwardsTime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">主持人邀请运动员、颁奖嘉宾上场</label>
+						<div class="col-sm-8" >
+							<input id="womenPlayTime" name="womenPlayTime" th:field="*{womenPlayTime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">主持人介绍颁奖嘉宾、获奖运动员</label>
+						<div class="col-sm-8" >
+							<input id="womenIntrTime" name="womenIntrTime" th:field="*{womenIntrTime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">为前三名颁发奖牌</label>
+						<div class="col-sm-8" >
+							<input id="womenModalTime" name="womenModalTime" th:field="*{womenModalTime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">为前三名颁发奖杯</label>
+						<div class="col-sm-8" >
+							<input id="womenTrophyTime" name="womenTrophyTime" th:field="*{womenTrophyTime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">为前三名颁发支票</label>
+						<div class="col-sm-8" >
+							<input id="womenCheckTime" name="womenCheckTime" th:field="*{womenCheckTime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">为前三名颁发奖品</label>
+						<div class="col-sm-8" >
+							<input id="womenPrizeTime" name="womenPrizeTime" th:field="*{womenPrizeTime}" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">嘉宾和运动员合影留念</label>
+						<div class="col-sm-8" >
+							<input id="womenPhotoTime" name="womenPhotoTime" th:field="*{womenPhotoTime}" class="form-control" type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">颁奖仪式结束</label>
+						<div class="col-sm-8" >
+							<input id="endTime" name="endTime" th:field="*{endTime}" class="form-control" type="text">
+						</div>
+					</div>
+				</form>
+
+				<div class="row">
+					<div class="col-sm-offset-5 col-sm-10">
+						<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>生 成</button>&nbsp;
+					</div>
+				</div>
+			</div>
+
+			<div id="handout_wrap_inner" class="col-md-8" style="background-color: rgb(255, 255, 255);height:100%;">
+			</div>
+		</div>
+
+	</div>
+
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "ceremony";
+		$('#form-startrunplan-edit input, #form-startrunplan-edit text').not([type="submit"]).addClass('required');
+		$("#form-startrunplan-edit").validate({
+			rules:{
+				title:{
+					required:true,
+				}
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+				var data = $("#form-awardsplan-edit").serializeArray();
+				$.ajax({
+					cache : true,
+					type : "POST",
+					url : prefix + "/saveawardplan",
+					data :data,
+					async : false,
+					error : function(request) {
+						$.modal.alertError("系统错误");
+					},
+					success : function(data) {
+						console.log(data);
+						$('#handout_wrap_inner').media({
+							width: '100%',
+							height: '100%',
+							autoplay: true,
+							src:data.data,
+						});
+					}
+				});
+	        }
+	    }
+	</script>
+</body>
+</html>
