@@ -33,11 +33,13 @@ public class WordToolServiceImpl implements WordToolService {
 
     @Override
     public void renderDocument(String tempaltePath, Map<String, String> dataMap, String outputFilePath) {
+        log.info("开始渲染word【{}】",outputFilePath);
         try {
             WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new File(tempaltePath));
             MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
+            log.info("wordMLPackage.getMainDocumentPart()");
 
-            Map<String,String> datMapCopy = Maps.newHashMap(dataMap);
+            Map<String, String> datMapCopy = Maps.newHashMap(dataMap);
 
             specialMap.forEach((k, v) -> {
                 if (datMapCopy.containsKey(k)) {
@@ -50,9 +52,12 @@ public class WordToolServiceImpl implements WordToolService {
             documentPart.variableReplace(datMapCopy);
             // 保存结果
             wordMLPackage.save(new File(outputFilePath));
+            log.info("渲染word【{}】成功",outputFilePath);
         } catch (Docx4JException e) {
             log.error("word模板文档【{}】渲染失败", tempaltePath, e);
         } catch (JAXBException e) {
+            log.error("word模板文档【{}】渲染失败", tempaltePath, e);
+        } catch (Exception e) {
             log.error("word模板文档【{}】渲染失败", tempaltePath, e);
         }
     }
