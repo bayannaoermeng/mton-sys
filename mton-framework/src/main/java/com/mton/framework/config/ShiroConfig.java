@@ -295,6 +295,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/office/**","anon");
         filterChainDefinitionMap.put("/referoffice/**","anon");
         filterChainDefinitionMap.put("/word/**","anon");
+        filterChainDefinitionMap.put("/doc/**","anon");
 
         Map<String, Filter> filters = new LinkedHashMap<>();
         filters.put("onlineSession" , onlineSessionFilter());
