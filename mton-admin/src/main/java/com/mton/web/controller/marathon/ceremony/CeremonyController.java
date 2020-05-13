@@ -106,7 +106,7 @@ public class CeremonyController {
         bean.setPreviewUrl(request.getContextPath() + MrtonConstants.PREVIEW_DIR_PATH + previewFileName);
 
         modelMap.put("bean", bean.getBean());
-        modelMap.put("previewurl",bean.getPreviewUrl());
+        modelMap.put("previewUrl",bean.getPreviewUrl());
 
         return prefix + "/awardplan";
     }
