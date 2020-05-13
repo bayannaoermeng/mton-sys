@@ -1,10 +1,13 @@
 package com.mton.web.controller.marathon.ceremony;
 
 import com.google.common.collect.Maps;
+import com.marathon.MrtonConstants;
 import com.marathon.MrtonProcEnum;
 import com.marathon.domain.MrtonWordItem;
 import com.marathon.qvo.OrgChartDataVO;
 import com.marathon.qvo.ceremony.AwardsPlan;
+import com.marathon.qvo.ceremony.CommonPlan;
+import com.marathon.qvo.ceremony.CommonWordPlanVO;
 import com.marathon.qvo.ceremony.StartRunPlan;
 import com.marathon.service.ceremony.ICeremonyService;
 import com.marathon.service.office.WordTaskService;
@@ -31,6 +34,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/ceremony")
 public class CeremonyController {
+
     private String prefix = "marathon/ceremony";
 
     @Autowired
@@ -63,15 +67,20 @@ public class CeremonyController {
 
     @GetMapping("/startrunplan/{mrtonprocId}")
     @ApiOperation(value = "起跑仪式方案")
-    public String edit(@PathVariable("mrtonprocId") String mrtonprocId, ModelMap modelMap) {
+    public String edit(@PathVariable("mrtonprocId") String mrtonprocId, ModelMap modelMap,HttpServletRequest request) {
 
-        StartRunPlan startRunPlan = new StartRunPlan();
+        CommonWordPlanVO<StartRunPlan> bean = new CommonWordPlanVO<>();
 
-        startRunPlan.setId(mrtonprocId);
+        getWordItemBean(mrtonprocId, bean, StartRunPlan.class);
 
-        getWordItemBean(mrtonprocId, startRunPlan);
+        String previewFileName = wordTaskService.getPreviewFileName(mrtonprocId);
 
-        modelMap.put("startRunPlan", startRunPlan);
+        bean.setPreviewUrl(request.getContextPath() + MrtonConstants.PREVIEW_DIR_PATH + previewFileName);
+
+        //详细信息
+        modelMap.put("bean", bean.getBean());
+        modelMap.put("previewUrl",bean.getPreviewUrl());
+
         return prefix + "/startrunplan";
     }
 
@@ -86,15 +95,18 @@ public class CeremonyController {
 
     @GetMapping("awardsplan/{mrtonprocId}")
     @ApiOperation(value = "颁奖仪式方案")
-    public String awardsplan(@PathVariable("mrtonprocId") String mrtonprocId, ModelMap modelMap) {
+    public String awardsplan(@PathVariable("mrtonprocId") String mrtonprocId, ModelMap modelMap,HttpServletRequest request) {
 
-        AwardsPlan awardsPlan = new AwardsPlan();
+        CommonWordPlanVO<AwardsPlan> bean = new CommonWordPlanVO<>();
 
-        awardsPlan.setId(mrtonprocId);
+        getWordItemBean(mrtonprocId, bean, AwardsPlan.class);
 
-        getWordItemBean(mrtonprocId, awardsPlan);
+        String previewFileName = wordTaskService.getPreviewFileName(mrtonprocId);
 
-        modelMap.put("awardPlan", awardsPlan);
+        bean.setPreviewUrl(request.getContextPath() + MrtonConstants.PREVIEW_DIR_PATH + previewFileName);
+
+        modelMap.put("bean", bean.getBean());
+        modelMap.put("previewurl",bean.getPreviewUrl());
 
         return prefix + "/awardplan";
     }
@@ -115,22 +127,26 @@ public class CeremonyController {
      * @param mrtonprocId
      * @param bean
      */
-    private void getWordItemBean(String mrtonprocId, Object bean) {
+    private void getWordItemBean(String mrtonprocId, CommonWordPlanVO bean, Class kind) {
         List<MrtonWordItem> lstItem = wordItemService.getWordItem(mrtonprocId);
+        try {
+            CommonPlan object = (CommonPlan) kind.newInstance();
 
-        if (lstItem.size() > 0) {
+            object.setId(mrtonprocId);
 
-            Map<String, String> tmpMap = Maps.newHashMap();
+            if (lstItem.size() > 0) {
 
-            lstItem.forEach(item -> {
-                tmpMap.put(item.getPlaceholderKey(), item.getPlaceholderValue());
-            });
+                Map<String, String> tmpMap = Maps.newHashMap();
 
-            try {
-                BeanUtils.populate(bean, tmpMap);
-            } catch (Exception e) {
-                e.printStackTrace();
+                lstItem.forEach(item -> {
+                    tmpMap.put(item.getPlaceholderKey(), item.getPlaceholderValue());
+                });
+                BeanUtils.populate(object, tmpMap);
             }
+
+            bean.setBean(object);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -150,7 +166,7 @@ public class CeremonyController {
 
             String fileName = wordTaskService.genWordDoc(taskId, dataMap);
 
-            previewUrl = request.getContextPath() + "/doc/preview/" + fileName;
+            previewUrl = request.getContextPath() + MrtonConstants.PREVIEW_DIR_PATH + fileName;
 
             log.info("文档预览地址【{}】", previewUrl);
 

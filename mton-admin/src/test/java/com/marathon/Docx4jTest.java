@@ -53,4 +53,10 @@ public class Docx4jTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void testReplace(){
+        String temp = "D:\\mrton\\document\\test\\test.html";
+        System.out.println(temp.replace("D:\\mrton\\document\\",""));
+    }
 }

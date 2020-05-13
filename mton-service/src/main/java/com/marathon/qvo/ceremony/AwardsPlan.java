@@ -8,9 +8,7 @@ import lombok.Data;
  * @description 颁奖仪式方案
  */
 @Data
-public class AwardsPlan {
-
-    private String id;
+public class AwardsPlan extends CommonPlan {
 
     private String title;
 

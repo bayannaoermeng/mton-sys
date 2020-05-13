@@ -97,8 +97,7 @@ public class Word2PdfService {
 
         // exporter writes to an OutputStream.
 
-        String temp[] = inputfilepath.split("\\\\");
-        String fileName = temp[temp.length - 1];
+        String fileName = new File(inputfilepath).getName();
         String ext = Files.getFileExtension(inputfilepath);
         fileName = fileName.replaceAll(ext, "pdf");
         outputFilePath = outputFilePath + File.separator + fileName;

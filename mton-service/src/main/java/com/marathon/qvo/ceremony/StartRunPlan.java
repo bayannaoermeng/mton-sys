@@ -8,8 +8,7 @@ import lombok.Data;
  * @description 起跑仪式方案模板参数
  */
 @Data
-public class StartRunPlan {
-    private String id;
+public class StartRunPlan extends CommonPlan {
     private String title;
     private String hostOpen;
     private String endtime;

@@ -7,7 +7,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4">
-				<form class="form-horizontal m" id="form-startrunplan-edit" th:object="${startRunPlan}">
+				<form class="form-horizontal m" id="form-startrunplan-edit" th:object="${bean}">
 					<input id="id" name="id" th:field="*{id}"  type="hidden">
 					<div class="form-group">
 						<label class="col-sm-3 control-label">赛事名称</label>
@@ -114,7 +114,18 @@
 	</div>
 
     <div th:include="include::footer"></div>
-    <script type="text/javascript">
+    <script th:inline="javascript">
+
+		var url = [[${previewUrl}]];
+
+		$('#handout_wrap_inner').media({
+			width: '650px',
+			height: '750px',
+			autoplay: true,
+			title: "预览文件",
+			src:url
+		});
+
 		var prefix = ctx + "ceremony";
 		$("#form-startrunplan-edit").validate({
 			rules:{
