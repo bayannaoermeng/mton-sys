@@ -31,9 +31,11 @@
     function registerEvent(procoId,procName){
         console.log(procoId);
         if('起跑仪式方案' == procName){
-            $.modal.openTab(procName,'ceremony/startrunplan/'+procoId)
+            $.modal.openTab(procName,'startrunplan/edit/'+procoId)
         }else if ('颁奖仪式方案' == procName){
-            $.modal.openTab(procName,'ceremony/awardsplan/'+procoId)
+            $.modal.openTab(procName,'awardsplan/edit/'+procoId)
+        }else if ('人员落实' == procName){
+            $.modal.openTab(procName,'ceremony/anchor/init/'+procoId);
         }
         return false;
     }

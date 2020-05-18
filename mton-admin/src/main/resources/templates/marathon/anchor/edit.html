@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改仪式第三方人员需求')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-mrtonThirdpartyStaff-edit" th:object="${mrtonThirdpartyStaff}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">任务ID：</label>
+				<div class="col-sm-8">
+					<input id="procId" name="procId" th:field="*{procId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">供应商：</label>
+				<div class="col-sm-8">
+					<input id="supplier" name="supplier" th:field="*{supplier}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">对接人：</label>
+				<div class="col-sm-8">
+					<input id="contactPerson" name="contactPerson" th:field="*{contactPerson}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">联系方式：</label>
+				<div class="col-sm-8">
+					<input id="mobile" name="mobile" th:field="*{mobile}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">报价：</label>
+				<div class="col-sm-8">
+					<input id="price" name="price" th:field="*{price}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">交通食宿：</label>
+				<div class="col-sm-8">
+					<input id="transportation" name="transportation" th:field="*{transportation}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">发票详情：</label>
+				<div class="col-sm-8">
+					<input id="invoiceDetail" name="invoiceDetail" th:field="*{invoiceDetail}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">人员详情：</label>
+				<div class="col-sm-8">
+					<input id="staffDetail" name="staffDetail" th:field="*{staffDetail}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "marathon/mrtonThirdpartyStaff";
+		$("#form-mrtonThirdpartyStaff-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-mrtonThirdpartyStaff-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>
