@@ -6,7 +6,7 @@
 <body class="white-bg">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-md-5">
 				<form class="form-horizontal m" id="form-awardsplan-edit" th:object="${bean}">
 					<input id="id" name="id" th:field="*{id}"  type="hidden">
 					<div class="form-group">
@@ -214,7 +214,7 @@
 				</div>
 			</div>
 
-			<div class="col-md-8">
+			<div class="col-md-7">
 				<div id="handout_wrap_inner" style="background-color: rgb(255, 255, 255);"></div>
 			</div>
 		</div>
@@ -256,18 +256,15 @@
 					url : prefix + "/saveawardsplan",
 					data :data,
 					async : false,
+					beforeSend: function () {
+						$.modal.loading("正在处理中，请稍后...");
+					},
 					error : function(request) {
 						$.modal.alertError("系统错误");
 					},
 					success : function(data) {
-						console.log(data);
-						$('#handout_wrap_inner').media({
-							width: '650px',
-							height: '750px',
-							autoplay: true,
-							title: "预览文件",
-							src:data.data,
-						});
+						$('#handout_wrap_inner > iframe').attr("src",data.data);
+						$.modal.closeLoading();
 					}
 				});
 	        }
