@@ -130,7 +130,7 @@
 		var h=window.innerHeight||document.body.clientHeight||document.documentElement.clientHeight;
 		$("iframe").css("height",h);
 
-		var prefix = ctx + "ceremony";
+		var prefix = ctx + "startrunplan";
 		$("#form-startrunplan-edit").validate({
 			rules:{
 				title:{
@@ -182,7 +182,7 @@
 				$.ajax({
 					cache : true,
 					type : "POST",
-					url : prefix + "/savestartrunplan",
+					url : prefix + "/save",
 					data :data,
 					async : false,
 					error : function(request) {
@@ -202,9 +202,6 @@
 	        }
 	    }
 
-		function downLoad(filename) {
-			window.location.href = ctx + "common/download?fileName=" + encodeURI(filename) + "&delete=" + false
-		}
 	</script>
 </body>
 </html>
