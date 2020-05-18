@@ -33,7 +33,7 @@ public class Mrton3PartyStaffServiceImpl implements IMrton3PartyStaffService {
 
     @Override
     public int updateMrton3PartyStaff(Mrton3PartyStaff mrton3PartyStaff) {
-        return mrton3PartyStaffMapper.updateByPrimaryKey(mrton3PartyStaff);
+        return mrton3PartyStaffMapper.updateByPrimaryKeySelective(mrton3PartyStaff);
     }
 
     @Override

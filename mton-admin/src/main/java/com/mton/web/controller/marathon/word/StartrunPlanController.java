@@ -58,8 +58,8 @@ public class StartrunPlanController {
 
     @ApiOperation("参考文件列表")
     @GetMapping("relate")
-    public AjaxResult<CommonWordPlanVO<String>> relate() {
-        return  wordTaskService.getRelate();
+    public AjaxResult relate() {
+//        return  wordTaskService.getRelate();
         return AjaxResult.success();
     }
 

@@ -42,7 +42,7 @@ public class AnchorDemandController extends BaseController {
     /**
      * 查询仪式主持人需求列表
      */
-    @RequiresPermissions("marathon:mrton3PartyStaff:list")
+    @RequiresPermissions("marathon:mrton3PartyStaff:view")
     @RequestMapping("/list/{procid}")
     @ResponseBody
     public TableDataInfo list(@PathVariable() String procid) {

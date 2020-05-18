@@ -5,7 +5,7 @@
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-mrtonThirdpartyStaff-edit" th:object="${mrtonThirdpartyStaff}">
+        <form class="form-horizontal m" id="form-mrtonThirdpartyStaff-edit" th:object="${mrton3PartyStaff}">
             <input id="id" name="id" th:field="*{id}"  type="hidden">
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">任务ID：</label>
@@ -65,7 +65,7 @@
     </div>
     <div th:include="include::footer"></div>
     <script type="text/javascript">
-		var prefix = ctx + "marathon/mrtonThirdpartyStaff";
+		var prefix = ctx + "ceremony/anchor";
 		$("#form-mrtonThirdpartyStaff-edit").validate({
 			rules:{
 				xxxx:{
