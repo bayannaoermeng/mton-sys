@@ -7,6 +7,7 @@ import com.marathon.service.office.WordTaskService;
 import com.mton.common.base.AjaxResult;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * @version AwardsPlanController, v0.1 2020/5/18 15:56
  * @description 颁奖仪式方案
  */
+@Controller
 @RequestMapping("awardsplan")
 public class AwardsPlanController {
 
