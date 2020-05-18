@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author cuiguangqiang
  * @version AwardsPlanController, v0.1 2020/5/18 15:56
- * @description 类说明
+ * @description 颁奖仪式方案
  */
 @RequestMapping("awardsplan")
 public class AwardsPlanController {
@@ -43,7 +43,7 @@ public class AwardsPlanController {
         return prefix + "/awardplan";
     }
 
-    @ApiOperation("保存起跑仪式方案")
+    @ApiOperation("保存颁奖仪式方案")
     @PostMapping("save")
     @ResponseBody
     public AjaxResult saveAwardsPlan(AwardsPlan awardsPlan, HttpServletRequest request) {

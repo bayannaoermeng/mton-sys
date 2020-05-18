@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author cuiguangqiang
  * @version StartrunPlanController, v0.1 2020/5/18 15:43
- * @description 类说明
+ * @description 起跑仪式方案
  */
 @RequestMapping("startrunplan")
 public class StartrunPlanController {
