@@ -32,7 +32,7 @@ public class AnchorDemandController extends BaseController {
     private IMrton3PartyStaffService staffService;
 
 
-//    @RequiresPermissions("marathon:mrton3PartyStaff:view")
+    @RequiresPermissions("marathon:mrton3PartyStaff:view")
     @GetMapping("/init/{mrtonprocid}")
     public String mrton3PartyStaff(@PathVariable String mrtonprocid, ModelMap modelMap) {
         modelMap.put("procid", mrtonprocid);
@@ -42,7 +42,7 @@ public class AnchorDemandController extends BaseController {
     /**
      * 查询仪式主持人需求列表
      */
-//    @RequiresPermissions("marathon:mrton3PartyStaff:list")
+    @RequiresPermissions("marathon:mrton3PartyStaff:list")
     @RequestMapping("/list/{procid}")
     @ResponseBody
     public TableDataInfo list(@PathVariable() String procid) {
@@ -75,7 +75,7 @@ public class AnchorDemandController extends BaseController {
     /**
      * 新增保存仪式主持人需求
      */
-//    @RequiresPermissions("marathon:mrton3PartyStaff:add")
+    @RequiresPermissions("marathon:mrton3PartyStaff:add")
     @Log(title = "仪式主持人需求", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -96,7 +96,7 @@ public class AnchorDemandController extends BaseController {
     /**
      * 修改保存仪式主持人需求
      */
-//    @RequiresPermissions("marathon:mrton3PartyStaff:edit")
+    @RequiresPermissions("marathon:mrton3PartyStaff:edit")
     @Log(title = "仪式主持人需求", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
