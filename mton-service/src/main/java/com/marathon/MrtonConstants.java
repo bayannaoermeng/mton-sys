@@ -17,6 +17,12 @@ public class MrtonConstants {
 
     public static final String RESOURCE_COMPETITION_RULE = "竞赛章程";
 
+    public static final String THIRDPARTY_STAFF_ANCHOR = "主持人人员落实";
+
+    public static final String WORD_TASK_NAME_STARTRUNPLAN = "起跑仪式方案";
+
+    public static final String WORD_TASK_NAME_AWARDS = "颁奖仪式方案";
+
     //OFFICE 毕升关键字 预览|编辑
     public static final String OFFICE_PREVIEW_KEY = "openPreview";
     public static final String OFFICE_EDIT_KEY = "openEditor";

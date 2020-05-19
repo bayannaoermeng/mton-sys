@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.marathon.mapper.customize.MrtonResourceCustomizeMapper">
+    <select id="getRelatedResource" resultType="com.marathon.qvo.ceremony.PreviewData">
+        SELECT
+            infoo.marathon_name as `name`,
+            resource_url as url
+        FROM
+            marathon_info infoo
+        LEFT JOIN mrton_proc_info procinfo ON infoo.marathon_uuid = procinfo.marathon_id
+        LEFT JOIN mrton_proc_cfg cfg ON procinfo.proc_id = cfg.proc_id
+        LEFT JOIN mrton_resource resource on resource.proc_id = procinfo.id
+        WHERE
+            cfg.proc_name = #{procName}
+    </select>
+</mapper>

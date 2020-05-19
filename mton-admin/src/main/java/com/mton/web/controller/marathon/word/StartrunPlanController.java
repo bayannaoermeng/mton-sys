@@ -1,7 +1,9 @@
 package com.mton.web.controller.marathon.word;
 
 import com.marathon.MrtonConstants;
+import com.marathon.qvo.ceremony.CommonPreviewDataVO;
 import com.marathon.qvo.ceremony.CommonWordPlanVO;
+import com.marathon.qvo.ceremony.PreviewData;
 import com.marathon.qvo.ceremony.StartRunPlan;
 import com.marathon.service.office.WordTaskService;
 import com.mton.common.base.AjaxResult;
@@ -12,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author cuiguangqiang
@@ -58,9 +61,18 @@ public class StartrunPlanController {
 
     @ApiOperation("参考文件列表")
     @GetMapping("relate")
-    public AjaxResult relate() {
-//        return  wordTaskService.getRelate();
-        return AjaxResult.success();
+    @ResponseBody
+    public AjaxResult relate(HttpServletRequest request) {
+
+        CommonPreviewDataVO vo = wordTaskService.getRelatePreviewData(MrtonConstants.WORD_TASK_NAME_STARTRUNPLAN);
+
+        List<PreviewData> lstData = vo.getLstPreview();
+
+        for (PreviewData data : lstData) {
+            data.setUrl(request.getContextPath() + MrtonConstants.PREVIEW_DIR_PATH + data.getUrl());
+        }
+
+        return AjaxResult.success(vo);
     }
 
 }

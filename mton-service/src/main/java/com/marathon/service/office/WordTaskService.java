@@ -1,5 +1,6 @@
 package com.marathon.service.office;
 
+import com.marathon.qvo.ceremony.CommonPreviewDataVO;
 import com.marathon.qvo.ceremony.CommonWordPlanVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,4 +37,10 @@ public interface WordTaskService {
      */
     String genWordAndPreview(Object object, HttpServletRequest request);
 
+    /**
+     * word任务历史参考文件列表
+     * @param wordTaskName
+     * @return
+     */
+    CommonPreviewDataVO getRelatePreviewData(String wordTaskName);
 }

@@ -8,8 +8,11 @@ import com.marathon.mapper.MrtonProcCfgMapper;
 import com.marathon.mapper.MrtonProcCfgResourceMapper;
 import com.marathon.mapper.MrtonResourceMapper;
 import com.marathon.mapper.MrtonWordItemMapper;
+import com.marathon.mapper.customize.MrtonResourceCustomizeMapper;
 import com.marathon.qvo.ceremony.CommonPlan;
+import com.marathon.qvo.ceremony.CommonPreviewDataVO;
 import com.marathon.qvo.ceremony.CommonWordPlanVO;
+import com.marathon.qvo.ceremony.PreviewData;
 import com.marathon.service.IMarathonInfoService;
 import com.marathon.service.IMrtonProcInfoService;
 import com.marathon.service.IMrtonResourceService;
@@ -68,11 +71,15 @@ public class WordTaskServiceImpl implements WordTaskService {
     private MrtonResourceMapper mrtonResourceMapper;
 
     @Autowired
+    private MrtonResourceCustomizeMapper mrtonResourceCustomizeMapper;
+
+    @Autowired
     private SystemConfig systemConfig;
 
 
     /**
      * 返回任务（word模板任务）预览地址，没有生成文件的返回模板预览地址
+     *
      * @param mrtonprocId
      * @return
      */
@@ -298,6 +305,30 @@ public class WordTaskServiceImpl implements WordTaskService {
         return outputFileDir;
     }
 
+    /**
+     * word任务历史参考文件列表
+     *
+     * @param wordTaskName
+     * @return
+     */
+    @Override
+    public CommonPreviewDataVO getRelatePreviewData(String wordTaskName) {
 
+        CommonPreviewDataVO vo = new CommonPreviewDataVO();
 
+        List<PreviewData> lstData = mrtonResourceCustomizeMapper.getRelatedResource(wordTaskName);
+
+        if (lstData.size() > 0) {
+            for (PreviewData data : lstData) {
+                String fileName = new File(systemConfig.getTaskDocDir() + data.getUrl()).getName();
+                fileName = fileName.replaceAll("docx", "pdf");
+                if (!new File(getContextPreviewDir() + fileName).exists()) {
+                    throw new IllegalArgumentException("预览文件【" + fileName + "】不存在！");
+                }
+                data.setUrl(fileName);
+            }
+            vo.setLstPreview(lstData);
+        }
+        return vo;
+    }
 }
