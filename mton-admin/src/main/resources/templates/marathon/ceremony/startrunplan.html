@@ -106,8 +106,19 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-8">
+			<!-- 预览区域 -->
+			<div class="col-md-4">
 				<div id="handout_wrap_inner" style="background-color: rgb(255, 255, 255);"></div>
+			</div>
+			<!-- 参考区域 -->
+			<div class="col-md-4">
+				<div id="preview"></div>
+			</div>
+			<!-- 参考文件列表	-->
+			<div class="col-md-2">
+				<ul class="list-group list-group-flush">
+					<button type="button" class="list-group-item list-group-item-action active">Cras justo odio</button>
+				</ul>
 			</div>
 			</div>
 		</div>
@@ -116,21 +127,58 @@
 
     <div th:include="include::footer"></div>
     <script th:inline="javascript">
-
 		var url = [[${previewUrl}]];
 
-		$('#handout_wrap_inner').media({
-			width: '100%',
-			height: '100%',
-			autoplay: true,
-			title: "预览文件",
-			src:url
-		});
-
-		var h=window.innerHeight||document.body.clientHeight||document.documentElement.clientHeight;
-		$("iframe").css("height",h);
+		var livar = "<button type=\"button\" class=\"list-group-item list-group-item-action\"></button>"
 
 		var prefix = ctx + "startrunplan";
+
+		$(function () {
+			//初始化预览区域
+			$('#handout_wrap_inner').media({
+				width: '100%',
+				height: '100%',
+				autoplay: true,
+				title: "预览文件",
+				src:url
+			});
+
+			//设置预览区域高度默认值
+			var h=window.innerHeight||document.body.clientHeight||document.documentElement.clientHeight;
+			$("iframe").css("height",h);
+
+			//参考列表
+			$.get(prefix + "/relate",function (data) {
+				if(data.code == 0){
+					var lstPreview = data.data.lstPreview;
+					console.log(lstPreview);
+					//清除内容
+					$('.list-group').empty();
+					lstPreview.forEach(function (preview) {
+						var li = $(livar).appendTo($('.list-group'));
+						li.html(preview.name);
+						li.data("url",preview.url);
+						$(li).bind("click",function () {
+							$('body > div > div > div:nth-child(4) > ul > button').removeClass('active');
+							$(this).addClass("active");
+							$('#preview').media({
+								width: '100%',
+								height: '100%',
+								autoplay: true,
+								title: "test",
+								src:$(this).data("url")
+							});
+							$("iframe").css("height",h);
+						});
+					});
+				}else{
+					$.modal.alertError("系统错误");
+				}
+			});
+		});
+
+
+
 		$("#form-startrunplan-edit").validate({
 			rules:{
 				title:{
@@ -192,14 +240,12 @@
 						$.modal.alertError("系统错误");
 					},
 					success : function(data) {
-						// console.log(data);
 						$('#handout_wrap_inner > iframe').attr("src",data.data);
 						$.modal.closeLoading();
 					}
 				});
 	        }
 	    }
-
 	</script>
 </body>
 </html>
