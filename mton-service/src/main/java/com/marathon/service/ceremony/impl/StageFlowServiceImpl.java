@@ -1,5 +1,7 @@
 package com.marathon.service.ceremony.impl;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,7 +45,16 @@ public class StageFlowServiceImpl implements IStageFlowService {
     public List<MrtonStageFlow> selectMrtonStageFlowList(MrtonStageFlow mrtonStageFlow) {
         MrtonStageFlowExample example = new MrtonStageFlowExample();
         example.or().andProcIdEqualTo(mrtonStageFlow.getProcId()).andDelFlagEqualTo(0);
-        return mrtonStageFlowMapper.selectByExample(example);
+        List<MrtonStageFlow> lstStageFlow = mrtonStageFlowMapper.selectByExample(example);
+        for (MrtonStageFlow stageFlow : lstStageFlow) {
+            if (stageFlow.getStartTime() != null && stageFlow.getEndTime() != null) {
+                LocalTime startTime = LocalTime.parse(stageFlow.getStartTime());
+                LocalTime endTime = LocalTime.parse(stageFlow.getEndTime());
+                Duration duration = Duration.between(startTime, endTime);
+                stageFlow.setDuration(duration.toString());
+            }
+        }
+        return lstStageFlow;
     }
 
     /**
@@ -65,7 +76,7 @@ public class StageFlowServiceImpl implements IStageFlowService {
      */
     @Override
     public int updateMrtonStageFlow(MrtonStageFlow mrtonStageFlow) {
-        return mrtonStageFlowMapper.updateByPrimaryKey(mrtonStageFlow);
+        return mrtonStageFlowMapper.updateByPrimaryKeySelective(mrtonStageFlow);
     }
 
     /**

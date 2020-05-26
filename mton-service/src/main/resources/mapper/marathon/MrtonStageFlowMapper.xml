@@ -4,8 +4,8 @@
   <resultMap id="BaseResultMap" type="com.marathon.domain.MrtonStageFlow" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="proc_id" property="procId" jdbcType="VARCHAR" />
-    <result column="start_time" property="startTime" jdbcType="TIME" />
-    <result column="end_time" property="endTime" jdbcType="TIME" />
+    <result column="start_time" property="startTime" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="VARCHAR" />
     <result column="region" property="region" jdbcType="VARCHAR" />
     <result column="event" property="event" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />

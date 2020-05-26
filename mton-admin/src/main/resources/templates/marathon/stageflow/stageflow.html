@@ -35,7 +35,7 @@
         $(function() {
             var options = {
 				url: prefix + "/list/"+procid,
-				createUrl: prefix + "/add",
+				createUrl: prefix + "/add/"+procid,
 				updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
@@ -45,99 +45,74 @@
 		            checkbox: true
 		        },
 				{
-					field : 'id', 
+					field : 'id',
 					title : '',
 					visible: false
 				},
 				{
-					field : 'procId', 
-					title : '任务ID',
-					sortable: true
-				},
-				{
 					field : 'startTime', 
 					title : '开始时间',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'endTime', 
 					title : '结束时间',
-					sortable: true
+					sortable: false
+				},
+				{
+					field : 'duration',
+					title : '时长',
+					sortable: false
 				},
 				{
 					field : 'region', 
 					title : '区域',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'event', 
 					title : '事件',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'description', 
 					title : '详细描述',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'principal', 
 					title : '负责人',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'otherPeople', 
 					title : '相关人员',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'audio', 
 					title : '音频',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'video', 
 					title : '视频',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'props', 
 					title : '道具',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'light', 
 					title : '灯光',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'remarks', 
 					title : '备注',
-					sortable: true
-				},
-				{
-					field : 'delFlag', 
-					title : '删除标志（0代表存在 1代表删除）',
-					sortable: true
-				},
-				{
-					field : 'createBy', 
-					title : '创建者',
-					sortable: true
-				},
-				{
-					field : 'createTime', 
-					title : '创建时间',
-					sortable: true
-				},
-				{
-					field : 'updateBy', 
-					title : '更新者',
-					sortable: true
-				},
-				{
-					field : 'updateTime', 
-					title : '更新时间',
-					sortable: true
+					sortable: false
 				},
 		        {
 		            title: '操作',
