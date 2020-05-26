@@ -11,6 +11,6 @@
         LEFT JOIN mrton_proc_cfg cfg ON procinfo.proc_id = cfg.proc_id
         LEFT JOIN mrton_resource resource on resource.proc_id = procinfo.id
         WHERE
-            cfg.proc_name = #{procName}
+            cfg.proc_name = #{procName} and infoo.marathon_deleted = 1
     </select>
 </mapper>

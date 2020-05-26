@@ -67,10 +67,11 @@ public class AwardsPlanController {
 
         List<PreviewData> lstData = vo.getLstPreview();
 
-        for (PreviewData data : lstData) {
-            data.setUrl(request.getContextPath() + MrtonConstants.PREVIEW_DIR_PATH + data.getUrl());
+        if(lstData!=null){
+            for (PreviewData data : lstData) {
+                data.setUrl(request.getContextPath() + MrtonConstants.PREVIEW_DIR_PATH + data.getUrl());
+            }
         }
-
         return AjaxResult.success(vo);
     }
 

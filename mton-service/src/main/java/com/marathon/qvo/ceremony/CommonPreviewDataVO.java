@@ -1,5 +1,6 @@
 package com.marathon.qvo.ceremony;
 
+import com.google.common.collect.Lists;
 import lombok.Data;
 
 import java.util.List;
@@ -14,4 +15,10 @@ public class CommonPreviewDataVO {
 
     private List<PreviewData> lstPreview;
 
+    public List<PreviewData> getLstPreview() {
+        if(lstPreview == null){
+            lstPreview = Lists.newArrayList();
+        }
+        return lstPreview;
+    }
 }
