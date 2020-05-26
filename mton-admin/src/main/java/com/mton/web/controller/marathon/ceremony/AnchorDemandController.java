@@ -67,8 +67,9 @@ public class AnchorDemandController extends BaseController {
     /**
      * 新增仪式主持人需求
      */
-    @GetMapping("/add")
-    public String add() {
+    @GetMapping("/add/{mrtonprocid}")
+    public String add(@PathVariable String mrtonprocid,ModelMap modelMap) {
+        modelMap.put("mrtonprocid",mrtonprocid);
         return prefix + "/add";
     }
 
