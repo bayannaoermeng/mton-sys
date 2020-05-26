@@ -39,6 +39,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/templates/**")
                 .addResourceLocations("classpath:"+ File.separator+"templates"+ File.separator);
         registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/doc/**").addResourceLocations("file:/home/mton/doc/");
     }
 
     @Override
