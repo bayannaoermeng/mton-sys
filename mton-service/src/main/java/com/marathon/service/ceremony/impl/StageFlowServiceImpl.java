@@ -1,17 +1,22 @@
 package com.marathon.service.ceremony.impl;
 
-import java.time.Duration;
-import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.List;
-
 import cn.hutool.core.convert.Convert;
+import com.marathon.domain.MrtonStageFlow;
 import com.marathon.domain.MrtonStageFlowExample;
+import com.marathon.mapper.MrtonStageFlowMapper;
 import com.marathon.service.ceremony.IStageFlowService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.marathon.mapper.MrtonStageFlowMapper;
-import com.marathon.domain.MrtonStageFlow;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalTime;
+import java.time.temporal.TemporalUnit;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 主舞台流程 服务层实现
@@ -20,6 +25,7 @@ import com.marathon.domain.MrtonStageFlow;
  * @date 2020-05-24
  */
 @Service
+@Slf4j
 public class StageFlowServiceImpl implements IStageFlowService {
     @Autowired
     private MrtonStageFlowMapper mrtonStageFlowMapper;
@@ -43,16 +49,21 @@ public class StageFlowServiceImpl implements IStageFlowService {
      */
     @Override
     public List<MrtonStageFlow> selectMrtonStageFlowList(MrtonStageFlow mrtonStageFlow) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         MrtonStageFlowExample example = new MrtonStageFlowExample();
         example.or().andProcIdEqualTo(mrtonStageFlow.getProcId()).andDelFlagEqualTo(0);
         List<MrtonStageFlow> lstStageFlow = mrtonStageFlowMapper.selectByExample(example);
-        for (MrtonStageFlow stageFlow : lstStageFlow) {
-            if (stageFlow.getStartTime() != null && stageFlow.getEndTime() != null) {
-                LocalTime startTime = LocalTime.parse(stageFlow.getStartTime());
-                LocalTime endTime = LocalTime.parse(stageFlow.getEndTime());
-                Duration duration = Duration.between(startTime, endTime);
-                stageFlow.setDuration(duration.toString());
+        try {
+            for (MrtonStageFlow stageFlow : lstStageFlow) {
+                if (stageFlow.getStartTime() != null && stageFlow.getEndTime() != null) {
+                    LocalTime startTime = LocalTime.parse(sdf.format(sdf.parse(stageFlow.getStartTime())));
+                    LocalTime endTime = LocalTime.parse(sdf.format(sdf.parse(stageFlow.getEndTime())));
+                    Duration duration = Duration.between(startTime, endTime);
+                    stageFlow.setDuration(DurationFormatUtils.formatDuration(duration.toMillis(),"H:mm:ss",true));
+                }
             }
+        } catch (ParseException e) {
+            log.error("时间格式转换出错，"+e.getMessage(),e);
         }
         return lstStageFlow;
     }
@@ -93,4 +104,14 @@ public class StageFlowServiceImpl implements IStageFlowService {
         return mrtonStageFlowMapper.deleteByExample(example);
     }
 
+    public static void main(String[] args) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        String start = "3:4:5";
+        String end = "4:5:6";
+
+        LocalTime startTime = LocalTime.parse(sdf.format(sdf.parse(start)));
+        LocalTime endTime = LocalTime.parse(sdf.format(sdf.parse(end)));
+
+        System.out.println(DurationFormatUtils.formatDuration(Duration.between(startTime,endTime).toMillis(),"HH:mm:ss",true));
+    }
 }
