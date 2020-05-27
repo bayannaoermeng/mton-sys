@@ -112,13 +112,6 @@ spring:
         wall:
           config:
             multi-statement-allow: true
-
-  resources:
-    #web静态页面路径
-    #  static-locations: file:///E:/workspace/demo/target/demo/static/,file:///E:/workspace/demo/target/demo/public/
-    #当前启动目录下相对路径
-    static-locations: file:./static/,file:./public/
-
 # MyBatis
 mybatis:
   # 搜索指定包别名
