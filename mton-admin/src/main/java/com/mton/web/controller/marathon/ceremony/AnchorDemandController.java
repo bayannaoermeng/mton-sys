@@ -68,8 +68,8 @@ public class AnchorDemandController extends BaseController {
      * 新增仪式主持人需求
      */
     @GetMapping("/add/{mrtonprocid}")
-    public String add(@PathVariable String mrtonprocid,ModelMap modelMap) {
-        modelMap.put("mrtonprocid",mrtonprocid);
+    public String add(@PathVariable String mrtonprocid, ModelMap modelMap) {
+        modelMap.put("mrtonprocid", mrtonprocid);
         return prefix + "/add";
     }
 
@@ -114,6 +114,17 @@ public class AnchorDemandController extends BaseController {
     @ResponseBody
     public AjaxResult remove(String ids) {
         return toAjax(staffService.deleteMrton3PartyStaffByIds(ids));
+    }
+
+
+    @RequiresPermissions("marathon:mrton3PartyStaff:view")
+    @GetMapping("/staffDetail/{id}")
+    public String staffDetail(@PathVariable String id, ModelMap modelMap) {
+        Mrton3PartyStaff staff = staffService.selectMrton3PartyStaffById(Integer.parseInt(id));
+        if (staff != null) {
+            modelMap.put("staffDetail", staff.getStaffDetail());
+        }
+        return prefix + "/staffDetail";
     }
 
 
