@@ -79,7 +79,7 @@
             mrton.marathon_uuid as marathonId,
             mrton.marathon_name as mrtonName ,
             cfg.proc_name as procName,
-            CONCAT(mrton.marathon_name,cfg.proc_name) as mrthonMenuName
+            YEAR(mrton.marathon_starttime) as starttime
         FROM
             mrton_proc_cfg cfg
         INNER JOIN mrton_proc_user mpuser ON cfg.proc_id = mpuser.parent_proc_id
