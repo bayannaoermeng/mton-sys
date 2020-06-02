@@ -8,8 +8,7 @@
     <result column="resource_url" property="resourceUrl" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="uploader" property="uploader" jdbcType="INTEGER" />
-    <result column="isTemplate" property="istemplate" jdbcType="BIT" />
-    <result column="del_flag" property="delFlag" jdbcType="BIT" />
+    <result column="del_flag" property="delFlag" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, proc_id, resource_name, resource_url, createtime, uploader, isTemplate, del_flag
+    id, proc_id, resource_name, resource_url, createtime, uploader, del_flag
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.marathon.domain.MrtonResourceExample" >
     select
@@ -110,11 +109,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into mrton_resource (proc_id, resource_name, resource_url, 
-      createtime, uploader, isTemplate, 
-      del_flag)
+      createtime, uploader, del_flag
+      )
     values (#{procId,jdbcType=VARCHAR}, #{resourceName,jdbcType=VARCHAR}, #{resourceUrl,jdbcType=VARCHAR}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{uploader,jdbcType=INTEGER}, #{istemplate,jdbcType=BIT}, 
-      #{delFlag,jdbcType=BIT})
+      #{createtime,jdbcType=TIMESTAMP}, #{uploader,jdbcType=INTEGER}, #{delFlag,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.marathon.domain.MrtonResource" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -137,9 +136,6 @@
       <if test="uploader != null" >
         uploader,
       </if>
-      <if test="istemplate != null" >
-        isTemplate,
-      </if>
       <if test="delFlag != null" >
         del_flag,
       </if>
@@ -160,11 +156,8 @@
       <if test="uploader != null" >
         #{uploader,jdbcType=INTEGER},
       </if>
-      <if test="istemplate != null" >
-        #{istemplate,jdbcType=BIT},
-      </if>
       <if test="delFlag != null" >
-        #{delFlag,jdbcType=BIT},
+        #{delFlag,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -195,11 +188,8 @@
       <if test="record.uploader != null" >
         uploader = #{record.uploader,jdbcType=INTEGER},
       </if>
-      <if test="record.istemplate != null" >
-        isTemplate = #{record.istemplate,jdbcType=BIT},
-      </if>
       <if test="record.delFlag != null" >
-        del_flag = #{record.delFlag,jdbcType=BIT},
+        del_flag = #{record.delFlag,jdbcType=TINYINT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -214,8 +204,7 @@
       resource_url = #{record.resourceUrl,jdbcType=VARCHAR},
       createtime = #{record.createtime,jdbcType=TIMESTAMP},
       uploader = #{record.uploader,jdbcType=INTEGER},
-      isTemplate = #{record.istemplate,jdbcType=BIT},
-      del_flag = #{record.delFlag,jdbcType=BIT}
+      del_flag = #{record.delFlag,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -238,11 +227,8 @@
       <if test="uploader != null" >
         uploader = #{uploader,jdbcType=INTEGER},
       </if>
-      <if test="istemplate != null" >
-        isTemplate = #{istemplate,jdbcType=BIT},
-      </if>
       <if test="delFlag != null" >
-        del_flag = #{delFlag,jdbcType=BIT},
+        del_flag = #{delFlag,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -254,12 +240,9 @@
       resource_url = #{resourceUrl,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP},
       uploader = #{uploader,jdbcType=INTEGER},
-      isTemplate = #{istemplate,jdbcType=BIT},
-      del_flag = #{delFlag,jdbcType=BIT}
+      del_flag = #{delFlag,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-
   <resultMap type="com.marathon.domain.MrtonResource" id="MrtonResourceResult">
     <result property="id" column="id"/>
     <result property="procId" column="proc_id"/>
@@ -267,12 +250,11 @@
     <result property="resourceUrl" column="resource_url"/>
     <result property="createtime" column="createtime"/>
     <result property="uploader" column="uploader"/>
-    <result property="istemplate" column="isTemplate"/>
     <result property="delFlag" column="del_flag"/>
   </resultMap>
 
   <sql id="selectMrtonResourceVo">
-        select id, proc_id, resource_name, resource_url, createtime, uploader, isTemplate, del_flag from mrton_resource
+        select id, proc_id, resource_name, resource_url, createtime, uploader, del_flag from mrton_resource
     </sql>
 
   <select id="selectMrtonResourceList" parameterType="com.marathon.domain.MrtonResource" resultMap="MrtonResourceResult">
@@ -289,8 +271,6 @@
       <if test="createtime != null ">and createtime = #{createtime}
       </if>
       <if test="uploader != null ">and uploader = #{uploader}
-      </if>
-      <if test="isTemplate != null ">and isTemplate = #{isTemplate}
       </if>
       <if test="delFlag != null ">and del_flag = #{delFlag}
       </if>
@@ -315,8 +295,6 @@
       </if>
       <if test="uploader != null  ">uploader,
       </if>
-      <if test="isTemplate != null  ">isTemplate,
-      </if>
       <if test="delFlag != null  ">del_flag,
       </if>
     </trim>
@@ -330,8 +308,6 @@
       <if test="createtime != null  ">#{createtime},
       </if>
       <if test="uploader != null  ">#{uploader},
-      </if>
-      <if test="isTemplate != null  ">#{isTemplate},
       </if>
       <if test="delFlag != null  ">#{delFlag},
       </if>
@@ -350,8 +326,6 @@
       <if test="createtime != null  ">createtime = #{createtime},
       </if>
       <if test="uploader != null  ">uploader = #{uploader},
-      </if>
-      <if test="isTemplate != null  ">isTemplate = #{isTemplate},
       </if>
       <if test="delFlag != null  ">del_flag = #{delFlag},
       </if>

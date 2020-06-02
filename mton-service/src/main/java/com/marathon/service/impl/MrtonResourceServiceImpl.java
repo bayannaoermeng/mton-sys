@@ -28,7 +28,7 @@ public class MrtonResourceServiceImpl implements IMrtonResourceService {
      */
     @Override
     public MrtonResource selectMrtonResourceById(Integer id) {
-        return mrtonResourceMapper.selectMrtonResourceById(id);
+        return mrtonResourceMapper.selectByPrimaryKey(id);
     }
 
     /**

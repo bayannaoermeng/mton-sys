@@ -43,7 +43,7 @@ public class FileResourceController {
             String fileName = FileUploadUtils.upload(filePath, file);
             fileResource.setResourceName(filename);
             fileResource.setResourceUrl(fileName);
-            mrtonResourceMapper.insertMrtonResource(fileResource);
+            mrtonResourceMapper.insertSelective(fileResource);
         }
         return fileResource;
     }
@@ -54,7 +54,7 @@ public class FileResourceController {
         AjaxResult result = new AjaxResult();
         try {
             Files.delete(Paths.get(Global.getUploadPath()+File.separator+fileResource.getResourceUrl()));
-            mrtonResourceMapper.deleteMrtonResourceById(fileResource.getId());
+            mrtonResourceMapper.deleteByPrimaryKey(fileResource.getId());
         } catch (IOException e) {
 
         }

@@ -32,18 +32,11 @@ public class MrtonResource implements Serializable {
     private Integer uploader;
 
     /**
-     * 是否是模板
-     *
-     * @mbggenerated
-     */
-    private Boolean istemplate;
-
-    /**
      * 是否被删除
      *
      * @mbggenerated
      */
-    private Boolean delFlag;
+    private Integer delFlag;
 
     private static final long serialVersionUID = 1L;
 
@@ -95,19 +88,11 @@ public class MrtonResource implements Serializable {
         this.uploader = uploader;
     }
 
-    public Boolean getIstemplate() {
-        return istemplate;
-    }
-
-    public void setIstemplate(Boolean istemplate) {
-        this.istemplate = istemplate;
-    }
-
-    public Boolean getDelFlag() {
+    public Integer getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(Boolean delFlag) {
+    public void setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
     }
 }

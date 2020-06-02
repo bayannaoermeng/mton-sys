@@ -515,66 +515,6 @@ public class MrtonResourceExample {
             return (Criteria) this;
         }
 
-        public Criteria andIstemplateIsNull() {
-            addCriterion("isTemplate is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIstemplateIsNotNull() {
-            addCriterion("isTemplate is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIstemplateEqualTo(Boolean value) {
-            addCriterion("isTemplate =", value, "istemplate");
-            return (Criteria) this;
-        }
-
-        public Criteria andIstemplateNotEqualTo(Boolean value) {
-            addCriterion("isTemplate <>", value, "istemplate");
-            return (Criteria) this;
-        }
-
-        public Criteria andIstemplateGreaterThan(Boolean value) {
-            addCriterion("isTemplate >", value, "istemplate");
-            return (Criteria) this;
-        }
-
-        public Criteria andIstemplateGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("isTemplate >=", value, "istemplate");
-            return (Criteria) this;
-        }
-
-        public Criteria andIstemplateLessThan(Boolean value) {
-            addCriterion("isTemplate <", value, "istemplate");
-            return (Criteria) this;
-        }
-
-        public Criteria andIstemplateLessThanOrEqualTo(Boolean value) {
-            addCriterion("isTemplate <=", value, "istemplate");
-            return (Criteria) this;
-        }
-
-        public Criteria andIstemplateIn(List<Boolean> values) {
-            addCriterion("isTemplate in", values, "istemplate");
-            return (Criteria) this;
-        }
-
-        public Criteria andIstemplateNotIn(List<Boolean> values) {
-            addCriterion("isTemplate not in", values, "istemplate");
-            return (Criteria) this;
-        }
-
-        public Criteria andIstemplateBetween(Boolean value1, Boolean value2) {
-            addCriterion("isTemplate between", value1, value2, "istemplate");
-            return (Criteria) this;
-        }
-
-        public Criteria andIstemplateNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("isTemplate not between", value1, value2, "istemplate");
-            return (Criteria) this;
-        }
-
         public Criteria andDelFlagIsNull() {
             addCriterion("del_flag is null");
             return (Criteria) this;
@@ -585,52 +525,52 @@ public class MrtonResourceExample {
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagEqualTo(Boolean value) {
+        public Criteria andDelFlagEqualTo(Integer value) {
             addCriterion("del_flag =", value, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagNotEqualTo(Boolean value) {
+        public Criteria andDelFlagNotEqualTo(Integer value) {
             addCriterion("del_flag <>", value, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagGreaterThan(Boolean value) {
+        public Criteria andDelFlagGreaterThan(Integer value) {
             addCriterion("del_flag >", value, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andDelFlagGreaterThanOrEqualTo(Integer value) {
             addCriterion("del_flag >=", value, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagLessThan(Boolean value) {
+        public Criteria andDelFlagLessThan(Integer value) {
             addCriterion("del_flag <", value, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagLessThanOrEqualTo(Boolean value) {
+        public Criteria andDelFlagLessThanOrEqualTo(Integer value) {
             addCriterion("del_flag <=", value, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagIn(List<Boolean> values) {
+        public Criteria andDelFlagIn(List<Integer> values) {
             addCriterion("del_flag in", values, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagNotIn(List<Boolean> values) {
+        public Criteria andDelFlagNotIn(List<Integer> values) {
             addCriterion("del_flag not in", values, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagBetween(Boolean value1, Boolean value2) {
+        public Criteria andDelFlagBetween(Integer value1, Integer value2) {
             addCriterion("del_flag between", value1, value2, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andDelFlagNotBetween(Integer value1, Integer value2) {
             addCriterion("del_flag not between", value1, value2, "delFlag");
             return (Criteria) this;
         }

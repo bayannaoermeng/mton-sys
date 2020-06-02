@@ -27,9 +27,6 @@ public interface MrtonResourceMapper {
     int updateByPrimaryKeySelective(MrtonResource record);
 
     int updateByPrimaryKey(MrtonResource record);
-
-    int deleteMrtonResourceByIds(List<String> toStrArray);
-
     /**
      * 查询任务关联资源（文件）信息
      *
