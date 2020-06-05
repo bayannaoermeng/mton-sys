@@ -2,6 +2,7 @@ package com.mton.web.controller.marathon.ceremony;
 
 import com.google.common.collect.Lists;
 import com.marathon.domain.Mrton3PartyStaff;
+import com.marathon.qvo.ceremony.Mrton3PartyStaffVO;
 import com.marathon.service.thirdpartystaff.IMrton3PartyStaffService;
 import com.mton.common.annotation.Log;
 import com.mton.common.base.AjaxResult;
@@ -80,7 +81,7 @@ public class AnchorDemandController extends BaseController {
     @Log(title = "仪式主持人需求", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(Mrton3PartyStaff mrton3PartyStaff) {
+    public AjaxResult addSave(@RequestBody Mrton3PartyStaff mrton3PartyStaff) {
         return toAjax(staffService.insertMrton3PartyStaff(mrton3PartyStaff));
     }
 
@@ -89,7 +90,7 @@ public class AnchorDemandController extends BaseController {
      */
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, ModelMap mmap) {
-        Mrton3PartyStaff mrton3PartyStaff = staffService.selectMrton3PartyStaffById(id);
+        Mrton3PartyStaffVO mrton3PartyStaff = staffService.selectMrton3PartyStaffById(id);
         mmap.put("mrton3PartyStaff", mrton3PartyStaff);
         return prefix + "/edit";
     }

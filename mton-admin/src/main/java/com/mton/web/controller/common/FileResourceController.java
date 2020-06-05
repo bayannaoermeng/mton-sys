@@ -1,6 +1,8 @@
 package com.mton.web.controller.common;
 
+import com.google.common.base.Strings;
 import com.marathon.domain.MrtonResource;
+import com.marathon.domain.MrtonResourceExample;
 import com.marathon.mapper.MrtonResourceMapper;
 import com.mton.common.base.AjaxResult;
 import com.mton.common.config.Global;
@@ -41,6 +43,9 @@ public class FileResourceController {
             String filePath = Global.getUploadPath();
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
+            if (!Strings.isNullOrEmpty(activityId)) {
+                fileResource.setProcId(activityId);
+            }
             fileResource.setResourceName(filename);
             fileResource.setResourceUrl(fileName);
             mrtonResourceMapper.insertSelective(fileResource);
@@ -53,7 +58,7 @@ public class FileResourceController {
     public AjaxResult deleteFile(@RequestBody MrtonResource fileResource) {
         AjaxResult result = new AjaxResult();
         try {
-            Files.delete(Paths.get(Global.getUploadPath()+File.separator+fileResource.getResourceUrl()));
+            Files.delete(Paths.get(Global.getUploadPath() + File.separator + fileResource.getResourceUrl()));
             mrtonResourceMapper.deleteByPrimaryKey(fileResource.getId());
         } catch (IOException e) {
 

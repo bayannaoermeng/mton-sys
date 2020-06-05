@@ -1,9 +1,11 @@
 package com.marathon.domain;
 
+import com.mton.common.base.BaseEntity;
+
 import java.io.Serializable;
 import java.util.Date;
 
-public class Mrton3PartyStaff implements Serializable {
+public class Mrton3PartyStaff extends BaseEntity implements Serializable {
     private Integer id;
 
     /**
