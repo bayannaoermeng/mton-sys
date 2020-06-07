@@ -56,13 +56,12 @@ public class FileResourceController {
     @RequestMapping("/deleteFile")
     @ResponseBody
     public AjaxResult deleteFile(@RequestBody MrtonResource fileResource) {
-        AjaxResult result = new AjaxResult();
         try {
             Files.delete(Paths.get(Global.getUploadPath() + File.separator + fileResource.getResourceUrl()));
             mrtonResourceMapper.deleteByPrimaryKey(fileResource.getId());
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
-        return result;
+        return AjaxResult.success();
     }
 }

@@ -77,7 +77,7 @@
 	</div>
     <div th:include="include::footer"></div>
 	<th:block th:include="include :: bootstrap-fileinput-js" />
-    <script type="text/javascript">
+	<script th:inline="javascript">
 		var procid = [[${mrtonprocid}]]
 		var prefix = ctx + "ceremony/anchor"
 		$("#form-mrtonThirdpartyStaff-add").validate({
@@ -99,7 +99,7 @@
 				var transportation = $("input[name='transportation']").val();
 				var invoiceDetail = $("input[name='invoiceDetail']").val();
 				var remark = $("input[name='remark']").val();
-				var staffDetail = $("input[name='staffDetail']").val();
+				var staffDetail = $("textarea[name='staffDetail']").val();
 				var resumePath = $(".list-group-item").attr('id');
 				$.ajax({
 					cache : true,

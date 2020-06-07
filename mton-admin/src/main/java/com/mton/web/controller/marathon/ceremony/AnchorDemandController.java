@@ -81,7 +81,7 @@ public class AnchorDemandController extends BaseController {
     @Log(title = "仪式主持人需求", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(@RequestBody Mrton3PartyStaff mrton3PartyStaff) {
+    public AjaxResult addSave(Mrton3PartyStaff mrton3PartyStaff) {
         return toAjax(staffService.insertMrton3PartyStaff(mrton3PartyStaff));
     }
 

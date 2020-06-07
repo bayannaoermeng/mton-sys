@@ -2,6 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
 	<th:block th:include="include :: header('修改仪式第三方人员需求')" />
+	<th:block th:include="include :: bootstrap-fileinput-css" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -65,8 +66,7 @@
 				<label class="col-sm-3 control-label">简历</label>
 				<div class="list-group col-sm-8" id="atachment_list_uploaded" style="margin-top: 10px;margin-left: 15px">
 					<li class="list-group-item" th:if ="${mrton3PartyStaff.resumeResource} !=null">
-						<span id = "resourceId" th:field="*{resumeResource.id}"></span>
-						<span th:field="*{resumeResource.resourceName}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn-danger btn" id="delFileBtn">删除</button>
+						<span th:text="*{resumeResource.resourceName}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn-danger btn" id="delFileBtn">删除</button>
 					</li>
 				</div>
 			</div>
@@ -79,16 +79,22 @@
 		</form>
     </div>
     <div th:include="include::footer"></div>
-    <script type="text/javascript">
+	<th:block th:include="include :: bootstrap-fileinput-js" />
+	<script th:inline="javascript">
 		//任务ID
 		var procid = [[${mrton3PartyStaff.procId}]]
 		var prefix = ctx + "ceremony/anchor";
 
 		$(function () {
+			var fileResource = [[${mrton3PartyStaff.resumeResource}]];
+			if( $.isEmptyObject(fileResource)){
+				//隐藏简历
+				$('#attachment-div').css('display','none');
+				//显示上传
+				$('#upload-div').css('display','block');
+			}
 			$('#delFileBtn').click(function () {
-				var fileResource = {};
-				var resourceId=$("#resourceId").text();
-				fileResource.id = resourceId;
+				var fileResource = [[${mrton3PartyStaff.resumeResource}]];
 				$.ajax({
 					url: ctx + 'fileresource/deleteFile',
 					method: 'post',
@@ -99,7 +105,7 @@
 						if (response.code != 0) {
 							bootbox.alert(response.message);
 						} else {
-							$('#'+fileResource.id).remove();
+							$('#atachment_list_uploaded').empty();
 
 							//隐藏简历
 							$('#attachment-div').css('display','none');
@@ -134,7 +140,8 @@
 				var transportation = $("input[name='transportation']").val();
 				var invoiceDetail = $("input[name='invoiceDetail']").val();
 				var remark = $("input[name='remark']").val();
-				var staffDetail = $("input[name='staffDetail']").val();
+				var staffDetail = $("textarea[name='staffDetail']").val();
+				var resumePath = $(".list-group-item").attr('id');
 				$.ajax({
 					cache : true,
 					type : "POST",
@@ -149,7 +156,8 @@
 						"transportation": transportation,
 						"invoiceDetail": invoiceDetail,
 						"remark": remark,
-						"staffDetail": staffDetail
+						"staffDetail": staffDetail,
+						"resumePath": resumePath
 					},
 					async : false,
 					error : function(request) {

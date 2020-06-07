@@ -1,6 +1,7 @@
 package com.marathon.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class MrtonResource implements Serializable {
@@ -22,7 +23,7 @@ public class MrtonResource implements Serializable {
      *
      * @mbggenerated
      */
-    private Date createtime;
+    private LocalDateTime createtime;
 
     /**
      * 编辑者
@@ -72,11 +73,11 @@ public class MrtonResource implements Serializable {
         this.resourceUrl = resourceUrl == null ? null : resourceUrl.trim();
     }
 
-    public Date getCreatetime() {
+    public LocalDateTime getCreatetime() {
         return createtime;
     }
 
-    public void setCreatetime(Date createtime) {
+    public void setCreatetime(LocalDateTime createtime) {
         this.createtime = createtime;
     }
 
