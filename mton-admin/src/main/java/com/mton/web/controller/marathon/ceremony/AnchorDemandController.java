@@ -128,5 +128,15 @@ public class AnchorDemandController extends BaseController {
         return prefix + "/staffDetail";
     }
 
+    @RequestMapping("/master/{id}")
+    @ResponseBody
+    public AjaxResult master(@PathVariable String id) {
+        Mrton3PartyStaff staff = new Mrton3PartyStaff();
+        staff.setMaster(1);
+        staff.setId(Integer.valueOf(id));
+        staffService.updateMrton3PartyStaff(staff);
+        return AjaxResult.success("成功");
+    }
+
 
 }
