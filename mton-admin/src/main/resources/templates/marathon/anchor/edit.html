@@ -5,283 +5,250 @@
 	<th:block th:include="include :: bootstrap-fileinput-css" />
 </head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-mrtonThirdpartyStaff-edit" th:object="${mrton3PartyStaff}">
-            <input id="id" name="id" th:field="*{id}"  type="hidden">
-			<div class="form-group" hidden>
-				<label class="col-sm-3 control-label">任务ID：</label>
-				<div class="col-sm-8">
-					<input id="procId" name="procId" th:field="*{procId}" class="form-control" type="text">
-				</div>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+	<form class="form-horizontal m" id="form-mrtonThirdpartyStaff-edit" th:object="${mrton3PartyStaff}">
+		<input id="id" name="id" th:field="*{id}"  type="hidden">
+		<div class="form-group" hidden>
+			<label class="col-sm-3 control-label">任务ID：</label>
+			<div class="col-sm-8">
+				<input id="procId" name="procId" th:field="*{procId}" class="form-control" type="text">
 			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">供应商：</label>
-				<div class="col-sm-8">
-					<input id="supplier" name="supplier" th:field="*{supplier}" class="form-control" type="text">
-				</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">供应商：</label>
+			<div class="col-sm-8">
+				<input id="supplier" name="supplier" th:field="*{supplier}" class="form-control" type="text">
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">对接人：</label>
-				<div class="col-sm-8">
-					<input id="contactPerson" name="contactPerson" th:field="*{contactPerson}" class="form-control" type="text">
-				</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">对接人：</label>
+			<div class="col-sm-8">
+				<input id="contactPerson" name="contactPerson" th:field="*{contactPerson}" class="form-control" type="text">
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">联系方式：</label>
-				<div class="col-sm-8">
-					<input id="mobile" name="mobile" th:field="*{mobile}" class="form-control" type="text">
-				</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">联系方式：</label>
+			<div class="col-sm-8">
+				<input id="mobile" name="mobile" th:field="*{mobile}" class="form-control" type="text">
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">报价：</label>
-				<div class="col-sm-8">
-					<input id="price" name="price" th:field="*{price}" class="form-control" type="text">
-				</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">报价：</label>
+			<div class="col-sm-8">
+				<input id="price" name="price" th:field="*{price}" class="form-control" type="text">
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">交通食宿：</label>
-				<div class="col-sm-8">
-					<input id="transportation" name="transportation" th:field="*{transportation}" class="form-control" type="text">
-				</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">交通食宿：</label>
+			<div class="col-sm-8">
+				<input id="transportation" name="transportation" th:field="*{transportation}" class="form-control" type="text">
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">发票详情：</label>
-				<div class="col-sm-8">
-					<input id="invoiceDetail" name="invoiceDetail" th:field="*{invoiceDetail}" class="form-control" type="text">
-				</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">发票详情：</label>
+			<div class="col-sm-8">
+				<input id="invoiceDetail" name="invoiceDetail" th:field="*{invoiceDetail}" class="form-control" type="text">
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">备注：</label>
-				<div class="col-sm-8">
-					<input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">
-				</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">备注：</label>
+			<div class="col-sm-8">
+				<input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">人员详情：</label>
-				<div class="col-sm-8">
-					<textarea id="staffDetail" name="staffDetail" th:field="*{staffDetail}" class="form-control"></textarea>
-				</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">人员详情：</label>
+			<div class="col-sm-8">
+				<textarea id="staffDetail" name="staffDetail" th:field="*{staffDetail}" class="form-control"></textarea>
 			</div>
-<<<<<<< HEAD
-			<div class="form-group">
-				<label class="col-sm-3 control-label">简历上传</label>
-				<div class="col-xs-8">
-					<div><a>简历</a> <a>删除</a></div>
+		</div>
+		<div class="form-group" id="attachment-div">
+			<label class="col-sm-3 control-label">简历</label>
+			<div class="list-group col-sm-8" id="atachment_list_uploaded" style="margin-top: 10px;margin-left: 15px">
+				<li class="list-group-item" th:if ="${mrton3PartyStaff.resumeResource} !=null">
+					<span th:text="*{resumeResource.resourceName}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn-danger btn" id="delFileBtn">删除</button>
+				</li>
+			</div>
+		</div>
+		<div class="form-group" id="upload-div" hidden>
+			<label class="col-sm-3 control-label">简历上传</label>
+			<div class="col-xs-8">
+				<input id="file-upload" name="file" type="file" multiple class="file-loading">
+			</div>
+		</div>
+	</form>
+</div>
+<div th:include="include::footer"></div>
+<th:block th:include="include :: bootstrap-fileinput-js" />
+<script th:inline="javascript">
+	//任务ID
+	var procid = [[${mrton3PartyStaff.procId}]]
+	var prefix = ctx + "ceremony/anchor";
 
-=======
-			<div class="form-group" id="attachment-div">
-				<label class="col-sm-3 control-label">简历</label>
-				<div class="list-group col-sm-8" id="atachment_list_uploaded" style="margin-top: 10px;margin-left: 15px">
-					<li class="list-group-item" th:if ="${mrton3PartyStaff.resumeResource} !=null">
-						<span th:text="*{resumeResource.resourceName}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn-danger btn" id="delFileBtn">删除</button>
-					</li>
-				</div>
-			</div>
-			<div class="form-group" id="upload-div" hidden>
-				<label class="col-sm-3 control-label">简历上传</label>
-				<div class="col-xs-8">
->>>>>>> 2a9e7871564efd1165e9937a06967bd2dbfa3ee0
-					<input id="file-upload" name="file" type="file" multiple class="file-loading">
-				</div>
-			</div>
-		</form>
-    </div>
-    <div th:include="include::footer"></div>
-	<th:block th:include="include :: bootstrap-fileinput-js" />
-<<<<<<< HEAD
-    <script type="text/javascript">
-=======
-	<script th:inline="javascript">
-		//任务ID
-		var procid = [[${mrton3PartyStaff.procId}]]
->>>>>>> 2a9e7871564efd1165e9937a06967bd2dbfa3ee0
-		var prefix = ctx + "ceremony/anchor";
-
-		$(function () {
+	$(function () {
+		var fileResource = [[${mrton3PartyStaff.resumeResource}]];
+		if( $.isEmptyObject(fileResource)){
+			//隐藏简历
+			$('#attachment-div').css('display','none');
+			//显示上传
+			$('#upload-div').css('display','block');
+		}
+		$('#delFileBtn').click(function () {
 			var fileResource = [[${mrton3PartyStaff.resumeResource}]];
-			if( $.isEmptyObject(fileResource)){
-				//隐藏简历
-				$('#attachment-div').css('display','none');
-				//显示上传
-				$('#upload-div').css('display','block');
-			}
-			$('#delFileBtn').click(function () {
-				var fileResource = [[${mrton3PartyStaff.resumeResource}]];
-				$.ajax({
-					url: ctx + 'fileresource/deleteFile',
-					method: 'post',
-					dataType: "json",
-					contentType: 'application/json;charset=UTF-8',
-					data: JSON.stringify(fileResource),
-					success: function (response) {
-						if (response.code != 0) {
-							bootbox.alert(response.message);
-						} else {
-							$('#atachment_list_uploaded').empty();
+			$.ajax({
+				url: ctx + 'fileresource/deleteFile',
+				method: 'post',
+				dataType: "json",
+				contentType: 'application/json;charset=UTF-8',
+				data: JSON.stringify(fileResource),
+				success: function (response) {
+					if (response.code != 0) {
+						bootbox.alert(response.message);
+					} else {
+						$('#atachment_list_uploaded').empty();
 
-							//隐藏简历
-							$('#attachment-div').css('display','none');
-							//显示上传
-							$('#upload-div').css('display','block');
+						//隐藏简历
+						$('#attachment-div').css('display','none');
+						//显示上传
+						$('#upload-div').css('display','block');
 
-						}
-					},
-					error: function (response) {
-						bootbox.alert("error");
 					}
-				});
-			});
-		});
-
-		$("#form-mrtonThirdpartyStaff-edit").validate({
-			rules:{
-				xxxx:{
-					required:true,
 				},
-			},
-			focusCleanup: true
-		});
-		
-		function submitHandler() {
-	        if ($.validate.form()) {
-				var procId = $("input[name='procId']").val();
-				var supplier = $("input[name='supplier']").val();
-				var contactPerson = $("input[name='contactPerson']").val();
-				var mobile = $("input[name='mobile']").val();
-				var price = $("input[name='price']").val();
-				var transportation = $("input[name='transportation']").val();
-				var invoiceDetail = $("input[name='invoiceDetail']").val();
-				var remark = $("input[name='remark']").val();
-				var staffDetail = $("textarea[name='staffDetail']").val();
-				var resumePath = $(".list-group-item").attr('id');
-				$.ajax({
-					cache : true,
-					type : "POST",
-					url : prefix + "/edit",
-					data : {
-						"id": $("input[name = 'id']").val(),
-						"procId": procId,
-						"supplier": supplier,
-						"contactPerson": contactPerson,
-						"mobile": mobile,
-						"price": price,
-						"transportation": transportation,
-						"invoiceDetail": invoiceDetail,
-						"remark": remark,
-						"staffDetail": staffDetail,
-						"resumePath": resumePath
-					},
-					async : false,
-					error : function(request) {
-						$.modal.alertError("系统错误");
-					},
-					success : function(data) {
-						$.operate.successCallback(data);
-					}
-				});
-	        }
-	    }
-<<<<<<< HEAD
-=======
-
->>>>>>> 2a9e7871564efd1165e9937a06967bd2dbfa3ee0
-		$("#file-upload").fileinput({
-			language: 'zh', //设置语言
-			uploadUrl: ctx + "fileresource/add", //上传的地址
-			uploadAsync: true, //默认异步上传
-			showUpload: true, //是否显示上传按钮
-			showRemove: true, //显示移除按钮
-			showPreview: true, //是否显示预览
-			showCaption: true,//是否显示标题
-			browseClass: "btn btn-primary", //按钮样式
-			dropZoneEnabled: false,//是否显示拖拽区域
-			maxFileCount: 1, //表示允许同时上传的最大文件个数
-			enctype: 'multipart/form-data',
-			validateInitialCount: true,
-			uploadExtraData: function(previewId, index) {
-				var data = {
-<<<<<<< HEAD
-					activityId : "test",
-=======
-					activityId : procid,
->>>>>>> 2a9e7871564efd1165e9937a06967bd2dbfa3ee0
-				};
-				return data;
-			},
-		});
-
-		$('#file-upload').on('fileuploaderror', function (event, data, previewId, index) {
-			var form = data.form, files = data.files, extra = data.extra,
-					response = data.response, reader = data.reader;
-			console.log(data);
-			console.log('File upload error');
-		});
-
-		$('#file-upload').on('fileerror', function (event, data) {
-<<<<<<< HEAD
-			console.log(data.id);
-			console.log(data.index);
-			console.log(data.file);
-			console.log(data.reader);
-			console.log(data.files);
-=======
->>>>>>> 2a9e7871564efd1165e9937a06967bd2dbfa3ee0
-		});
-
-		$('#file-upload').on('fileuploaded', function (event, data, previewId, index) {
-			var form = data.form, files = data.files, extra = data.extra,
-					response = data.response, reader = data.reader;
-<<<<<<< HEAD
-=======
-
-			//隐藏上传控件
-			$("#file-upload").fileinput('reset');
-			$('#upload-div').css('display','none');
-
-			//显示简历
-			$('#attachment-div').css('display','block');
->>>>>>> 2a9e7871564efd1165e9937a06967bd2dbfa3ee0
-			var tmplate=
-					'<li class="list-group-item" id='+response.id+'>' +
-					'<span>'+response.resourceName+'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-					'<button class="btn-danger btn" id="delFileBtn">删除</button>' +
-					'</li>';
-			$(tmplate).appendTo($('#atachment_list_uploaded'))
-					.data("file",response)
-					.find('button').click(function(){
-				var fileResource=$(this).parent().data("file");
-				$.ajax({
-					url: ctx + 'fileresource/deleteFile',
-					method: 'post',
-					dataType: "json",
-					contentType: 'application/json;charset=UTF-8',
-					data: JSON.stringify(fileResource),
-					success: function (response) {
-						if (response.code != 0) {
-							bootbox.alert(response.message);
-						} else {
-							$('#'+fileResource.id).remove();
-<<<<<<< HEAD
-=======
-
-							//隐藏简历
-							$('#attachment-div').css('display','none');
-							//显示上传
-							$('#upload-div').css('display','block');
-
->>>>>>> 2a9e7871564efd1165e9937a06967bd2dbfa3ee0
-						}
-					},
-					error: function (response) {
-						bootbox.alert("error");
-					}
-				});
+				error: function (response) {
+					bootbox.alert("error");
+				}
 			});
 		});
+	});
 
-		$('#file-upload').on('filebatchuploadcomplete', function(event, files, extra) {
-			$("#file-upload").fileinput('reset');
+	$("#form-mrtonThirdpartyStaff-edit").validate({
+		rules:{
+			xxxx:{
+				required:true,
+			},
+		},
+		focusCleanup: true
+	});
+
+	function submitHandler() {
+		if ($.validate.form()) {
+			var procId = $("input[name='procId']").val();
+			var supplier = $("input[name='supplier']").val();
+			var contactPerson = $("input[name='contactPerson']").val();
+			var mobile = $("input[name='mobile']").val();
+			var price = $("input[name='price']").val();
+			var transportation = $("input[name='transportation']").val();
+			var invoiceDetail = $("input[name='invoiceDetail']").val();
+			var remark = $("input[name='remark']").val();
+			var staffDetail = $("textarea[name='staffDetail']").val();
+			var resumePath = $(".list-group-item").attr('id');
+			$.ajax({
+				cache : true,
+				type : "POST",
+				url : prefix + "/edit",
+				data : {
+					"id": $("input[name = 'id']").val(),
+					"procId": procId,
+					"supplier": supplier,
+					"contactPerson": contactPerson,
+					"mobile": mobile,
+					"price": price,
+					"transportation": transportation,
+					"invoiceDetail": invoiceDetail,
+					"remark": remark,
+					"staffDetail": staffDetail,
+					"resumePath": resumePath
+				},
+				async : false,
+				error : function(request) {
+					$.modal.alertError("系统错误");
+				},
+				success : function(data) {
+					$.operate.successCallback(data);
+				}
+			});
+		}
+	}
+
+	$("#file-upload").fileinput({
+		language: 'zh', //设置语言
+		uploadUrl: ctx + "fileresource/add", //上传的地址
+		uploadAsync: true, //默认异步上传
+		showUpload: true, //是否显示上传按钮
+		showRemove: true, //显示移除按钮
+		showPreview: true, //是否显示预览
+		showCaption: true,//是否显示标题
+		browseClass: "btn btn-primary", //按钮样式
+		dropZoneEnabled: false,//是否显示拖拽区域
+		maxFileCount: 1, //表示允许同时上传的最大文件个数
+		enctype: 'multipart/form-data',
+		validateInitialCount: true,
+		uploadExtraData: function(previewId, index) {
+			var data = {
+				activityId : procid,
+			};
+			return data;
+		},
+	});
+
+	$('#file-upload').on('fileuploaderror', function (event, data, previewId, index) {
+		var form = data.form, files = data.files, extra = data.extra,
+				response = data.response, reader = data.reader;
+		console.log(data);
+		console.log('File upload error');
+	});
+
+	$('#file-upload').on('fileerror', function (event, data) {
+	});
+
+	$('#file-upload').on('fileuploaded', function (event, data, previewId, index) {
+		var form = data.form, files = data.files, extra = data.extra,
+				response = data.response, reader = data.reader;
+
+		//隐藏上传控件
+		$("#file-upload").fileinput('reset');
+		$('#upload-div').css('display','none');
+
+		//显示简历
+		$('#attachment-div').css('display','block');
+		var tmplate=
+				'<li class="list-group-item" id='+response.id+'>' +
+				'<span>'+response.resourceName+'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+				'<button class="btn-danger btn" id="delFileBtn">删除</button>' +
+				'</li>';
+		$(tmplate).appendTo($('#atachment_list_uploaded'))
+				.data("file",response)
+				.find('button').click(function(){
+			var fileResource=$(this).parent().data("file");
+			$.ajax({
+				url: ctx + 'fileresource/deleteFile',
+				method: 'post',
+				dataType: "json",
+				contentType: 'application/json;charset=UTF-8',
+				data: JSON.stringify(fileResource),
+				success: function (response) {
+					if (response.code != 0) {
+						bootbox.alert(response.message);
+					} else {
+						$('#'+fileResource.id).remove();
+
+						//隐藏简历
+						$('#attachment-div').css('display','none');
+						//显示上传
+						$('#upload-div').css('display','block');
+
+					}
+				},
+				error: function (response) {
+					bootbox.alert("error");
+				}
+			});
 		});
-	</script>
+	});
+
+	$('#file-upload').on('filebatchuploadcomplete', function(event, files, extra) {
+		$("#file-upload").fileinput('reset');
+	});
+</script>
 </body>
 </html>

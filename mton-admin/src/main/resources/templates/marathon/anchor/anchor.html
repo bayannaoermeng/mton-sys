@@ -124,12 +124,11 @@
 
         });
 		function setmaster() {
-			debugger;
+			// debugger;
 			var row=$("#bootstrap-table").bootstrapTable('getSelections');
-			alert(row[0].id)
 			id = row[0].id
 			$.post(prefix + "/master/"+id, function(data){
-				$.table.search();
+				// $.table.search();
 				$('#bootstrap-table').bootstrapTable(('refresh'));
 			})
 
