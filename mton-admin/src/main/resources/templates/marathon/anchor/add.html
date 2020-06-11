@@ -77,7 +77,8 @@
 	</div>
     <div th:include="include::footer"></div>
 	<th:block th:include="include :: bootstrap-fileinput-js" />
-    <script type="text/javascript">
+	<script th:inline="javascript">
+		var procid = [[${mrtonprocid}]]
 		var prefix = ctx + "ceremony/anchor"
 		$("#form-mrtonThirdpartyStaff-add").validate({
 			rules:{
@@ -90,7 +91,40 @@
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/add", $('#form-mrtonThirdpartyStaff-add').serialize());
+				var procId = $("input[name='procId']").val();
+				var supplier = $("input[name='supplier']").val();
+				var contactPerson = $("input[name='contactPerson']").val();
+				var mobile = $("input[name='mobile']").val();
+				var price = $("input[name='price']").val();
+				var transportation = $("input[name='transportation']").val();
+				var invoiceDetail = $("input[name='invoiceDetail']").val();
+				var remark = $("input[name='remark']").val();
+				var staffDetail = $("textarea[name='staffDetail']").val();
+				var resumePath = $(".list-group-item").attr('id');
+				$.ajax({
+					cache : true,
+					type : "POST",
+					url : prefix + "/add",
+					data : {
+						"procId": procId,
+						"supplier": supplier,
+						"contactPerson": contactPerson,
+						"mobile": mobile,
+						"price": price,
+						"transportation": transportation,
+						"invoiceDetail": invoiceDetail,
+						"remark": remark,
+						"staffDetail": staffDetail,
+						"resumePath": resumePath
+					},
+					async : false,
+					error : function(request) {
+						$.modal.alertError("系统错误");
+					},
+					success : function(data) {
+						$.operate.successCallback(data);
+					}
+				});
 	        }
 	    }
 		$("#file-upload").fileinput({
@@ -108,7 +142,7 @@
 			validateInitialCount: true,
 			uploadExtraData: function(previewId, index) {
 				var data = {
-					activityId : "test",
+					activityId : procid,
 				};
 				return data;
 			},
