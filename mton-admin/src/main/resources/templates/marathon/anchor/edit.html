@@ -2,6 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
 	<th:block th:include="include :: header('修改仪式第三方人员需求')" />
+	<th:block th:include="include :: bootstrap-fileinput-css" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -61,9 +62,18 @@
 					<textarea id="staffDetail" name="staffDetail" th:field="*{staffDetail}" class="form-control"></textarea>
 				</div>
 			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">简历上传</label>
+				<div class="col-xs-8">
+					<div><a>简历</a> <a>删除</a></div>
+
+					<input id="file-upload" name="file" type="file" multiple class="file-loading">
+				</div>
+			</div>
 		</form>
     </div>
     <div th:include="include::footer"></div>
+	<th:block th:include="include :: bootstrap-fileinput-js" />
     <script type="text/javascript">
 		var prefix = ctx + "ceremony/anchor";
 		$("#form-mrtonThirdpartyStaff-edit").validate({
@@ -80,6 +90,77 @@
 	            $.operate.save(prefix + "/edit", $('#form-mrtonThirdpartyStaff-edit').serialize());
 	        }
 	    }
+		$("#file-upload").fileinput({
+			language: 'zh', //设置语言
+			uploadUrl: ctx + "fileresource/add", //上传的地址
+			uploadAsync: true, //默认异步上传
+			showUpload: true, //是否显示上传按钮
+			showRemove: true, //显示移除按钮
+			showPreview: true, //是否显示预览
+			showCaption: true,//是否显示标题
+			browseClass: "btn btn-primary", //按钮样式
+			dropZoneEnabled: false,//是否显示拖拽区域
+			maxFileCount: 1, //表示允许同时上传的最大文件个数
+			enctype: 'multipart/form-data',
+			validateInitialCount: true,
+			uploadExtraData: function(previewId, index) {
+				var data = {
+					activityId : "test",
+				};
+				return data;
+			},
+		});
+
+		$('#file-upload').on('fileuploaderror', function (event, data, previewId, index) {
+			var form = data.form, files = data.files, extra = data.extra,
+					response = data.response, reader = data.reader;
+			console.log(data);
+			console.log('File upload error');
+		});
+
+		$('#file-upload').on('fileerror', function (event, data) {
+			console.log(data.id);
+			console.log(data.index);
+			console.log(data.file);
+			console.log(data.reader);
+			console.log(data.files);
+		});
+
+		$('#file-upload').on('fileuploaded', function (event, data, previewId, index) {
+			var form = data.form, files = data.files, extra = data.extra,
+					response = data.response, reader = data.reader;
+			var tmplate=
+					'<li class="list-group-item" id='+response.id+'>' +
+					'<span>'+response.resourceName+'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+					'<button class="btn-danger btn" id="delFileBtn">删除</button>' +
+					'</li>';
+			$(tmplate).appendTo($('#atachment_list_uploaded'))
+					.data("file",response)
+					.find('button').click(function(){
+				var fileResource=$(this).parent().data("file");
+				$.ajax({
+					url: ctx + 'fileresource/deleteFile',
+					method: 'post',
+					dataType: "json",
+					contentType: 'application/json;charset=UTF-8',
+					data: JSON.stringify(fileResource),
+					success: function (response) {
+						if (response.code != 0) {
+							bootbox.alert(response.message);
+						} else {
+							$('#'+fileResource.id).remove();
+						}
+					},
+					error: function (response) {
+						bootbox.alert("error");
+					}
+				});
+			});
+		});
+
+		$('#file-upload').on('filebatchuploadcomplete', function(event, files, extra) {
+			$("#file-upload").fileinput('reset');
+		});
 	</script>
 </body>
 </html>

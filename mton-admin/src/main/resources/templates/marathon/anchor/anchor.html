@@ -10,6 +10,9 @@
 				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="marathon:mrton3PartyStaff:add">
 					<i class="fa fa-plus"></i> 添加
 				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="setmaster()" shiro:hasPermission="marathon:mrton3PartyStaff:add">
+					<i class="fa fa-edit"></i> 标注为供应商
+				</a>
 				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="marathon:mrton3PartyStaff:edit">
 					<i class="fa fa-edit"></i> 修改
 				</a>
@@ -118,7 +121,20 @@
 		        }]
             };
             $.table.init(options);
+
         });
+		function setmaster() {
+			debugger;
+			var row=$("#bootstrap-table").bootstrapTable('getSelections');
+			alert(row[0].id)
+			id = row[0].id
+			$.post(prefix + "/master/"+id, function(data){
+				$.table.search();
+				$('#bootstrap-table').bootstrapTable(('refresh'));
+			})
+
+
+		}
     </script>
 </body>
 </html>
