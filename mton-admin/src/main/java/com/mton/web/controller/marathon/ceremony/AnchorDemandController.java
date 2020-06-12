@@ -2,6 +2,7 @@ package com.mton.web.controller.marathon.ceremony;
 
 import com.google.common.collect.Lists;
 import com.marathon.domain.Mrton3PartyStaff;
+import com.marathon.domain.Mrton3PartyStaffExample;
 import com.marathon.qvo.ceremony.Mrton3PartyStaffVO;
 import com.marathon.service.thirdpartystaff.IMrton3PartyStaffService;
 import com.mton.common.annotation.Log;
@@ -48,7 +49,7 @@ public class AnchorDemandController extends BaseController {
     @ResponseBody
     public TableDataInfo list(@PathVariable() String procid) {
         startPage();
-        List<Mrton3PartyStaff> list = staffService.selectByProcId(procid);
+        List<Mrton3PartyStaffVO> list = staffService.selectByProcId(procid);
         return getDataTable(list);
     }
 
@@ -131,10 +132,7 @@ public class AnchorDemandController extends BaseController {
     @RequestMapping("/master/{id}")
     @ResponseBody
     public AjaxResult master(@PathVariable String id) {
-        Mrton3PartyStaff staff = new Mrton3PartyStaff();
-        staff.setMaster(1);
-        staff.setId(Integer.valueOf(id));
-        staffService.updateMrton3PartyStaff(staff);
+       staffService.setMaster(id);
         return AjaxResult.success("成功");
     }
 

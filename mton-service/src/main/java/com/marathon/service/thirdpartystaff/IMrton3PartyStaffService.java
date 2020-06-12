@@ -16,6 +16,8 @@ public interface IMrton3PartyStaffService {
 
     int deleteMrton3PartyStaffByIds(String ids);
 
-    List<Mrton3PartyStaff> selectByProcId(String procid);
+    List<Mrton3PartyStaffVO> selectByProcId(String procid);
 
+    //置成供应商
+    void setMaster(String id);
 }

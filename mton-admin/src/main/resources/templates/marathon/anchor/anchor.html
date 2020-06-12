@@ -100,14 +100,9 @@
 					}
 				},
 				{
-					field : 'staffType', 
-					title : '类型',
-					sortable: true
-				},
-				{
-					field : 'master',
-					title : '是否被选中为供应商:0:备选,1:被选中',
-					sortable: true
+					field : 'masterStr',
+					title : '供应商',
+					sortable: false
 				},
 		        {
 		            title: '操作',
@@ -127,8 +122,9 @@
 			// debugger;
 			var row=$("#bootstrap-table").bootstrapTable('getSelections');
 			id = row[0].id
-			$.post(prefix + "/master/"+id, function(data){
+			$.get(prefix + "/master/"+id, function(data){
 				// $.table.search();
+				console.log("get 请求。。。。。。。。。")
 				$('#bootstrap-table').bootstrapTable(('refresh'));
 			})
 

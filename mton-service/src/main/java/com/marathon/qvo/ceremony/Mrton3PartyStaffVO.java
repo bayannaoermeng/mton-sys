@@ -16,5 +16,8 @@ public class Mrton3PartyStaffVO extends Mrton3PartyStaff {
     // 简历文件
     private MrtonResource resumeResource;
 
+    //供应商/备选
+    private String masterStr;
+
 
 }
