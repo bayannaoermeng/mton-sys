@@ -109,6 +109,6 @@ public class Mrton3PartyStaffServiceImpl implements IMrton3PartyStaffService {
         //单独置成1
         partyStaff.setMaster(1);
         partyStaff.setId(Integer.valueOf(id));
-        this.updateMrton3PartyStaff(staff);
+        this.updateMrton3PartyStaff(partyStaff);
     }
 }
