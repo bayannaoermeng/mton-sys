@@ -20,4 +20,10 @@ public interface IMrton3PartyStaffService {
 
     //置成供应商
     void setMaster(String id);
+
+    /**
+     * 提交申请
+     * @param procId
+     */
+    void apply(String procId);
 }

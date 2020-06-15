@@ -129,11 +129,31 @@ public class AnchorDemandController extends BaseController {
         return prefix + "/staffDetail";
     }
 
+    /**
+     * 置为供应商
+     * @param id
+     * @return
+     */
     @RequestMapping("/master/{id}")
     @ResponseBody
     public AjaxResult master(@PathVariable String id) {
        staffService.setMaster(id);
         return AjaxResult.success("成功");
+    }
+
+    /**
+     * 提交申批
+     * @param procId 任务ID
+     * @return
+     */
+    @RequestMapping("/apply/{procId}")
+    @ResponseBody
+    public AjaxResult apply(@PathVariable String procId){
+
+        staffService.apply(procId);
+
+        return AjaxResult.success();
+
     }
 
 
