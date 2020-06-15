@@ -1,4 +1,4 @@
-package com.marathon.domain.workflow;
+package com.marathon.domain;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -23,7 +23,7 @@ public class WorkflowBusiness implements Serializable {
      *
      * @mbggenerated
      */
-    private Integer businessId;
+    private String businessId;
 
     /**
      * 节点id
@@ -99,12 +99,12 @@ public class WorkflowBusiness implements Serializable {
         this.workflowId = workflowId;
     }
 
-    public Integer getBusinessId() {
+    public String getBusinessId() {
         return businessId;
     }
 
-    public void setBusinessId(Integer businessId) {
-        this.businessId = businessId;
+    public void setBusinessId(String businessId) {
+        this.businessId = businessId == null ? null : businessId.trim();
     }
 
     public Integer getNodeId() {

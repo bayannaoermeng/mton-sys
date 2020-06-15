@@ -1,7 +1,7 @@
 package com.marathon.mapper;
 
-import com.marathon.domain.workflow.WorkflowBusiness;
-import com.marathon.domain.workflow.WorkflowBusinessExample;
+import com.marathon.domain.WorkflowBusiness;
+import com.marathon.domain.WorkflowBusinessExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

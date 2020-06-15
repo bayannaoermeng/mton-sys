@@ -1,4 +1,4 @@
-package com.marathon.domain.workflow;
+package com.marathon.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -255,52 +255,62 @@ public class WorkflowBusinessExample {
             return (Criteria) this;
         }
 
-        public Criteria andBusinessIdEqualTo(Integer value) {
+        public Criteria andBusinessIdEqualTo(String value) {
             addCriterion("business_id =", value, "businessId");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessIdNotEqualTo(Integer value) {
+        public Criteria andBusinessIdNotEqualTo(String value) {
             addCriterion("business_id <>", value, "businessId");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessIdGreaterThan(Integer value) {
+        public Criteria andBusinessIdGreaterThan(String value) {
             addCriterion("business_id >", value, "businessId");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andBusinessIdGreaterThanOrEqualTo(String value) {
             addCriterion("business_id >=", value, "businessId");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessIdLessThan(Integer value) {
+        public Criteria andBusinessIdLessThan(String value) {
             addCriterion("business_id <", value, "businessId");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessIdLessThanOrEqualTo(Integer value) {
+        public Criteria andBusinessIdLessThanOrEqualTo(String value) {
             addCriterion("business_id <=", value, "businessId");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessIdIn(List<Integer> values) {
+        public Criteria andBusinessIdLike(String value) {
+            addCriterion("business_id like", value, "businessId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessIdNotLike(String value) {
+            addCriterion("business_id not like", value, "businessId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessIdIn(List<String> values) {
             addCriterion("business_id in", values, "businessId");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessIdNotIn(List<Integer> values) {
+        public Criteria andBusinessIdNotIn(List<String> values) {
             addCriterion("business_id not in", values, "businessId");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessIdBetween(Integer value1, Integer value2) {
+        public Criteria andBusinessIdBetween(String value1, String value2) {
             addCriterion("business_id between", value1, value2, "businessId");
             return (Criteria) this;
         }
 
-        public Criteria andBusinessIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andBusinessIdNotBetween(String value1, String value2) {
             addCriterion("business_id not between", value1, value2, "businessId");
             return (Criteria) this;
         }
