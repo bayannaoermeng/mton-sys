@@ -1,9 +1,14 @@
 package com.marathon.service.workflow.impl;
 
+import com.marathon.domain.beans.WorkFlowApproveListBean;
 import com.marathon.mapper.MrtonProcWorkflowMapper;
 import com.marathon.service.workflow.IWorkFlowService;
+import com.marathon.service.workflow.WorkFlowEnum;
+import com.mton.system.mapper.SysUserRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author cuiguangqiang
@@ -15,6 +20,16 @@ public class WorkFlowServiceImpl implements IWorkFlowService {
 
     @Autowired
     private MrtonProcWorkflowMapper mrtonProcWorkflowMapper;
+    @Autowired
+    private SysUserRoleMapper sysUserRoleMapper;
+
+    @Override
+    public List<WorkFlowApproveListBean> getMyApproveList(Long userId, WorkFlowEnum flowEnum) {
+
+        List<WorkFlowApproveListBean> lstApproveList = mrtonProcWorkflowMapper.getMyApproveList(userId,flowEnum.getCode());
+
+        return lstApproveList;
 
 
+    }
 }

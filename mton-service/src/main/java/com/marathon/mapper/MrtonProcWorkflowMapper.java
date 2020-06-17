@@ -3,6 +3,8 @@ package com.marathon.mapper;
 import com.marathon.domain.MrtonProcWorkflow;
 import com.marathon.domain.MrtonProcWorkflowExample;
 import java.util.List;
+
+import com.marathon.domain.beans.WorkFlowApproveListBean;
 import org.apache.ibatis.annotations.Param;
 
 public interface MrtonProcWorkflowMapper {
@@ -27,4 +29,13 @@ public interface MrtonProcWorkflowMapper {
     int updateByPrimaryKeySelective(MrtonProcWorkflow record);
 
     int updateByPrimaryKey(MrtonProcWorkflow record);
+
+    /**
+     * 查询用户待审批任务列表
+     * @param userId 用户ID
+     * @param code 审批流程ID
+     * @return
+     */
+    List<WorkFlowApproveListBean> getMyApproveList(@Param("userId") Long userId, @Param("workflowId") Integer code);
+
 }

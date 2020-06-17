@@ -273,4 +273,23 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getMyApproveList" resultType="com.marathon.domain.beans.WorkFlowApproveListBean">
+    SELECT
+      procwork.proc_id as procId,
+      marathon.marathon_name as mrtonName,
+      cfg.proc_name as procName,
+      node.node_name AS nodeName
+    FROM
+        mrton_proc_workflow procwork
+    INNER JOIN workflow_approver wa ON procwork.node_id = wa.node_id
+    INNER JOIN sys_user_role ur ON ur.role_id = wa.role_id
+    INNER JOIN workflow_node node ON wa.node_id = node.id
+    INNER JOIN mrton_proc_info proc ON procwork.proc_id = proc.id
+    INNER JOIN mrton_proc_cfg cfg ON proc.proc_id = cfg.proc_id
+    INNER JOIN marathon_info marathon ON proc.marathon_id = marathon.marathon_uuid
+    WHERE
+        ur.user_id = #{userId}
+    AND procwork.workflow_id = #{workflowId}
+  </select>
 </mapper>
