@@ -13,6 +13,9 @@
 				<a class="btn btn-primary btn-edit disabled" onclick="setmaster()" shiro:hasPermission="marathon:mrton3PartyStaff:add">
 					<i class="fa fa-edit"></i> 标注为供应商
 				</a>
+				<a class="btn btn-success" onclick="submitapprove()" shiro:hasPermission="marathon:mrton3PartyStaff:add">
+					<i class="fa fa-save"></i> 提交审批
+				</a>
 				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="marathon:mrton3PartyStaff:edit">
 					<i class="fa fa-edit"></i> 修改
 				</a>
@@ -127,8 +130,12 @@
 				console.log("get 请求。。。。。。。。。")
 				$('#bootstrap-table').bootstrapTable(('refresh'));
 			})
-
-
+		}
+		function submitapprove() {
+			$.get(prefix + "/apply/"+procid, function(data){
+				// $.table.search();
+				alert("提交成功！")
+			})
 		}
     </script>
 </body>
