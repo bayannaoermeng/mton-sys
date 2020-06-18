@@ -11,6 +11,7 @@ import com.marathon.mapper.*;
 import com.marathon.qvo.ceremony.Mrton3PartyStaffVO;
 import com.marathon.service.IMrtonResourceService;
 import com.marathon.service.thirdpartystaff.IMrton3PartyStaffService;
+import com.marathon.service.workflow.WorkFlowEnum;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -160,6 +161,7 @@ public class Mrton3PartyStaffServiceImpl implements IMrton3PartyStaffService {
         MrtonProcWorkflow procWorkflow = new MrtonProcWorkflow();
         procWorkflow.setProcId(procId);
         procWorkflow.setNodeId(lstLink.get(0).getWorkflowLinkNextnode());
+        procWorkflow.setWorkflowId(WORK_FLOW_ANCHOR.getCode());
         procWorkflowMapper.insertSelective(procWorkflow);
     }
 }
