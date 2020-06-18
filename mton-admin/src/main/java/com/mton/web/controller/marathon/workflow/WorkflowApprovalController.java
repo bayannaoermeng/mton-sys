@@ -1,20 +1,19 @@
 package com.mton.web.controller.marathon.workflow;
 
 import com.marathon.domain.beans.WorkFlowApproveListBean;
+import com.marathon.qvo.WorkflowApproveQO;
 import com.marathon.qvo.ceremony.Mrton3PartyStaffVO;
 import com.marathon.service.thirdpartystaff.IMrton3PartyStaffService;
 import com.marathon.service.workflow.IWorkFlowService;
 import com.marathon.service.workflow.WorkFlowEnum;
+import com.mton.common.base.AjaxResult;
 import com.mton.common.page.TableDataInfo;
 import com.mton.framework.web.base.BaseController;
 import com.mton.system.domain.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,7 +54,7 @@ public class WorkflowApprovalController extends BaseController {
     }
 
     /**
-     * 审批操作
+     * 审批界面初始化
      * @param procId
      * @param modelMap
      * @return
@@ -65,5 +64,21 @@ public class WorkflowApprovalController extends BaseController {
         List<Mrton3PartyStaffVO> list = staffService.selectByProcId(procId);
         modelMap.put("lstStaff",list);
         return prefix + "/approve";
+    }
+
+    /**
+     * 审批提交
+     * @param approveQO
+     * @return
+     */
+    @RequestMapping("approveaction")
+    @ResponseBody
+    public AjaxResult approveAction(@RequestBody WorkflowApproveQO approveQO){
+
+        SysUser user = getSysUser();
+
+        workFlowService.approve(approveQO,user);
+
+        return AjaxResult.success();
     }
 }

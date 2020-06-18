@@ -2,8 +2,10 @@ package com.marathon.service.workflow.impl;
 
 import com.marathon.domain.beans.WorkFlowApproveListBean;
 import com.marathon.mapper.MrtonProcWorkflowMapper;
+import com.marathon.qvo.WorkflowApproveQO;
 import com.marathon.service.workflow.IWorkFlowService;
 import com.marathon.service.workflow.WorkFlowEnum;
+import com.mton.system.domain.SysUser;
 import com.mton.system.mapper.SysUserRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +22,6 @@ public class WorkFlowServiceImpl implements IWorkFlowService {
 
     @Autowired
     private MrtonProcWorkflowMapper mrtonProcWorkflowMapper;
-    @Autowired
-    private SysUserRoleMapper sysUserRoleMapper;
 
     @Override
     public List<WorkFlowApproveListBean> getMyApproveList(Long userId, WorkFlowEnum flowEnum) {
@@ -29,6 +29,11 @@ public class WorkFlowServiceImpl implements IWorkFlowService {
         List<WorkFlowApproveListBean> lstApproveList = mrtonProcWorkflowMapper.getMyApproveList(userId,flowEnum.getCode());
 
         return lstApproveList;
+    }
+
+    @Override
+    public void approve(WorkflowApproveQO approveQO, SysUser user) {
+
 
 
     }
