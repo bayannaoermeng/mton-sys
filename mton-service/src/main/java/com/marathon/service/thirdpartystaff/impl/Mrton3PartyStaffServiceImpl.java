@@ -104,6 +104,12 @@ public class Mrton3PartyStaffServiceImpl implements IMrton3PartyStaffService {
                     e.printStackTrace();
                 }
                 vo.setMasterStr(vo.getMaster() == 1 ? "供应商" : "备选");
+
+                String resourceId = mrton3PartyStaff.getResumePath();
+                if (!Strings.isNullOrEmpty(resourceId)) {
+                    MrtonResource resource = mrtonResourceService.selectMrtonResourceById(Integer.valueOf(resourceId));
+                    vo.setResumeResource(resource);
+                }
                 return vo;
             }
         });

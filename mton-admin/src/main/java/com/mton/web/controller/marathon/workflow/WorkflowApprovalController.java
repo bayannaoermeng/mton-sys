@@ -1,6 +1,8 @@
 package com.mton.web.controller.marathon.workflow;
 
 import com.marathon.domain.beans.WorkFlowApproveListBean;
+import com.marathon.qvo.ceremony.Mrton3PartyStaffVO;
+import com.marathon.service.thirdpartystaff.IMrton3PartyStaffService;
 import com.marathon.service.workflow.IWorkFlowService;
 import com.marathon.service.workflow.WorkFlowEnum;
 import com.mton.common.page.TableDataInfo;
@@ -8,7 +10,9 @@ import com.mton.framework.web.base.BaseController;
 import com.mton.system.domain.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,9 +32,12 @@ public class WorkflowApprovalController extends BaseController {
     @Autowired
     private IWorkFlowService workFlowService;
 
+    @Autowired
+    private IMrton3PartyStaffService staffService;
+
     @GetMapping("init")
     public String init() {
-        return prefix + "/approve";
+        return prefix + "/approvelist";
     }
 
     /**
@@ -45,5 +52,18 @@ public class WorkflowApprovalController extends BaseController {
         startPage();
         List<WorkFlowApproveListBean> list = workFlowService.getMyApproveList(sysUser.getUserId(), WorkFlowEnum.WORK_FLOW_ANCHOR);
         return getDataTable(list);
+    }
+
+    /**
+     * 审批操作
+     * @param procId
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("approve/{procId}")
+    public String approve(@PathVariable String procId, ModelMap modelMap){
+        List<Mrton3PartyStaffVO> list = staffService.selectByProcId(procId);
+        modelMap.put("lstStaff",list);
+        return prefix + "/approve";
     }
 }
