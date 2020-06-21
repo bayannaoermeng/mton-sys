@@ -7,7 +7,29 @@
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
     <div class="row">
         <div class="col-sm-12 select-table table-striped">
-            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+            <table id="bootstrap-table" data-mobile-responsive="true">
+                <tr>
+                    <th>供应商</th>
+                    <th>对接人</th>
+                    <th>联系方式</th>
+                    <th>报价</th>
+                    <th>交通食宿</th>
+                    <th>发票详情</th>
+                    <th>人员详情</th>
+                    <th>人员详情</th>
+                </tr>
+                <!--th:each 作用在哪个标签上面，对应就会根据它的值迭代多少次-->
+                <tr th:each="staff :${lstStaff}">
+                    <td th:text="${staff.supplier}">111</td>
+                    <td th:text="${staff.mobile}">111</td>
+                    <td th:text="${staff.price }">111</td>
+                    <td th:text="${staff.transportation}">111</td>
+                    <td th:text="${staff.invoiceDetail }">111</td>
+                    <td th:text="${staff.remark}">111</td>
+                    <td ><a class="btn btn-success btn-xs " href="javascript:void(0)" onclick="showstaffdetail('${staff.id }')"><i class="fa fa-label"></i>点击查看详情</a> </td>
+                     <td th:text="${staff.masterStr}">111</td>
+                </tr>
+            </table>
         </div>
     </div>
     <form class="form-horizontal m" id="form-mrtonThirdpartyStaff-approve">
@@ -36,82 +58,82 @@
 <div th:include="include::footer"></div>
 <script type="text/javascript">
     var prefix = ctx + "ceremony/anchor";
-    var procid = [[${procid}]];
-    console.log(procid);
-
-    $(function() {
-        var options = {
-            url: prefix + "/list/"+procid,
-            createUrl: prefix + "/add/"+procid,
-            updateUrl: prefix + "/edit/{id}",
-            removeUrl: prefix + "/remove",
-            detailUrl: prefix + "/staffDetail/{id}",
-            exportUrl: prefix + "/export",
-            modalName: "仪式第三方人员需求",
-            showExport: true,
-            columns: [{
-                checkbox: true
-            },
-                {
-                    field : 'id',
-                    title : '',
-                    visible: false
-                },
-                {
-                    field : 'supplier',
-                    title : '供应商',
-                    sortable: true
-                },
-                {
-                    field : 'contactPerson',
-                    title : '对接人',
-                    sortable: true
-                },
-                {
-                    field : 'mobile',
-                    title : '联系方式',
-                    sortable: true
-                },
-                {
-                    field : 'price',
-                    title : '报价',
-                    sortable: true
-                },
-                {
-                    field : 'transportation',
-                    title : '交通食宿',
-                    sortable: true
-                },
-                {
-                    field : 'invoiceDetail',
-                    title : '发票详情',
-                    sortable: true
-                },
-                {
-                    field : 'remark',
-                    title : '备注',
-                    sortable: true
-                },
-                {
-                    field : 'staffDetail',
-                    title : '人员详情',
-                    sortable: true,
-                    formatter: function(value, row, index) {
-                        var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs " href="javascript:void(0)" onclick="$.operate.detail(\'' + row.id + '\')"><i class="fa fa-label"></i>点击查看详情</a> ');
-                        return actions.join('');
-                    }
-                },
-                {
-                    field : 'masterStr',
-                    title : '供应商',
-                    sortable: false
-                }
-                ]
-        };
-        $.table.init(options);
-
-    });
+    // var procid = [[${procid}]];
+    // console.log(procid);
+    //
+    // $(function() {
+    //     var options = {
+    //         url: prefix + "/list/"+procid,
+    //         createUrl: prefix + "/add/"+procid,
+    //         updateUrl: prefix + "/edit/{id}",
+    //         removeUrl: prefix + "/remove",
+    //         detailUrl: prefix + "/staffDetail/{id}",
+    //         exportUrl: prefix + "/export",
+    //         modalName: "仪式第三方人员需求",
+    //         showExport: true,
+    //         columns: [{
+    //             checkbox: true
+    //         },
+    //             {
+    //                 field : 'id',
+    //                 title : '',
+    //                 visible: false
+    //             },
+    //             {
+    //                 field : 'supplier',
+    //                 title : '供应商',
+    //                 sortable: true
+    //             },
+    //             {
+    //                 field : 'contactPerson',
+    //                 title : '对接人',
+    //                 sortable: true
+    //             },
+    //             {
+    //                 field : 'mobile',
+    //                 title : '联系方式',
+    //                 sortable: true
+    //             },
+    //             {
+    //                 field : 'price',
+    //                 title : '报价',
+    //                 sortable: true
+    //             },
+    //             {
+    //                 field : 'transportation',
+    //                 title : '交通食宿',
+    //                 sortable: true
+    //             },
+    //             {
+    //                 field : 'invoiceDetail',
+    //                 title : '发票详情',
+    //                 sortable: true
+    //             },
+    //             {
+    //                 field : 'remark',
+    //                 title : '备注',
+    //                 sortable: true
+    //             },
+    //             {
+    //                 field : 'staffDetail',
+    //                 title : '人员详情',
+    //                 sortable: true,
+    //                 formatter: function(value, row, index) {
+    //                     var actions = [];
+    //                     actions.push('<a class="btn btn-success btn-xs " href="javascript:void(0)" onclick="$.operate.detail(\'' + row.id + '\')"><i class="fa fa-label"></i>点击查看详情</a> ');
+    //                     return actions.join('');
+    //                 }
+    //             },
+    //             {
+    //                 field : 'masterStr',
+    //                 title : '供应商',
+    //                 sortable: false
+    //             }
+    //             ]
+    //     };
+    //     $.table.init(options);
+    //
+    // });
 
     $("#form-mrtonThirdpartyStaff-add").validate({
         rules:{
