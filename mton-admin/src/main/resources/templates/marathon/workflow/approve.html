@@ -9,14 +9,14 @@
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table" data-mobile-responsive="true">
                 <tr>
-                    <th>供应商</th>
-                    <th>对接人</th>
-                    <th>联系方式</th>
-                    <th>报价</th>
-                    <th>交通食宿</th>
-                    <th>发票详情</th>
-                    <th>人员详情</th>
-                    <th>人员详情</th>
+                    <th width="12%">供应商</th>
+                    <th width="12%">对接人</th>
+                    <th width="12%">联系方式</th>
+                    <th width="12%">报价</th>
+                    <th width="12%">交通食宿</th>
+                    <th width="12%">发票详情</th>
+                    <th width="12%">人员详情</th>
+                    <th width="12%">人员详情</th>
                 </tr>
                 <!--th:each 作用在哪个标签上面，对应就会根据它的值迭代多少次-->
                 <tr th:each="staff :${lstStaff}">
@@ -26,7 +26,7 @@
                     <td th:text="${staff.transportation}">111</td>
                     <td th:text="${staff.invoiceDetail }">111</td>
                     <td th:text="${staff.remark}">111</td>
-                    <td ><a class="btn btn-success btn-xs " href="javascript:void(0)" onclick="showstaffdetail('${staff.id }')"><i class="fa fa-label"></i>点击查看详情</a> </td>
+                    <td ><a class="btn btn-success btn-xs " href="javascript:void(0)" th:onclick="showstaffdetail('[[${staff.id}]]')" ><i class="fa fa-label"></i>点击查看详情</a> </td>
                      <td th:text="${staff.masterStr}">111</td>
                 </tr>
             </table>
@@ -36,18 +36,21 @@
         <div class="form-group" hidden>
             <label class="col-sm-3 control-label">任务ID：</label>
             <div class="col-sm-8">
-                <input id="procId" name="procId" class="form-control" type="text" th:value="${mrtonprocid}">
+                <input id="procId" name="procId" class="form-control" type="text" th:value="${lstStaff[0].procId}">
             </div>
         </div>
         <div class="form-group">
 <!--            <label class="col-sm-3 control-label">对接人：</label>-->
-            <div class="col-sm-8">
-                <input id="contactPerson" name="contactPerson" class="form-control" type="radio" value="1">
-            </div>
+            <label class="radio-inline col-sm-2">
+                <input type="radio"  name="approveResult" value="1" checked>同意
+            </label>
+            <label class="radio-inline col-sm-2">
+                <input type="radio"  name="approveResult" value="0">不同意
+            </label>
         </div>
 
         <div class="form-group">
-            <label class="col-sm-3 control-label">审批意见：</label>
+            <label class="col-sm-2 control-label">审批意见：</label>
             <div class="col-sm-8">
                 <input id="remark" name="remark" class="form-control" type="text">
             </div>
@@ -58,82 +61,6 @@
 <div th:include="include::footer"></div>
 <script type="text/javascript">
     var prefix = ctx + "ceremony/anchor";
-    // var procid = [[${procid}]];
-    // console.log(procid);
-    //
-    // $(function() {
-    //     var options = {
-    //         url: prefix + "/list/"+procid,
-    //         createUrl: prefix + "/add/"+procid,
-    //         updateUrl: prefix + "/edit/{id}",
-    //         removeUrl: prefix + "/remove",
-    //         detailUrl: prefix + "/staffDetail/{id}",
-    //         exportUrl: prefix + "/export",
-    //         modalName: "仪式第三方人员需求",
-    //         showExport: true,
-    //         columns: [{
-    //             checkbox: true
-    //         },
-    //             {
-    //                 field : 'id',
-    //                 title : '',
-    //                 visible: false
-    //             },
-    //             {
-    //                 field : 'supplier',
-    //                 title : '供应商',
-    //                 sortable: true
-    //             },
-    //             {
-    //                 field : 'contactPerson',
-    //                 title : '对接人',
-    //                 sortable: true
-    //             },
-    //             {
-    //                 field : 'mobile',
-    //                 title : '联系方式',
-    //                 sortable: true
-    //             },
-    //             {
-    //                 field : 'price',
-    //                 title : '报价',
-    //                 sortable: true
-    //             },
-    //             {
-    //                 field : 'transportation',
-    //                 title : '交通食宿',
-    //                 sortable: true
-    //             },
-    //             {
-    //                 field : 'invoiceDetail',
-    //                 title : '发票详情',
-    //                 sortable: true
-    //             },
-    //             {
-    //                 field : 'remark',
-    //                 title : '备注',
-    //                 sortable: true
-    //             },
-    //             {
-    //                 field : 'staffDetail',
-    //                 title : '人员详情',
-    //                 sortable: true,
-    //                 formatter: function(value, row, index) {
-    //                     var actions = [];
-    //                     actions.push('<a class="btn btn-success btn-xs " href="javascript:void(0)" onclick="$.operate.detail(\'' + row.id + '\')"><i class="fa fa-label"></i>点击查看详情</a> ');
-    //                     return actions.join('');
-    //                 }
-    //             },
-    //             {
-    //                 field : 'masterStr',
-    //                 title : '供应商',
-    //                 sortable: false
-    //             }
-    //             ]
-    //     };
-    //     $.table.init(options);
-    //
-    // });
 
     $("#form-mrtonThirdpartyStaff-add").validate({
         rules:{
@@ -143,11 +70,30 @@
         },
         focusCleanup: true
     });
-    var approveprefix = ""
+
+    var approveprefix = ctx + "approval"
     function submitHandler() {
         if ($.validate.form()) {
-            $.operate.save(approveprefix + "/approve", $('#form-mrtonThirdpartyStaff-add').serialize());
+            var url = approveprefix + "/approveaction";
+            $.ajax({
+                cache : true,
+                type : "POST",
+                url : url,
+                data : $('#form-mrtonThirdpartyStaff-approve').serialize(),
+                async : false,
+                error : function(request) {
+                    $.modal.alertError("系统错误");
+                },
+                success : function(data) {
+                    $.operate.successCallback(data);
+                }
+            });
+            // $.operate.save(approveprefix + "/approveaction", $('#form-mrtonThirdpartyStaff-add').serialize());
         }
+    }
+    function showstaffdetail(id) {
+        var url = prefix + "/staffDetail/" + id;
+        $.modal.open("查看人员详情", url);
     }
 
 </script>
