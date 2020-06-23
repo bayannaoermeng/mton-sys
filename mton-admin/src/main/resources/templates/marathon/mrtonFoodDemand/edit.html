@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改餐饮需求')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-mrtonFoodDemand-edit" th:object="${mrtonFoodDemand}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">任务ID：</label>
+				<div class="col-sm-8">
+					<input id="procId" name="procId" th:field="*{procId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">申请部门：</label>
+				<div class="col-sm-8">
+					<input id="department" name="department" th:field="*{department}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">早中晚餐 0早 1:中餐 2:晚餐：</label>
+				<div class="col-sm-8">
+					<input id="stage" name="stage" th:field="*{stage}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">餐饮标准：</label>
+				<div class="col-sm-8">
+					<input id="foodStandard" name="foodStandard" th:field="*{foodStandard}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">具体要求：</label>
+				<div class="col-sm-8">
+					<input id="requirement" name="requirement" th:field="*{requirement}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">餐饮数量：</label>
+				<div class="col-sm-8">
+					<input id="foodCount" name="foodCount" th:field="*{foodCount}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">饮用水数量：</label>
+				<div class="col-sm-8">
+					<input id="waterCount" name="waterCount" th:field="*{waterCount}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">送餐时间：</label>
+				<div class="col-sm-8">
+					<input id="serviceTime" name="serviceTime" th:field="*{serviceTime}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">删除标记 0：已删除  1：未删除：</label>
+				<div class="col-sm-8">
+					<input id="delFlag" name="delFlag" th:field="*{delFlag}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">创建用户：</label>
+				<div class="col-sm-8">
+					<input id="createUserName" name="createUserName" th:field="*{createUserName}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">创建时间：</label>
+				<div class="col-sm-8">
+					<input id="createTime" name="createTime" th:field="*{createTime}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">创建用户：</label>
+				<div class="col-sm-8">
+					<input id="updateUserName" name="updateUserName" th:field="*{updateUserName}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">：</label>
+				<div class="col-sm-8">
+					<input id="updateTime" name="updateTime" th:field="*{updateTime}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "marathon/mrtonFoodDemand";
+		$("#form-mrtonFoodDemand-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-mrtonFoodDemand-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>
