@@ -30,7 +30,7 @@ public class MrtonClothesDemandController extends BaseController {
     @Autowired
     private IMrtonClothesDemandService mrtonClothesDemandService;
 
-    @RequiresPermissions("marathon:mrtonClothesDemand:view")
+    @RequiresPermissions("marathon:mrtonClothesDemand:list")
     @GetMapping("/init/{mrtonprocid}")
     public String mrtonClothesDemand(@PathVariable String mrtonprocid, ModelMap modelMap) {
         modelMap.put("procid", mrtonprocid);

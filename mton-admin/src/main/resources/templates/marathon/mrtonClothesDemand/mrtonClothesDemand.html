@@ -29,7 +29,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('marathon:mrtonClothesDemand:edit')}]];
         var removeFlag = [[${@permission.hasPermi('marathon:mrtonClothesDemand:remove')}]];
-        var prefix = ctx + "marathon/mrtonClothesDemand";
+        var prefix = ctx + "mrtonClothesDemand";
 		var procid = [[${procid}]];
 
         $(function() {

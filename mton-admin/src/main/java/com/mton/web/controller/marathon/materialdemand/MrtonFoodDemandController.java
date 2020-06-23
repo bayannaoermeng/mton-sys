@@ -30,7 +30,7 @@ public class MrtonFoodDemandController extends BaseController {
     @Autowired
     private IMrtonFoodDemandService mrtonFoodDemandService;
 
-    @RequiresPermissions("marathon:mrtonFoodDemand:view")
+    @RequiresPermissions("marathon:mrtonFoodDemand:list")
     @GetMapping("/init/{mrtonprocid}")
     public String mrtonFoodDemand(@PathVariable String mrtonprocid, ModelMap modelMap) {
         modelMap.put("procid", mrtonprocid);
