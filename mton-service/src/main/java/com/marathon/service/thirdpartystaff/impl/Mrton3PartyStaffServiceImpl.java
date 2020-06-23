@@ -138,6 +138,13 @@ public class Mrton3PartyStaffServiceImpl implements IMrton3PartyStaffService {
     @Override
     public void apply(String procId) {
 
+        MrtonProcWorkflowExample mpwExample = new MrtonProcWorkflowExample();
+        mpwExample.or().andProcIdEqualTo(procId);
+        List<MrtonProcWorkflow> lstProcWorkFlow = procWorkflowMapper.selectByExample(mpwExample);
+        if(lstProcWorkFlow.size()>0){
+            throw new IllegalArgumentException("已经审批过了！");
+        }
+
         Integer workFlowId = WORK_FLOW_ANCHOR.getCode();
 
         //所有的流程节点

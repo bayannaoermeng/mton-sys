@@ -94,11 +94,14 @@ public class WorkFlowServiceImpl implements IWorkFlowService {
             businessMapper.insertSelective(business);
 
             //插入待处理流程
+            MrtonProcWorkflowExample example1 = new MrtonProcWorkflowExample();
+            example1.or().andProcIdEqualTo(procId);
+
             MrtonProcWorkflow procWorkflow = new MrtonProcWorkflow();
             procWorkflow.setNodeId(linkk.getWorkflowLinkNextnode());
             procWorkflow.setProcId(procId);
             procWorkflow.setWorkflowId(WorkFlowEnum.WORK_FLOW_ANCHOR.getCode());
-            mrtonProcWorkflowMapper.insertSelective(procWorkflow);
+            mrtonProcWorkflowMapper.updateByExampleSelective(procWorkflow,example1);
         }
     }
 }

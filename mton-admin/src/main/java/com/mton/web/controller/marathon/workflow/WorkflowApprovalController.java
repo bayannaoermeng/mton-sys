@@ -73,7 +73,7 @@ public class WorkflowApprovalController extends BaseController {
      */
     @RequestMapping("approveaction")
     @ResponseBody
-    public AjaxResult approveAction(@RequestBody WorkflowApproveQO approveQO){
+    public AjaxResult approveAction(WorkflowApproveQO approveQO){
 
         SysUser user = getSysUser();
 
