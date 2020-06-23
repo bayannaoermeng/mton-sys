@@ -6,71 +6,6 @@
 <body class="gray-bg">
      <div class="container-div">
 		<div class="row">
-			<div class="col-sm-12 search-collapse">
-				<form id="formId">
-					<div class="select-list">
-						<ul>
-							<li>
-								任务ID：<input type="text" name="procId"/>
-							</li>
-
-							<li>
-								姓名：<input type="text" name="name"/>
-							</li>
-
-							<li>
-								性别 0:女 1:男：<input type="text" name="gender"/>
-							</li>
-
-							<li>
-								上装尺码：<input type="text" name="shirtSize"/>
-							</li>
-
-							<li>
-								下装尺码：<input type="text" name="trousersSize"/>
-							</li>
-
-							<li>
-								鞋子尺码：<input type="text" name="shoesSize"/>
-							</li>
-
-							<li>
-								备注：<input type="text" name="remark"/>
-							</li>
-
-							<li>
-								类别 0:员工 1:嘉宾：<input type="text" name="category"/>
-							</li>
-
-							<li>
-								删除标记 0：已删除  1：未删除：<input type="text" name="delFlag"/>
-							</li>
-
-							<li>
-								创建用户：<input type="text" name="createUserName"/>
-							</li>
-
-							<li>
-								创建时间：<input type="text" name="createTime"/>
-							</li>
-
-							<li>
-								创建用户：<input type="text" name="updateUserName"/>
-							</li>
-
-							<li>
-								：<input type="text" name="updateTime"/>
-							</li>
-
-							<li>
-								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-							</li>
-						</ul>
-					</div>
-				</form>
-			</div>
-			
 	        <div class="btn-group-sm" id="toolbar" role="group">
 				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="marathon:mrtonClothesDemand:add">
 					<i class="fa fa-plus"></i> 添加
@@ -95,11 +30,12 @@
         var editFlag = [[${@permission.hasPermi('marathon:mrtonClothesDemand:edit')}]];
         var removeFlag = [[${@permission.hasPermi('marathon:mrtonClothesDemand:remove')}]];
         var prefix = ctx + "marathon/mrtonClothesDemand";
+		var procid = [[${procid}]];
 
         $(function() {
             var options = {
-                url: prefix + "/list",
-                createUrl: prefix + "/add",
+                url: prefix + "/list/"+procid,
+                createUrl: prefix + "/add/"+procid,
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
@@ -151,31 +87,6 @@
 				{
 					field : 'category', 
 					title : '类别 0:员工 1:嘉宾',
-					sortable: true
-				},
-				{
-					field : 'delFlag', 
-					title : '删除标记 0：已删除  1：未删除',
-					sortable: true
-				},
-				{
-					field : 'createUserName', 
-					title : '创建用户',
-					sortable: true
-				},
-				{
-					field : 'createTime', 
-					title : '创建时间',
-					sortable: true
-				},
-				{
-					field : 'updateUserName', 
-					title : '创建用户',
-					sortable: true
-				},
-				{
-					field : 'updateTime', 
-					title : '',
 					sortable: true
 				},
 		        {

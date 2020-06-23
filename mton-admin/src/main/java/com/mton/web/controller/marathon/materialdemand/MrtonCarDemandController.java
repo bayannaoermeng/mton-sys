@@ -23,27 +23,30 @@ import java.util.List;
  * @date 2020-06-23
  */
 @Controller
-@RequestMapping("/marathon/mrtonCarDemand")
+@RequestMapping("/mrtonCarDemand")
 public class MrtonCarDemandController extends BaseController {
-    private String prefix = "marathon/mrtonCarDemand" ;
+    private String prefix = "marathon/mrtonCarDemand";
 
     @Autowired
     private IMrtonCarDemandService mrtonCarDemandService;
 
     @RequiresPermissions("marathon:mrtonCarDemand:view")
-    @GetMapping()
-    public String mrtonCarDemand() {
-        return prefix + "/mrtonCarDemand" ;
+    @GetMapping("/init/{mrtonprocid}")
+    public String mrtonCarDemand(@PathVariable String mrtonprocid, ModelMap modelMap) {
+        modelMap.put("procid", mrtonprocid);
+        return prefix + "/mrtonCarDemand";
     }
 
     /**
      * 查询车辆需求列表
      */
     @RequiresPermissions("marathon:mrtonCarDemand:list")
-    @PostMapping("/list")
+    @PostMapping("/list/{mrtonprocid}")
     @ResponseBody
-    public TableDataInfo list(MrtonCarDemand mrtonCarDemand) {
+    public TableDataInfo list(@PathVariable String mrtonprocid) {
         startPage();
+        MrtonCarDemand mrtonCarDemand = new MrtonCarDemand();
+        mrtonCarDemand.setProcId(mrtonprocid);
         List<MrtonCarDemand> list = mrtonCarDemandService.selectMrtonCarDemandList(mrtonCarDemand);
         return getDataTable(list);
     }
@@ -57,23 +60,24 @@ public class MrtonCarDemandController extends BaseController {
     @ResponseBody
     public AjaxResult export(MrtonCarDemand mrtonCarDemand) {
         List<MrtonCarDemand> list = mrtonCarDemandService.selectMrtonCarDemandList(mrtonCarDemand);
-        ExcelUtil<MrtonCarDemand> util = new ExcelUtil<MrtonCarDemand>(MrtonCarDemand. class);
+        ExcelUtil<MrtonCarDemand> util = new ExcelUtil<MrtonCarDemand>(MrtonCarDemand.class);
         return util.exportExcel(list, "mrtonCarDemand");
     }
 
     /**
      * 新增车辆需求
      */
-    @GetMapping("/add")
-    public String add() {
-        return prefix + "/add" ;
+    @GetMapping("/add/{mrtonprocid}")
+    public String add(@PathVariable String mrtonprocid, ModelMap modelMap) {
+        modelMap.put("mrtonprocid", mrtonprocid);
+        return prefix + "/add";
     }
 
     /**
      * 新增保存车辆需求
      */
     @RequiresPermissions("marathon:mrtonCarDemand:add")
-    @Log(title = "车辆需求" , businessType = BusinessType.INSERT)
+    @Log(title = "车辆需求", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(MrtonCarDemand mrtonCarDemand) {
@@ -85,16 +89,16 @@ public class MrtonCarDemandController extends BaseController {
      */
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, ModelMap mmap) {
-        MrtonCarDemand mrtonCarDemand =mrtonCarDemandService.selectMrtonCarDemandById(id);
-        mmap.put("mrtonCarDemand" , mrtonCarDemand);
-        return prefix + "/edit" ;
+        MrtonCarDemand mrtonCarDemand = mrtonCarDemandService.selectMrtonCarDemandById(id);
+        mmap.put("mrtonCarDemand", mrtonCarDemand);
+        return prefix + "/edit";
     }
 
     /**
      * 修改保存车辆需求
      */
     @RequiresPermissions("marathon:mrtonCarDemand:edit")
-    @Log(title = "车辆需求" , businessType = BusinessType.UPDATE)
+    @Log(title = "车辆需求", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(MrtonCarDemand mrtonCarDemand) {
@@ -105,7 +109,7 @@ public class MrtonCarDemandController extends BaseController {
      * 删除车辆需求
      */
     @RequiresPermissions("marathon:mrtonCarDemand:remove")
-    @Log(title = "车辆需求" , businessType = BusinessType.DELETE)
+    @Log(title = "车辆需求", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {

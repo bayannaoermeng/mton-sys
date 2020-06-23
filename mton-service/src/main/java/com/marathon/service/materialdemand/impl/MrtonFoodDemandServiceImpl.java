@@ -1,12 +1,15 @@
 package com.marathon.service.materialdemand.impl;
 
-import java.util.List;
-
+import cn.hutool.core.convert.Convert;
+import com.marathon.domain.MrtonFoodDemand;
+import com.marathon.domain.MrtonFoodDemandExample;
+import com.marathon.mapper.MrtonFoodDemandMapper;
 import com.marathon.service.materialdemand.IMrtonFoodDemandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.marathon.mapper.MrtonFoodDemandMapper;
-import com.marathon.domain.MrtonFoodDemand;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 餐饮需求 服务层实现
@@ -38,7 +41,9 @@ public class MrtonFoodDemandServiceImpl implements IMrtonFoodDemandService {
      */
     @Override
     public List<MrtonFoodDemand> selectMrtonFoodDemandList(MrtonFoodDemand mrtonFoodDemand) {
-        return null;
+        MrtonFoodDemandExample example = new MrtonFoodDemandExample();
+        example.or().andProcIdEqualTo(mrtonFoodDemand.getProcId());
+        return mrtonFoodDemandMapper.selectByExample(example);
     }
 
     /**
@@ -49,7 +54,7 @@ public class MrtonFoodDemandServiceImpl implements IMrtonFoodDemandService {
      */
     @Override
     public int insertMrtonFoodDemand(MrtonFoodDemand mrtonFoodDemand) {
-        return 0;
+        return mrtonFoodDemandMapper.insertSelective(mrtonFoodDemand);
     }
 
     /**
@@ -60,7 +65,7 @@ public class MrtonFoodDemandServiceImpl implements IMrtonFoodDemandService {
      */
     @Override
     public int updateMrtonFoodDemand(MrtonFoodDemand mrtonFoodDemand) {
-        return 1;
+        return mrtonFoodDemandMapper.updateByPrimaryKeySelective(mrtonFoodDemand);
     }
 
     /**
@@ -71,7 +76,10 @@ public class MrtonFoodDemandServiceImpl implements IMrtonFoodDemandService {
      */
     @Override
     public int deleteMrtonFoodDemandByIds(String ids) {
-        return 1;
+        Integer[] arrayId = Convert.toIntArray(ids);
+        MrtonFoodDemandExample example = new MrtonFoodDemandExample();
+        example.or().andIdIn(Arrays.asList(arrayId));
+        return mrtonFoodDemandMapper.deleteByExample(example);
     }
 
 }

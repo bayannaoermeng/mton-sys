@@ -1,12 +1,15 @@
 package com.marathon.service.materialdemand.impl;
 
-import java.util.List;
-
+import cn.hutool.core.convert.Convert;
+import com.marathon.domain.MrtonClothesDemand;
+import com.marathon.domain.MrtonClothesDemandExample;
+import com.marathon.mapper.MrtonClothesDemandMapper;
 import com.marathon.service.materialdemand.IMrtonClothesDemandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.marathon.mapper.MrtonClothesDemandMapper;
-import com.marathon.domain.MrtonClothesDemand;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 服装需求 服务层实现
@@ -38,7 +41,9 @@ public class MrtonClothesDemandServiceImpl implements IMrtonClothesDemandService
      */
     @Override
     public List<MrtonClothesDemand> selectMrtonClothesDemandList(MrtonClothesDemand mrtonClothesDemand) {
-        return null;
+        MrtonClothesDemandExample example = new MrtonClothesDemandExample();
+        example.or().andProcIdEqualTo(mrtonClothesDemand.getProcId());
+        return mrtonClothesDemandMapper.selectByExample(example);
     }
 
     /**
@@ -49,6 +54,7 @@ public class MrtonClothesDemandServiceImpl implements IMrtonClothesDemandService
      */
     @Override
     public int insertMrtonClothesDemand(MrtonClothesDemand mrtonClothesDemand) {
+        mrtonClothesDemandMapper.insertSelective(mrtonClothesDemand);
         return 1;
     }
 
@@ -60,7 +66,8 @@ public class MrtonClothesDemandServiceImpl implements IMrtonClothesDemandService
      */
     @Override
     public int updateMrtonClothesDemand(MrtonClothesDemand mrtonClothesDemand) {
-        return 1;
+
+        return mrtonClothesDemandMapper.updateByPrimaryKeySelective(mrtonClothesDemand);
     }
 
     /**
@@ -71,7 +78,10 @@ public class MrtonClothesDemandServiceImpl implements IMrtonClothesDemandService
      */
     @Override
     public int deleteMrtonClothesDemandByIds(String ids) {
-        return 1;
+        Integer[] arrayId = Convert.toIntArray(ids);
+        MrtonClothesDemandExample example = new MrtonClothesDemandExample();
+        example.or().andIdIn(Arrays.asList(arrayId));
+        return mrtonClothesDemandMapper.deleteByExample(example);
     }
 
 }

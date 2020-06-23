@@ -6,75 +6,6 @@
 <body class="gray-bg">
      <div class="container-div">
 		<div class="row">
-			<div class="col-sm-12 search-collapse">
-				<form id="formId">
-					<div class="select-list">
-						<ul>
-							<li>
-								任务ID：<input type="text" name="procId"/>
-							</li>
-
-							<li>
-								申请部门：<input type="text" name="department"/>
-							</li>
-
-							<li>
-								早中晚餐 0早 1:中餐 2:晚餐：<input type="text" name="stage"/>
-							</li>
-
-							<li>
-								餐饮标准：<input type="text" name="foodStandard"/>
-							</li>
-
-							<li>
-								具体要求：<input type="text" name="requirement"/>
-							</li>
-
-							<li>
-								餐饮数量：<input type="text" name="foodCount"/>
-							</li>
-
-							<li>
-								饮用水数量：<input type="text" name="waterCount"/>
-							</li>
-
-							<li>
-								送餐时间：<input type="text" name="serviceTime"/>
-							</li>
-
-							<li>
-								备注：<input type="text" name="remark"/>
-							</li>
-
-							<li>
-								删除标记 0：已删除  1：未删除：<input type="text" name="delFlag"/>
-							</li>
-
-							<li>
-								创建用户：<input type="text" name="createUserName"/>
-							</li>
-
-							<li>
-								创建时间：<input type="text" name="createTime"/>
-							</li>
-
-							<li>
-								创建用户：<input type="text" name="updateUserName"/>
-							</li>
-
-							<li>
-								：<input type="text" name="updateTime"/>
-							</li>
-
-							<li>
-								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-							</li>
-						</ul>
-					</div>
-				</form>
-			</div>
-			
 	        <div class="btn-group-sm" id="toolbar" role="group">
 				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="marathon:mrtonFoodDemand:add">
 					<i class="fa fa-plus"></i> 添加
@@ -99,11 +30,12 @@
         var editFlag = [[${@permission.hasPermi('marathon:mrtonFoodDemand:edit')}]];
         var removeFlag = [[${@permission.hasPermi('marathon:mrtonFoodDemand:remove')}]];
         var prefix = ctx + "marathon/mrtonFoodDemand";
+		var procid = [[${procid}]];
 
         $(function() {
             var options = {
-                url: prefix + "/list",
-                createUrl: prefix + "/add",
+                url: prefix + "/list/"+procid,
+                createUrl: prefix + "/add/"+procid,
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
@@ -112,16 +44,6 @@
                 columns: [{
 		            checkbox: true
 		        },
-				{
-					field : 'id', 
-					title : 'id',
-					visible: false
-				},
-				{
-					field : 'procId', 
-					title : '任务ID',
-					sortable: true
-				},
 				{
 					field : 'department', 
 					title : '申请部门',
@@ -160,31 +82,6 @@
 				{
 					field : 'remark', 
 					title : '备注',
-					sortable: true
-				},
-				{
-					field : 'delFlag', 
-					title : '删除标记 0：已删除  1：未删除',
-					sortable: true
-				},
-				{
-					field : 'createUserName', 
-					title : '创建用户',
-					sortable: true
-				},
-				{
-					field : 'createTime', 
-					title : '创建时间',
-					sortable: true
-				},
-				{
-					field : 'updateUserName', 
-					title : '创建用户',
-					sortable: true
-				},
-				{
-					field : 'updateTime', 
-					title : '',
 					sortable: true
 				},
 		        {

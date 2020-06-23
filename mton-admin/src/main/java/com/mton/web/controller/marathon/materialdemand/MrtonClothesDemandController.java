@@ -23,27 +23,30 @@ import java.util.List;
  * @date 2020-06-23
  */
 @Controller
-@RequestMapping("/marathon/mrtonClothesDemand")
+@RequestMapping("/mrtonClothesDemand")
 public class MrtonClothesDemandController extends BaseController {
-    private String prefix = "marathon/mrtonClothesDemand" ;
+    private String prefix = "marathon/mrtonClothesDemand";
 
     @Autowired
     private IMrtonClothesDemandService mrtonClothesDemandService;
 
     @RequiresPermissions("marathon:mrtonClothesDemand:view")
-    @GetMapping()
-    public String mrtonClothesDemand() {
-        return prefix + "/mrtonClothesDemand" ;
+    @GetMapping("/init/{mrtonprocid}")
+    public String mrtonClothesDemand(@PathVariable String mrtonprocid, ModelMap modelMap) {
+        modelMap.put("procid", mrtonprocid);
+        return prefix + "/mrtonClothesDemand";
     }
 
     /**
      * 查询服装需求列表
      */
     @RequiresPermissions("marathon:mrtonClothesDemand:list")
-    @PostMapping("/list")
+    @PostMapping("/list/{mrtonprocid}")
     @ResponseBody
-    public TableDataInfo list(MrtonClothesDemand mrtonClothesDemand) {
+    public TableDataInfo list(@PathVariable String mrtonprocid) {
         startPage();
+        MrtonClothesDemand mrtonClothesDemand = new MrtonClothesDemand();
+        mrtonClothesDemand.setProcId(mrtonprocid);
         List<MrtonClothesDemand> list = mrtonClothesDemandService.selectMrtonClothesDemandList(mrtonClothesDemand);
         return getDataTable(list);
     }
@@ -57,23 +60,24 @@ public class MrtonClothesDemandController extends BaseController {
     @ResponseBody
     public AjaxResult export(MrtonClothesDemand mrtonClothesDemand) {
         List<MrtonClothesDemand> list = mrtonClothesDemandService.selectMrtonClothesDemandList(mrtonClothesDemand);
-        ExcelUtil<MrtonClothesDemand> util = new ExcelUtil<MrtonClothesDemand>(MrtonClothesDemand. class);
+        ExcelUtil<MrtonClothesDemand> util = new ExcelUtil<MrtonClothesDemand>(MrtonClothesDemand.class);
         return util.exportExcel(list, "mrtonClothesDemand");
     }
 
     /**
      * 新增服装需求
      */
-    @GetMapping("/add")
-    public String add() {
-        return prefix + "/add" ;
+    @GetMapping("/add/{mrtonprocid}")
+    public String add(@PathVariable String mrtonprocid, ModelMap modelMap) {
+        modelMap.put("mrtonprocid", mrtonprocid);
+        return prefix + "/add";
     }
 
     /**
      * 新增保存服装需求
      */
     @RequiresPermissions("marathon:mrtonClothesDemand:add")
-    @Log(title = "服装需求" , businessType = BusinessType.INSERT)
+    @Log(title = "服装需求", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(MrtonClothesDemand mrtonClothesDemand) {
@@ -85,16 +89,16 @@ public class MrtonClothesDemandController extends BaseController {
      */
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, ModelMap mmap) {
-        MrtonClothesDemand mrtonClothesDemand =mrtonClothesDemandService.selectMrtonClothesDemandById(id);
-        mmap.put("mrtonClothesDemand" , mrtonClothesDemand);
-        return prefix + "/edit" ;
+        MrtonClothesDemand mrtonClothesDemand = mrtonClothesDemandService.selectMrtonClothesDemandById(id);
+        mmap.put("mrtonClothesDemand", mrtonClothesDemand);
+        return prefix + "/edit";
     }
 
     /**
      * 修改保存服装需求
      */
     @RequiresPermissions("marathon:mrtonClothesDemand:edit")
-    @Log(title = "服装需求" , businessType = BusinessType.UPDATE)
+    @Log(title = "服装需求", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(MrtonClothesDemand mrtonClothesDemand) {
@@ -105,7 +109,7 @@ public class MrtonClothesDemandController extends BaseController {
      * 删除服装需求
      */
     @RequiresPermissions("marathon:mrtonClothesDemand:remove")
-    @Log(title = "服装需求" , businessType = BusinessType.DELETE)
+    @Log(title = "服装需求", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {

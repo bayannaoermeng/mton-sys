@@ -23,7 +23,7 @@ import java.util.List;
  * @date 2020-06-23
  */
 @Controller
-@RequestMapping("/marathon/mrtonFoodDemand")
+@RequestMapping("/mrtonFoodDemand")
 public class MrtonFoodDemandController extends BaseController {
     private String prefix = "marathon/mrtonFoodDemand" ;
 
@@ -31,8 +31,9 @@ public class MrtonFoodDemandController extends BaseController {
     private IMrtonFoodDemandService mrtonFoodDemandService;
 
     @RequiresPermissions("marathon:mrtonFoodDemand:view")
-    @GetMapping()
-    public String mrtonFoodDemand() {
+    @GetMapping("/init/{mrtonprocid}")
+    public String mrtonFoodDemand(@PathVariable String mrtonprocid, ModelMap modelMap) {
+        modelMap.put("procid", mrtonprocid);
         return prefix + "/mrtonFoodDemand" ;
     }
 
@@ -40,10 +41,12 @@ public class MrtonFoodDemandController extends BaseController {
      * 查询餐饮需求列表
      */
     @RequiresPermissions("marathon:mrtonFoodDemand:list")
-    @PostMapping("/list")
+    @PostMapping("/list/{mrtonprocid}")
     @ResponseBody
-    public TableDataInfo list(MrtonFoodDemand mrtonFoodDemand) {
+    public TableDataInfo list(@PathVariable String mrtonprocid) {
         startPage();
+        MrtonFoodDemand mrtonFoodDemand = new MrtonFoodDemand();
+        mrtonFoodDemand.setProcId(mrtonprocid);
         List<MrtonFoodDemand> list = mrtonFoodDemandService.selectMrtonFoodDemandList(mrtonFoodDemand);
         return getDataTable(list);
     }
@@ -64,8 +67,9 @@ public class MrtonFoodDemandController extends BaseController {
     /**
      * 新增餐饮需求
      */
-    @GetMapping("/add")
-    public String add() {
+    @GetMapping("/add/{mrtonprocid}")
+    public String add(@PathVariable String mrtonprocid, ModelMap modelMap) {
+        modelMap.put("mrtonprocid",mrtonprocid);
         return prefix + "/add" ;
     }
 

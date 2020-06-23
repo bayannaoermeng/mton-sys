@@ -1,12 +1,15 @@
 package com.marathon.service.materialdemand.impl;
 
-import java.util.List;
-
+import cn.hutool.core.convert.Convert;
+import com.marathon.domain.MrtonCarDemand;
+import com.marathon.domain.MrtonCarDemandExample;
+import com.marathon.mapper.MrtonCarDemandMapper;
 import com.marathon.service.materialdemand.IMrtonCarDemandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.marathon.mapper.MrtonCarDemandMapper;
-import com.marathon.domain.MrtonCarDemand;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 车辆需求 服务层实现
@@ -38,7 +41,9 @@ public class MrtonCarDemandServiceImpl implements IMrtonCarDemandService {
      */
     @Override
     public List<MrtonCarDemand> selectMrtonCarDemandList(MrtonCarDemand mrtonCarDemand) {
-        return null;
+        MrtonCarDemandExample example = new MrtonCarDemandExample();
+        example.or().andProcIdEqualTo(mrtonCarDemand.getProcId());
+        return mrtonCarDemandMapper.selectByExample(example);
     }
 
     /**
@@ -49,7 +54,7 @@ public class MrtonCarDemandServiceImpl implements IMrtonCarDemandService {
      */
     @Override
     public int insertMrtonCarDemand(MrtonCarDemand mrtonCarDemand) {
-        return 1;
+        return mrtonCarDemandMapper.insertSelective(mrtonCarDemand);
     }
 
     /**
@@ -60,7 +65,7 @@ public class MrtonCarDemandServiceImpl implements IMrtonCarDemandService {
      */
     @Override
     public int updateMrtonCarDemand(MrtonCarDemand mrtonCarDemand) {
-        return 1;
+        return  mrtonCarDemandMapper.updateByPrimaryKeySelective(mrtonCarDemand);
     }
 
     /**
@@ -71,7 +76,10 @@ public class MrtonCarDemandServiceImpl implements IMrtonCarDemandService {
      */
     @Override
     public int deleteMrtonCarDemandByIds(String ids) {
-        return 1;
+        Integer[] arrayId = Convert.toIntArray(ids);
+        MrtonCarDemandExample example = new MrtonCarDemandExample();
+        example.or().andIdIn(Arrays.asList(arrayId));
+        return mrtonCarDemandMapper.deleteByExample(example);
     }
 
 }

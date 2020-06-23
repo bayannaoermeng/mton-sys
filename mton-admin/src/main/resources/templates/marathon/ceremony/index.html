@@ -38,6 +38,12 @@
             $.modal.openTab(procName,'ceremony/anchor/init/'+procoId);
         }else if ('主舞台活动流程' == procName){
             $.modal.openTab(procName,'stageflow/init/'+procoId);
+        }else if('服装统计' == procName){
+            $.modal.openTab(procName,'mrtonClothesDemand/init/'+procoId);
+        }else if('车辆安排' == procName){
+            $.modal.openTab(procName,'mrtonCarDemand/init/'+procoId);
+        }else if('餐饮需求' == procName){
+            $.modal.openTab(procName,'mrtonFoodDemand/init/'+procoId);
         }
         return false;
     }
