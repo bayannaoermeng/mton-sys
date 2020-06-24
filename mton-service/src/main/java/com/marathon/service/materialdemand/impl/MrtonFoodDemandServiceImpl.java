@@ -65,7 +65,9 @@ public class MrtonFoodDemandServiceImpl implements IMrtonFoodDemandService {
      */
     @Override
     public int updateMrtonFoodDemand(MrtonFoodDemand mrtonFoodDemand) {
-        return mrtonFoodDemandMapper.updateByPrimaryKeySelective(mrtonFoodDemand);
+        MrtonFoodDemandExample example = new MrtonFoodDemandExample();
+        example.or().andIdEqualTo(mrtonFoodDemand.getId());
+        return mrtonFoodDemandMapper.updateByExampleSelective(mrtonFoodDemand, example);
     }
 
     /**
