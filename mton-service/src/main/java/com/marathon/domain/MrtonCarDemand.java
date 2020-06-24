@@ -1,108 +1,108 @@
 package com.marathon.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class MrtonCarDemand implements Serializable {
     /**
      * id
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private Integer id;
 
     /**
      * 任务ID
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String procId;
 
     /**
      * 申请部门
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String department;
 
     /**
      * 用车时间
      *
-     * @mbggenerated
+     * @mbg.generated
      */
-    private Date serviceTime;
+    private LocalDateTime serviceTime;
 
     /**
      * 用车数量
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private Integer carCount;
 
     /**
      * 乘坐人数量
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private Integer riderCount;
 
     /**
      * 车型
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String carModel;
 
     /**
      * 路线
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String route;
 
     /**
      * 用途
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String carUse;
 
     /**
      * 备注
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String remark;
 
     /**
      * 删除标记 0：已删除  1：未删除
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private Integer delFlag;
 
     /**
      * 创建用户
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String createUserName;
 
     /**
      * 创建时间
      *
-     * @mbggenerated
+     * @mbg.generated
      */
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /**
      * 创建用户
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String updateUserName;
 
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -130,11 +130,11 @@ public class MrtonCarDemand implements Serializable {
         this.department = department == null ? null : department.trim();
     }
 
-    public Date getServiceTime() {
+    public LocalDateTime getServiceTime() {
         return serviceTime;
     }
 
-    public void setServiceTime(Date serviceTime) {
+    public void setServiceTime(LocalDateTime serviceTime) {
         this.serviceTime = serviceTime;
     }
 
@@ -202,11 +202,11 @@ public class MrtonCarDemand implements Serializable {
         this.createUserName = createUserName == null ? null : createUserName.trim();
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
@@ -218,11 +218,11 @@ public class MrtonCarDemand implements Serializable {
         this.updateUserName = updateUserName == null ? null : updateUserName.trim();
     }
 
-    public Date getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 }

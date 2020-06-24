@@ -1,101 +1,101 @@
 package com.marathon.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class MrtonClothesDemand implements Serializable {
     /**
      * id
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private Integer id;
 
     /**
      * 任务ID
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String procId;
 
     /**
      * 姓名
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String name;
 
     /**
      * 性别 0:女 1:男
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private Integer gender;
 
     /**
      * 上装尺码
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String shirtSize;
 
     /**
      * 下装尺码
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String trousersSize;
 
     /**
      * 鞋子尺码
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String shoesSize;
 
     /**
      * 备注
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String remark;
 
     /**
      * 类别 0:员工 1:嘉宾
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private Integer category;
 
     /**
      * 删除标记 0：已删除  1：未删除
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private Integer delFlag;
 
     /**
      * 创建用户
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String createUserName;
 
     /**
      * 创建时间
      *
-     * @mbggenerated
+     * @mbg.generated
      */
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /**
      * 创建用户
      *
-     * @mbggenerated
+     * @mbg.generated
      */
     private String updateUserName;
 
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -187,11 +187,11 @@ public class MrtonClothesDemand implements Serializable {
         this.createUserName = createUserName == null ? null : createUserName.trim();
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
@@ -203,11 +203,11 @@ public class MrtonClothesDemand implements Serializable {
         this.updateUserName = updateUserName == null ? null : updateUserName.trim();
     }
 
-    public Date getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 }
