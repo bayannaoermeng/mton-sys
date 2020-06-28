@@ -10,13 +10,21 @@ public interface MrtonFoodDemandMapper {
 
     int deleteByExample(MrtonFoodDemandExample example);
 
+    int deleteByPrimaryKey(Integer id);
+
     int insert(MrtonFoodDemand record);
 
     int insertSelective(MrtonFoodDemand record);
 
     List<MrtonFoodDemand> selectByExample(MrtonFoodDemandExample example);
 
+    MrtonFoodDemand selectByPrimaryKey(Integer id);
+
     int updateByExampleSelective(@Param("record") MrtonFoodDemand record, @Param("example") MrtonFoodDemandExample example);
 
     int updateByExample(@Param("record") MrtonFoodDemand record, @Param("example") MrtonFoodDemandExample example);
+
+    int updateByPrimaryKeySelective(MrtonFoodDemand record);
+
+    int updateByPrimaryKey(MrtonFoodDemand record);
 }

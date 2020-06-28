@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.marathon.mapper.MrtonFoodDemandMapper">
   <resultMap id="BaseResultMap" type="com.marathon.domain.MrtonFoodDemand">
-    <result column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="proc_id" jdbcType="VARCHAR" property="procId" />
     <result column="department" jdbcType="VARCHAR" property="department" />
     <result column="stage" jdbcType="INTEGER" property="stage" />
@@ -98,6 +98,16 @@
       limit #{limitStart} , #{limitEnd}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mrton_food_demand
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mrton_food_demand
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByExample" parameterType="com.marathon.domain.MrtonFoodDemandExample">
     delete from mrton_food_demand
     <if test="_parameter != null">
@@ -292,5 +302,71 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.marathon.domain.MrtonFoodDemand">
+    update mrton_food_demand
+    <set>
+      <if test="procId != null">
+        proc_id = #{procId,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null">
+        stage = #{stage,jdbcType=INTEGER},
+      </if>
+      <if test="foodStandard != null">
+        food_standard = #{foodStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="requirement != null">
+        requirement = #{requirement,jdbcType=VARCHAR},
+      </if>
+      <if test="foodCount != null">
+        food_count = #{foodCount,jdbcType=INTEGER},
+      </if>
+      <if test="waterCount != null">
+        water_count = #{waterCount,jdbcType=INTEGER},
+      </if>
+      <if test="serviceTime != null">
+        service_time = #{serviceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserName != null">
+        update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.marathon.domain.MrtonFoodDemand">
+    update mrton_food_demand
+    set proc_id = #{procId,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      stage = #{stage,jdbcType=INTEGER},
+      food_standard = #{foodStandard,jdbcType=VARCHAR},
+      requirement = #{requirement,jdbcType=VARCHAR},
+      food_count = #{foodCount,jdbcType=INTEGER},
+      water_count = #{waterCount,jdbcType=INTEGER},
+      service_time = #{serviceTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=TINYINT},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -78,7 +78,39 @@
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/add", $('#form-mrtonFoodDemand-add').serialize());
+				var procId = $("input[name='procId']").val();
+				var department = $("input[name='department']").val();
+				var stage = $("input[name='stage']").val();
+				var foodStandard = $("input[name='foodStandard']").val();
+				var requirement = $("input[name='requirement']").val();
+				var foodCount = $("input[name='foodCount']").val();
+				var waterCount = $("input[name='waterCount']").val();
+				var serviceTime = $("input[name='serviceTime']").val();
+				var remark = $("input[name='marathon_address']").val();
+				$.ajax({
+					cache : true,
+					type : "POST",
+					url : prefix + "/add",
+					data : {
+						"procId": procId,
+						"department":department,
+						"stage":stage,
+						"foodStandard":foodStandard,
+						"requirement":requirement,
+						"foodCount":foodCount,
+						"waterCount":waterCount,
+						"remark":remark,
+						"params[serviceTime]": serviceTime
+					},
+					async : false,
+					error : function(request) {
+						$.modal.alertError("系统错误");
+					},
+					success : function(data) {
+						$.operate.successCallback(data);
+					}
+				});
+			}
 	        }
 	    }
 	</script>

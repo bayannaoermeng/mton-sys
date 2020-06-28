@@ -8,6 +8,8 @@ import com.marathon.service.materialdemand.IMrtonFoodDemandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,7 +32,12 @@ public class MrtonFoodDemandServiceImpl implements IMrtonFoodDemandService {
      */
     @Override
     public MrtonFoodDemand selectMrtonFoodDemandById(Integer id) {
-        return null;
+        MrtonFoodDemand foodDemand = mrtonFoodDemandMapper.selectByPrimaryKey(id);
+        if (foodDemand.getServiceTime() != null) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            foodDemand.getParams().put("serviceTime", dtf.format(foodDemand.getServiceTime()));
+        }
+        return foodDemand;
     }
 
     /**
