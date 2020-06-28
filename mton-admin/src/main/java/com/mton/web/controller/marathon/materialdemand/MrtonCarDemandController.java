@@ -1,5 +1,6 @@
 package com.mton.web.controller.marathon.materialdemand;
 
+import com.google.common.base.Strings;
 import com.marathon.domain.MrtonCarDemand;
 import com.marathon.service.materialdemand.IMrtonCarDemandService;
 import com.mton.common.annotation.Log;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -81,6 +84,11 @@ public class MrtonCarDemandController extends BaseController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(MrtonCarDemand mrtonCarDemand) {
+        String serviceTime = (String) mrtonCarDemand.getParams().get("serviceTime");
+        if (!Strings.isNullOrEmpty(serviceTime)) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            mrtonCarDemand.setServiceTime(LocalDateTime.parse(serviceTime, dtf));
+        }
         return toAjax(mrtonCarDemandService.insertMrtonCarDemand(mrtonCarDemand));
     }
 
@@ -102,6 +110,11 @@ public class MrtonCarDemandController extends BaseController {
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(MrtonCarDemand mrtonCarDemand) {
+        String serviceTime = (String) mrtonCarDemand.getParams().get("serviceTime");
+        if (!Strings.isNullOrEmpty(serviceTime)) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            mrtonCarDemand.setServiceTime(LocalDateTime.parse(serviceTime, dtf));
+        }
         return toAjax(mrtonCarDemandService.updateMrtonCarDemand(mrtonCarDemand));
     }
 

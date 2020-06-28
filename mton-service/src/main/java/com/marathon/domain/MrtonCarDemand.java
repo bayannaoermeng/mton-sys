@@ -1,9 +1,11 @@
 package com.marathon.domain;
 
+import com.mton.common.base.BaseEntity;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class MrtonCarDemand implements Serializable {
+public class MrtonCarDemand extends BaseEntity {
     /**
      * id
      *
@@ -88,12 +90,6 @@ public class MrtonCarDemand implements Serializable {
      */
     private String createUserName;
 
-    /**
-     * 创建时间
-     *
-     * @mbg.generated
-     */
-    private LocalDateTime createTime;
 
     /**
      * 创建用户
@@ -101,8 +97,6 @@ public class MrtonCarDemand implements Serializable {
      * @mbg.generated
      */
     private String updateUserName;
-
-    private LocalDateTime updateTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -202,27 +196,11 @@ public class MrtonCarDemand implements Serializable {
         this.createUserName = createUserName == null ? null : createUserName.trim();
     }
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
     public String getUpdateUserName() {
         return updateUserName;
     }
 
     public void setUpdateUserName(String updateUserName) {
         this.updateUserName = updateUserName == null ? null : updateUserName.trim();
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
     }
 }
