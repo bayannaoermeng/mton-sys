@@ -45,12 +45,17 @@
 		            checkbox: true
 		        },
 				{
+					field : 'id',
+					title : 'id',
+					visible: false
+				},
+				{
 					field : 'name', 
 					title : '姓名',
 					sortable: true
 				},
 				{
-					field : 'params[gender]',
+					field : 'params.gender',
 					title : '性别',
 					sortable: true
 				},
@@ -75,7 +80,7 @@
 					sortable: true
 				},
 				{
-					field : 'params[category]',
+					field : 'params.category',
 					title : '类别',
 					sortable: true
 				},

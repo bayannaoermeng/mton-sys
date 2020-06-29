@@ -2,11 +2,12 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
 	<th:block th:include="include :: header('修改服装需求')" />
+	<th:block th:include="include :: select2-css" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-mrtonClothesDemand-edit" th:object="${mrtonClothesDemand}">
-            <input id="id" name="id" th:field="*{id}"  type="hidden">
+            <input id="id" name="id" th:field="*{id}"  hidden>
 			<div class="form-group" hidden="">
 				<label class="col-sm-3 control-label">任务ID：</label>
 				<div class="col-sm-8">
@@ -64,6 +65,7 @@
 		</form>
     </div>
     <div th:include="include::footer"></div>
+	<th:block th:include="include :: select2-js" />
     <script type="text/javascript">
 		var prefix = ctx + "mrtonClothesDemand";
 		$("#form-mrtonClothesDemand-edit").validate({

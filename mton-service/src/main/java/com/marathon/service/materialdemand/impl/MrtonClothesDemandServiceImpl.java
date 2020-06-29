@@ -30,7 +30,7 @@ public class MrtonClothesDemandServiceImpl implements IMrtonClothesDemandService
      */
     @Override
     public MrtonClothesDemand selectMrtonClothesDemandById(Integer id) {
-        return null;
+        return mrtonClothesDemandMapper.selectByPrimaryKey(id);
     }
 
     /**
