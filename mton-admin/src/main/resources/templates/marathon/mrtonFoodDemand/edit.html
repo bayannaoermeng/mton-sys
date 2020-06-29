@@ -54,7 +54,7 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">送餐时间：</label>
 				<div class="col-sm-8 select-time">
-					<input type="text" class="time-input" id="serviceTime" placeholder="送餐时间" name="params[serviceTime]" th:field="*{params[serviceTime]}/>
+					<input type="text" class="time-input" id="serviceTime" placeholder="送餐时间" name="params[serviceTime]" th:field="*{params[serviceTime]}"/>
 				</div>
 			</div>
 			<div class="form-group">	
@@ -82,7 +82,7 @@
 	        	var id = $("input[name='id']").val();
 				var procId = $("input[name='procId']").val();
 				var department = $("input[name='department']").val();
-				var stage = $("input[name='stage']").val();
+				var stage = $("select[name='stage']").val();
 				var foodStandard = $("input[name='foodStandard']").val();
 				var requirement = $("input[name='requirement']").val();
 				var foodCount = $("input[name='foodCount']").val();
@@ -94,6 +94,7 @@
 					type : "POST",
 					url : prefix + "/edit",
 					data : {
+						"id":id,
 						"procId": procId,
 						"department":department,
 						"stage":stage,

@@ -1,7 +1,10 @@
 package com.mton.web.controller.marathon.materialdemand;
 
+import com.google.common.base.Function;
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.marathon.domain.MrtonFoodDemand;
+import com.marathon.qvo.MrtonFoodDemandListVO;
 import com.marathon.service.materialdemand.IMrtonFoodDemandService;
 import com.mton.common.annotation.Log;
 import com.mton.common.base.AjaxResult;
@@ -10,13 +13,12 @@ import com.mton.common.page.TableDataInfo;
 import com.mton.common.utils.ExcelUtil;
 import com.mton.framework.web.base.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -34,6 +36,8 @@ public class MrtonFoodDemandController extends BaseController {
 
     @Autowired
     private IMrtonFoodDemandService mrtonFoodDemandService;
+
+    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @RequiresPermissions("marathon:mrtonFoodDemand:list")
     @GetMapping("/init/{mrtonprocid}")
@@ -53,7 +57,33 @@ public class MrtonFoodDemandController extends BaseController {
         MrtonFoodDemand mrtonFoodDemand = new MrtonFoodDemand();
         mrtonFoodDemand.setProcId(mrtonprocid);
         List<MrtonFoodDemand> list = mrtonFoodDemandService.selectMrtonFoodDemandList(mrtonFoodDemand);
-        return getDataTable(list);
+        List<MrtonFoodDemandListVO> lstVO = Lists.transform(list, new Function<MrtonFoodDemand, MrtonFoodDemandListVO>() {
+            @Override
+            public MrtonFoodDemandListVO apply(MrtonFoodDemand mrtonFoodDemand) {
+                MrtonFoodDemandListVO vo = new MrtonFoodDemandListVO();
+                BeanUtils.copyProperties(mrtonFoodDemand, vo);
+                if (mrtonFoodDemand.getStage() != null) {
+                    switch (mrtonFoodDemand.getStage()) {
+                        case 0:
+                            vo.setStageStr("早餐");
+                            break;
+                        case 1:
+                            vo.setStageStr("午餐");
+                            break;
+                        case 2:
+                            vo.setStageStr("晚餐");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                if(vo.getServiceTime()!=null){
+                    vo.setServiceTimeStr(dtf.format(vo.getServiceTime()));
+                }
+                return vo;
+            }
+        });
+        return getDataTable(lstVO);
     }
 
 
@@ -89,7 +119,7 @@ public class MrtonFoodDemandController extends BaseController {
 
         String serviceTime = (String) mrtonFoodDemand.getParams().get("serviceTime");
         if (!Strings.isNullOrEmpty(serviceTime)) {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             mrtonFoodDemand.setServiceTime(LocalDateTime.parse(serviceTime, dtf));
         }
         return toAjax(mrtonFoodDemandService.insertMrtonFoodDemand(mrtonFoodDemand));
@@ -115,7 +145,7 @@ public class MrtonFoodDemandController extends BaseController {
     public AjaxResult editSave(MrtonFoodDemand mrtonFoodDemand) {
         String serviceTime = (String) mrtonFoodDemand.getParams().get("serviceTime");
         if (!Strings.isNullOrEmpty(serviceTime)) {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             mrtonFoodDemand.setServiceTime(LocalDateTime.parse(serviceTime, dtf));
         }
         return toAjax(mrtonFoodDemandService.updateMrtonFoodDemand(mrtonFoodDemand));
