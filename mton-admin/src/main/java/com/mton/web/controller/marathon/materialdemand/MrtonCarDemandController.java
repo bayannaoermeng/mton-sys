@@ -1,6 +1,8 @@
 package com.mton.web.controller.marathon.materialdemand;
 
+import com.google.common.base.Function;
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.marathon.domain.MrtonCarDemand;
 import com.marathon.service.materialdemand.IMrtonCarDemandService;
 import com.mton.common.annotation.Log;
@@ -10,6 +12,7 @@ import com.mton.common.page.TableDataInfo;
 import com.mton.common.utils.ExcelUtil;
 import com.mton.framework.web.base.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,6 +36,8 @@ public class MrtonCarDemandController extends BaseController {
     @Autowired
     private IMrtonCarDemandService mrtonCarDemandService;
 
+    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     @RequiresPermissions("marathon:mrtonCarDemand:list")
     @GetMapping("/init/{mrtonprocid}")
     public String mrtonCarDemand(@PathVariable String mrtonprocid, ModelMap modelMap) {
@@ -51,7 +56,18 @@ public class MrtonCarDemandController extends BaseController {
         MrtonCarDemand mrtonCarDemand = new MrtonCarDemand();
         mrtonCarDemand.setProcId(mrtonprocid);
         List<MrtonCarDemand> list = mrtonCarDemandService.selectMrtonCarDemandList(mrtonCarDemand);
-        return getDataTable(list);
+        List<MrtonCarDemand> lstVO = Lists.transform(list, new Function<MrtonCarDemand, MrtonCarDemand>() {
+            @Override
+            public MrtonCarDemand apply(MrtonCarDemand mrtonCarDemand) {
+                MrtonCarDemand vo = new MrtonCarDemand();
+                BeanUtils.copyProperties(mrtonCarDemand, vo);
+                if (vo.getServiceTime() != null) {
+                    vo.getParams().put("serviceTime", dtf.format(vo.getServiceTime()));
+                }
+                return vo;
+            }
+        });
+        return getDataTable(lstVO);
     }
 
 
@@ -86,7 +102,6 @@ public class MrtonCarDemandController extends BaseController {
     public AjaxResult addSave(MrtonCarDemand mrtonCarDemand) {
         String serviceTime = (String) mrtonCarDemand.getParams().get("serviceTime");
         if (!Strings.isNullOrEmpty(serviceTime)) {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             mrtonCarDemand.setServiceTime(LocalDateTime.parse(serviceTime, dtf));
         }
         return toAjax(mrtonCarDemandService.insertMrtonCarDemand(mrtonCarDemand));
@@ -112,7 +127,6 @@ public class MrtonCarDemandController extends BaseController {
     public AjaxResult editSave(MrtonCarDemand mrtonCarDemand) {
         String serviceTime = (String) mrtonCarDemand.getParams().get("serviceTime");
         if (!Strings.isNullOrEmpty(serviceTime)) {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             mrtonCarDemand.setServiceTime(LocalDateTime.parse(serviceTime, dtf));
         }
         return toAjax(mrtonCarDemandService.updateMrtonCarDemand(mrtonCarDemand));

@@ -1,5 +1,7 @@
 package com.mton.web.controller.marathon.materialdemand;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import com.marathon.domain.MrtonClothesDemand;
 import com.marathon.service.materialdemand.IMrtonClothesDemandService;
 import com.mton.common.annotation.Log;
@@ -9,6 +11,7 @@ import com.mton.common.page.TableDataInfo;
 import com.mton.common.utils.ExcelUtil;
 import com.mton.framework.web.base.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -48,7 +51,34 @@ public class MrtonClothesDemandController extends BaseController {
         MrtonClothesDemand mrtonClothesDemand = new MrtonClothesDemand();
         mrtonClothesDemand.setProcId(mrtonprocid);
         List<MrtonClothesDemand> list = mrtonClothesDemandService.selectMrtonClothesDemandList(mrtonClothesDemand);
-        return getDataTable(list);
+        List<MrtonClothesDemand> lstVO = Lists.transform(list, new Function<MrtonClothesDemand, MrtonClothesDemand>() {
+            @Override
+            public MrtonClothesDemand apply(MrtonClothesDemand mrtonClothesDemand) {
+                MrtonClothesDemand vo = new MrtonClothesDemand();
+                BeanUtils.copyProperties(mrtonClothesDemand, vo);
+                if (vo.getGender() != null) {
+                    switch (vo.getGender()) {
+                        case 0:
+                            vo.getParams().put("gender", "男");
+                            break;
+                        case 1:
+                            vo.getParams().put("gender", "女");
+                    }
+                }
+                if (vo.getCategory() != null) {
+                    switch (vo.getCategory()) {
+                        case 0:
+                            vo.getParams().put("category", "员工");
+                            break;
+                        case 1:
+                            vo.getParams().put("category", "嘉宾");
+                            break;
+                    }
+                }
+                return vo;
+            }
+        });
+        return getDataTable(lstVO);
     }
 
 

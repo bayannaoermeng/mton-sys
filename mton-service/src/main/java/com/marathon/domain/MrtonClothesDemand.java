@@ -1,9 +1,11 @@
 package com.marathon.domain;
 
+import com.mton.common.base.BaseEntity;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class MrtonClothesDemand implements Serializable {
+public class MrtonClothesDemand extends BaseEntity {
     /**
      * id
      *
@@ -26,7 +28,7 @@ public class MrtonClothesDemand implements Serializable {
     private String name;
 
     /**
-     * 性别 0:女 1:男
+     * 性别 1:女 0:男
      *
      * @mbg.generated
      */
@@ -187,27 +189,11 @@ public class MrtonClothesDemand implements Serializable {
         this.createUserName = createUserName == null ? null : createUserName.trim();
     }
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
     public String getUpdateUserName() {
         return updateUserName;
     }
 
     public void setUpdateUserName(String updateUserName) {
         this.updateUserName = updateUserName == null ? null : updateUserName.trim();
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
     }
 }
