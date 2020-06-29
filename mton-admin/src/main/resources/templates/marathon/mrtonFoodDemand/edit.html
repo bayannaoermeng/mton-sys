@@ -54,7 +54,7 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">送餐时间：</label>
 				<div class="col-sm-8 select-time">
-					<input type="text" class="time-input" id="serviceTime" placeholder="送餐时间" name="params[serviceTime]" th:field="*{params[serviceTime]}"/>
+					<input type="text" class="time-input" id="serviceTime" placeholder="送餐时间" name="params[serviceTime]" data-format="yyyy-MM-dd HH:mm:ss" data-type="datetime" th:field="*{params[serviceTime]}" />
 				</div>
 			</div>
 			<div class="form-group">	
@@ -88,7 +88,7 @@
 				var foodCount = $("input[name='foodCount']").val();
 				var waterCount = $("input[name='waterCount']").val();
 				var serviceTime = $("input[name='serviceTime']").val();
-				var remark = $("input[name='marathon_address']").val();
+				var remark = $("input[name='remark']").val();
 				$.ajax({
 					cache : true,
 					type : "POST",

@@ -37,7 +37,7 @@ public class MrtonFoodDemandController extends BaseController {
     @Autowired
     private IMrtonFoodDemandService mrtonFoodDemandService;
 
-    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @RequiresPermissions("marathon:mrtonFoodDemand:list")
     @GetMapping("/init/{mrtonprocid}")
@@ -119,7 +119,6 @@ public class MrtonFoodDemandController extends BaseController {
 
         String serviceTime = (String) mrtonFoodDemand.getParams().get("serviceTime");
         if (!Strings.isNullOrEmpty(serviceTime)) {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             mrtonFoodDemand.setServiceTime(LocalDateTime.parse(serviceTime, dtf));
         }
         return toAjax(mrtonFoodDemandService.insertMrtonFoodDemand(mrtonFoodDemand));
@@ -145,7 +144,6 @@ public class MrtonFoodDemandController extends BaseController {
     public AjaxResult editSave(MrtonFoodDemand mrtonFoodDemand) {
         String serviceTime = (String) mrtonFoodDemand.getParams().get("serviceTime");
         if (!Strings.isNullOrEmpty(serviceTime)) {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             mrtonFoodDemand.setServiceTime(LocalDateTime.parse(serviceTime, dtf));
         }
         return toAjax(mrtonFoodDemandService.updateMrtonFoodDemand(mrtonFoodDemand));
