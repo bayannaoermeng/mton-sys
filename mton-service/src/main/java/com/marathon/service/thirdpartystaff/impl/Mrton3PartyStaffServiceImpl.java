@@ -8,10 +8,11 @@ import com.marathon.domain.workflow.WorkflowLink;
 import com.marathon.domain.workflow.WorkflowLinkExample;
 import com.marathon.domain.workflow.WorkflowNode;
 import com.marathon.mapper.*;
+import com.marathon.qvo.ceremony.ApproveInfo;
+import com.marathon.qvo.ceremony.Mrton3PartyStaffApproveInfoVO;
 import com.marathon.qvo.ceremony.Mrton3PartyStaffVO;
 import com.marathon.service.IMrtonResourceService;
 import com.marathon.service.thirdpartystaff.IMrton3PartyStaffService;
-import com.marathon.service.workflow.WorkFlowEnum;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,9 @@ public class Mrton3PartyStaffServiceImpl implements IMrton3PartyStaffService {
 
     @Autowired
     private MrtonProcWorkflowMapper procWorkflowMapper;
+
+    @Autowired
+    private WorkflowBusinessMapper businessMapper;
 
 
     @Override
@@ -136,14 +140,9 @@ public class Mrton3PartyStaffServiceImpl implements IMrton3PartyStaffService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void apply(String procId) {
+    public void apply(String procId, Long userId) {
 
-        MrtonProcWorkflowExample mpwExample = new MrtonProcWorkflowExample();
-        mpwExample.or().andProcIdEqualTo(procId);
-        List<MrtonProcWorkflow> lstProcWorkFlow = procWorkflowMapper.selectByExample(mpwExample);
-        if(lstProcWorkFlow.size()>0){
-            throw new IllegalArgumentException("已经审批过了！");
-        }
+        checkApproved(procId);
 
         Integer workFlowId = WORK_FLOW_ANCHOR.getCode();
 
@@ -162,6 +161,7 @@ public class Mrton3PartyStaffServiceImpl implements IMrton3PartyStaffService {
         business.setBusinessId(procId);
         business.setNodeId(prenode);
         business.setSuggestion(node.getNodeName());
+        business.setApprover(Math.toIntExact(userId));
         businessMapper.insertSelective(business);
 
         //待处理节点信息
@@ -170,5 +170,27 @@ public class Mrton3PartyStaffServiceImpl implements IMrton3PartyStaffService {
         procWorkflow.setNodeId(lstLink.get(0).getWorkflowLinkNextnode());
         procWorkflow.setWorkflowId(WORK_FLOW_ANCHOR.getCode());
         procWorkflowMapper.insertSelective(procWorkflow);
+    }
+
+    @Override
+    public void checkApproved(String procId) {
+        MrtonProcWorkflowExample mpwExample = new MrtonProcWorkflowExample();
+        mpwExample.or().andProcIdEqualTo(procId);
+        List<MrtonProcWorkflow> lstProcWorkFlow = procWorkflowMapper.selectByExample(mpwExample);
+        if (lstProcWorkFlow.size() > 0) {
+            if (lstProcWorkFlow.get(0).getNodeId() != 1) {
+                throw new IllegalArgumentException("已经审批过了！");
+            }
+        }
+    }
+
+    @Override
+    public Mrton3PartyStaffApproveInfoVO selectApproveInfo(String mrtonprocid) {
+        Mrton3PartyStaffApproveInfoVO vo = new Mrton3PartyStaffApproveInfoVO();
+        List<Mrton3PartyStaffVO> lst3PartyStaff = selectByProcId(mrtonprocid);
+        vo.getLst3PartyStaff().addAll(lst3PartyStaff);
+        List<ApproveInfo> lstApproveInfo = businessMapper.selectApproveInfo(mrtonprocid);
+        vo.getLstApprove().addAll(lstApproveInfo);
+        return vo;
     }
 }

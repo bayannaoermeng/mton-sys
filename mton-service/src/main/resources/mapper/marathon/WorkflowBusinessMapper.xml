@@ -198,7 +198,18 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+    <select id="selectApproveInfo" resultType="com.marathon.qvo.ceremony.ApproveInfo">
+      SELECT
+        suggestion AS remark,
+        userr.user_name AS approver,
+        business.create_time AS approveTime
+      FROM
+        `workflow_x_business` business
+        LEFT JOIN sys_user userr ON approver = userr.user_id
+      WHERE
+        business_id = #{mrtonprocid}
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
     update workflow_x_business
     <set >
       <if test="record.id != null" >

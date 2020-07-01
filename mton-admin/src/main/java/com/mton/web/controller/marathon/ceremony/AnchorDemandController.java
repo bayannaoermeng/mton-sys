@@ -3,6 +3,7 @@ package com.mton.web.controller.marathon.ceremony;
 import com.google.common.collect.Lists;
 import com.marathon.domain.Mrton3PartyStaff;
 import com.marathon.domain.Mrton3PartyStaffExample;
+import com.marathon.qvo.ceremony.Mrton3PartyStaffApproveInfoVO;
 import com.marathon.qvo.ceremony.Mrton3PartyStaffVO;
 import com.marathon.service.thirdpartystaff.IMrton3PartyStaffService;
 import com.mton.common.annotation.Log;
@@ -37,8 +38,15 @@ public class AnchorDemandController extends BaseController {
     @RequiresPermissions("marathon:mrton3PartyStaff:view")
     @GetMapping("/init/{mrtonprocid}")
     public String mrton3PartyStaff(@PathVariable String mrtonprocid, ModelMap modelMap) {
-        modelMap.put("procid", mrtonprocid);
-        return prefix + "/anchor";
+        try {
+            staffService.checkApproved(mrtonprocid);
+            Mrton3PartyStaffApproveInfoVO vo = staffService.selectApproveInfo(mrtonprocid);
+            modelMap.put("staffApproveInfo",vo);
+            return prefix + "approveinfo";
+        } catch (Exception e) {
+            modelMap.put("procid", mrtonprocid);
+            return prefix + "/anchor";
+        }
     }
 
     /**
@@ -131,26 +139,30 @@ public class AnchorDemandController extends BaseController {
 
     /**
      * 置为供应商
+     *
      * @param id
      * @return
      */
     @RequestMapping("/master/{id}")
     @ResponseBody
     public AjaxResult master(@PathVariable String id) {
-       staffService.setMaster(id);
+        staffService.setMaster(id);
         return AjaxResult.success("成功");
     }
 
     /**
      * 提交申批
+     *
      * @param procId 任务ID
      * @return
      */
     @RequestMapping("/apply/{procId}")
     @ResponseBody
-    public AjaxResult apply(@PathVariable String procId){
+    public AjaxResult apply(@PathVariable String procId) {
 
-        staffService.apply(procId);
+        Long userId = getUserId();
+
+        staffService.apply(procId,userId);
 
         return AjaxResult.success();
 

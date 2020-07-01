@@ -29,7 +29,7 @@ public class WorkFlowApproveTest {
     @Test
     public void testApprove(){
 
-        staffService.apply("d2a4c158-cdb6-4e7d-a2b5-e732d3fa018b");
+        staffService.apply("d2a4c158-cdb6-4e7d-a2b5-e732d3fa018b", userId);
 
         WorkflowApproveQO qo = new WorkflowApproveQO();
         qo.setProcId("d2a4c158-cdb6-4e7d-a2b5-e732d3fa018b");

@@ -3,6 +3,8 @@ package com.marathon.mapper;
 import com.marathon.domain.WorkflowBusiness;
 import com.marathon.domain.WorkflowBusinessExample;
 import java.util.List;
+
+import com.marathon.qvo.ceremony.ApproveInfo;
 import org.apache.ibatis.annotations.Param;
 
 public interface WorkflowBusinessMapper {
@@ -27,4 +29,6 @@ public interface WorkflowBusinessMapper {
     int updateByPrimaryKeySelective(WorkflowBusiness record);
 
     int updateByPrimaryKey(WorkflowBusiness record);
+
+    List<ApproveInfo> selectApproveInfo(String mrtonprocid);
 }
