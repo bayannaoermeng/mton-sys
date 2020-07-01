@@ -49,9 +49,6 @@ public class Mrton3PartyStaffServiceImpl implements IMrton3PartyStaffService {
     @Autowired
     private MrtonProcWorkflowMapper procWorkflowMapper;
 
-    @Autowired
-    private WorkflowBusinessMapper businessMapper;
-
 
     @Override
     public int insertMrton3PartyStaff(Mrton3PartyStaff mrton3PartyStaff) {
