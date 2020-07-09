@@ -27,8 +27,8 @@ public class WorkFlowApproveTest {
     private IWorkFlowService workFlowService;
 
     @Test
-    public void testApprove(){
-
+    public void testApprove() {
+        long userId = 1;
         staffService.apply("d2a4c158-cdb6-4e7d-a2b5-e732d3fa018b", userId);
 
         WorkflowApproveQO qo = new WorkflowApproveQO();
@@ -38,6 +38,6 @@ public class WorkFlowApproveTest {
 
         SysUser user = new SysUser();
         user.setUserId(Long.valueOf("1"));
-        workFlowService.approve(qo,user);
+        workFlowService.approve(qo, user);
     }
 }

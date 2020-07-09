@@ -40,12 +40,13 @@ public class AnchorDemandController extends BaseController {
     public String mrton3PartyStaff(@PathVariable String mrtonprocid, ModelMap modelMap) {
         try {
             staffService.checkApproved(mrtonprocid);
-            Mrton3PartyStaffApproveInfoVO vo = staffService.selectApproveInfo(mrtonprocid);
-            modelMap.put("staffApproveInfo",vo);
-            return prefix + "approveinfo";
-        } catch (Exception e) {
             modelMap.put("procid", mrtonprocid);
             return prefix + "/anchor";
+        } catch (Exception e) {
+            Mrton3PartyStaffApproveInfoVO vo = staffService.selectApproveInfo(mrtonprocid);
+            modelMap.put("staffApproveInfo",vo);
+            return prefix + "/approveinfo";
+
         }
     }
 
