@@ -26,7 +26,8 @@
                         userId="${userId}"
                         password="${password}"></jdbcConnection>
         <javaTypeResolver>
-            <property name="forceBigDecimals" value="false"/>
+            <property name="forceBigDecimals" value="true"/>
+            <property name="useJSR310Types" value="true"/>
         </javaTypeResolver>
 
         <javaModelGenerator targetPackage="${modelTargetPackage}"
@@ -46,10 +47,18 @@
         </javaClientGenerator>
 
 
-        <!-- 表结构 -->
-
-        <table tableName="mrton_resource" domainObjectName="MrtonResource">
+<!--         表结构-->
+        <table tableName="mrton_food_demand" domainObjectName="MrtonFoodDemand">
             <generatedKey column="id" sqlStatement="MySql" type="post" identity="true" />
+            <columnOverride column="del_flag" javaType="java.lang.Integer" jdbcType="TINYINT" />
         </table>
+<!--        <table tableName="mrton_clothes_demand" domainObjectName="MrtonClothesDemand">-->
+<!--            <generatedKey column="id" sqlStatement="MySql" type="post" identity="true" />-->
+<!--            <columnOverride column="del_flag" javaType="java.lang.Integer" jdbcType="TINYINT" />-->
+<!--        </table>-->
+<!--        <table tableName="mrton_car_demand" domainObjectName="MrtonCarDemand">-->
+<!--            <generatedKey column="id" sqlStatement="MySql" type="post" identity="true" />-->
+<!--            <columnOverride column="del_flag" javaType="java.lang.Integer" jdbcType="TINYINT" />-->
+<!--        </table>-->
     </context>
 </generatorConfiguration>

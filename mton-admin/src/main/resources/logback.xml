@@ -73,11 +73,12 @@
     </appender>
 
     <!-- 系统模块日志级别控制  -->
-    <logger name="com.mton" level="info"/>
+    <logger name="com.mton" level="debug"/>
+    <logger name="com.marathon" level="debug"/>
     <!-- Spring日志级别控制  -->
     <logger name="org.springframework" level="warn" />
 
-    <root level="info">
+    <root level="debug">
         <appender-ref ref="console"/>
     </root>
 
